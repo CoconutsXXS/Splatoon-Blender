@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Splatoon Blender</title>
+    <link rel="stylesheet" href="index.css">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="band">
+        <h1 id="huge-title" style="margin-bottom: 5px; margin-top: 100px;">Splatoon Blender</h1>
+        <span style="margin-bottom: 134px; font-size: medium;">a Blender add-on for Splatoon models</span>
+    </div>
+
+    <div style="display: flex; text-align: center; align-items: center; justify-content: center; padding-top: 30px; padding-bottom: 30px;">
+        <button class="left">Cloth Importer</button>
+        <button class="left">Character Creator</button>
+        <button style="font-size: 60px; font-weight: 600; padding: 10px; padding-left: 50px; padding-right: 50px;">Complete Kit</button>
+        <button disabled class="right">Dynamic Ink</button>
+        <button class="right">Model Importer</button>
+    </div>
+
+    <div style="display: flex;">
+        <div style="display: flex; margin-top: 30px; width: 50vw; perspective: 1000px;">
+            <img class="zoomable left" src="./Character Creation.png" style="border-radius: 6px; min-width: 200px; width: 100%; height: fit-content; margin-left: 30px;">
+            <div style="margin-left: 30px; min-width: 50px; width: 35vw;">
+                <h2>Highly Customizable</h2>
+                <span>Customize all settings to create your perfect character.</span>
+            </div>
+        </div>
+
+        <div style="display: flex; margin-top: 30px; width: 50vw; perspective: 1000px;">
+            <img class="zoomable right" src="./Character Pose Edit.png" style="border-radius: 6px;margin-left: 30px; max-height: 335px;">
+            <div style="margin-left: 30px; min-width: 50px; width: 35vw; perspective: 1000px;">
+                <h2>Easy Posing</h2>
+                <span>All rigs are simple and effective, not too complicated and easy to use.</span>
+                <img class="zoomable right" src="./Character Pose Render.png" style="border-radius: 6px; width: calc(100% - 30px); height: fit-content; margin-top: 10px; max-width: 363px;">
+            </div>
+        </div>
+    </div>
+
+    <div style="display: flex;">
+        <div>
+            <h2>Model Importation Comparison</h2>
+            <div style="position: absolute; opacity: 0; animation-name: comparison-A; animation-duration: 3s; animation-iteration-count: infinite;">
+                <img src="./Plush Clean.png" width="300px" height="300px" style="position: absolute;">
+                <h3 style="margin: 10px; position: relative;">Add-On</h3>
+            </div>
+            <div style="position: absolute; opacity: 0; animation-name: comparison-B; animation-duration: 3s; animation-iteration-count: infinite;">
+                <img src="./Plush Dae.png" width="300px" height="300px" style="position: absolute;">
+                <h3 style="margin: 10px; position: relative;">Collada</h3>
+            </div>
+            <div style="position: absolute; opacity: 0; animation-name: comparison-C; animation-duration: 3s; animation-iteration-count: infinite;">
+                <img src="./Plush Fbx.png" width="300px" height="300px" style="position: absolute;">
+                <h3 style="margin: 10px; position: relative;">FBX</h3>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
