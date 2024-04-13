@@ -4,6 +4,7 @@ body
     background-color: #1f1f1f;
     overflow-x: hidden;
     perspective: 800px;
+    position:relative;
 }
 .band
 {
@@ -153,9 +154,13 @@ button.right:hover
     z-index: 20;
     transform: scale3d(1.5, 1.5, 1.5) rotate3d(0, -1, 0, 30deg) translate3d(0px, 0, 0)
 }
-video.zoomable:hover
+video.zoomable.right:hover
 {
     transform: scale3d(2, 2, 2) rotate3d(0, -1, 0, 10deg) translate3d(0px, -50px, 0)
+}
+video.zoomable.left:hover
+{
+    transform: scale3d(2, 2, 2) rotate3d(0, 1, 0, 10deg) translate3d(0px, -50px, 0)
 }
 
 /* 3D Text */
