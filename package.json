@@ -5,7 +5,8 @@
   "main": "3D.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "vite"
+    "dev": "vite",
+    "deploy": "gh-pages -d dist"
   },
   "repository": {
     "type": "git",
@@ -18,6 +19,7 @@
   },
   "homepage": "https://github.com/CoconutsXXS/Splatoon-Blender#readme",
   "dependencies": {
+    "gh-pages": "^6.1.1",
     "three": "^0.163.0",
     "three-gltf-loader": "^1.111.0",
     "vite": "^5.2.8"
