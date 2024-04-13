@@ -1,0 +1,28 @@
+{
+  "name": "three-gltf-loader",
+  "version": "1.111.0",
+  "description": "three.js GLTFLoader wrapped as a module for easy importing",
+  "main": "index.js",
+  "homepage": "https://github.com/johh/three-gltf-loader#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/johh/three-gltf-loader.git"
+  },
+  "author": "JohH <code@johh.net>",
+  "license": "MIT",
+  "private": false,
+  "keywords": [
+    "three",
+    "three.js",
+    "gltf",
+    "gltf2",
+    "loader",
+    "webgl",
+    "es6",
+    "ts",
+    "typescript"
+  ],
+  "peerDependencies": {
+    "three": ">=0.111.0"
+  }
+}
