@@ -1,5 +1,5 @@
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three/build/three.min.js';
-import { GLTFLoader } from './GLTFLoader.js'
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
 function asyncTimeout(time)
 {
