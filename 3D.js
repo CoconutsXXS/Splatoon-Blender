@@ -75,7 +75,7 @@ scene.add(new THREE.AmbientLight(0xFFFFFF, 1));
 const center = new THREE.Object3D();
 scene.add(center)
 
-const characterScene = await loadScene("./Character Compressed.glb");
+const characterScene = await loadScene("./Character.glb");
 //center.add(characterScene)
 
 function loadImage(path)
