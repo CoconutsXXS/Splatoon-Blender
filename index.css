@@ -72,6 +72,16 @@ button:hover
     background-position: 50% 50%;
     box-shadow: #e87e0d85 -30px 0px 65px, #265787 30px 0px 65px;
 }
+button.discord
+{
+    box-shadow: rgba(126, 137, 255, 0.4) -10px 0px 30px, rgba(27, 38, 159, 0.5) 10px 0px 30px; 
+}
+button.discord:hover
+{
+    background-size: 100%;
+    background-position: 50% 50%;
+    box-shadow: rgb(126, 136, 255) -30px 0px 65px, rgb(27, 38, 159) 30px 0px 65px;
+}
 button.left:disabled
 {
     background: #535353;
