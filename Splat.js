@@ -1,6 +1,9 @@
 // Importer Three.js
 import * as THREE from 'three';
-import { randInt } from 'three/src/math/MathUtils.js';
+const randInt = function(a, b)
+{
+    return Math.floor((Math.random()*(b-a+1))+a)
+}
 
 // Créer une scène
 const scene = new THREE.Scene();
