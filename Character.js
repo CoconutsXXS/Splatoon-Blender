@@ -28,18 +28,8 @@ function loadScene(path)
 const scene = new THREE.Scene();
 
 // Create Camera
-const camera = new THREE.PerspectiveCamera(90, iw / ih);
+const camera = new THREE.PerspectiveCamera(90, window.character_canvas.height / window.character_canvas.height);
 camera.position.set(0, 0, 4);
-
-// Window Size
-window.addEventListener('resize', onWindowResize, false);
-
-function onWindowResize()
-{
-    // camera.aspect = document.getElementById("canvas").width / document.getElementById("canvas").height;
-    // camera.updateProjectionMatrix();
-    // renderer.setSize(document.getElementById("canvas").width, document.getElementById("canvas").height);
-}
 
 // Create Light
 const lightLeft = new THREE.DirectionalLight(0xFFFFFF, 3);
@@ -75,6 +65,14 @@ scene.add(new THREE.AmbientLight(0xFFFFFF, 1));
 const center = new THREE.Object3D();
 scene.add(center)
 
+async function wait(time)
+{
+    return new Promise((resolve) =>
+    {
+        setTimeout(resolve, time)
+    });
+}
+await wait(1000)
 const characterScene = await loadScene("./Character Compressed.glb");
 //center.add(characterScene)
 
@@ -96,7 +94,7 @@ for(var child of characterScene.children)
 }
 
 // Render
-const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, canvas });
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, canvas: character_canvas });
 renderer.render(scene, camera);
 
 
@@ -130,7 +128,7 @@ Math.lerp = function (start, end, amt)
 {
     return (1-amt)*start+amt*end
 }
-document.body.onmousemove = function(event)
+document.body.addEventListener('mousemove', function(event)
 {
     if(click)
     {
@@ -140,7 +138,7 @@ document.body.onmousemove = function(event)
 
     oldX = event.clientX;
     oldY = event.clientY;
-}
+})
 
 document.getElementById('canvas-box').onmousedown = () => {click = true;}
 document.body.onmouseup = () => {click = false;}

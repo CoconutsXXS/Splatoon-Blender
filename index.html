@@ -23,13 +23,13 @@
         <h1 id="huge-title" style="margin-bottom: 5px; margin-top: 100px;">Splatoon Blender</h1>
         <span style="margin-bottom: 134px; font-size: medium; animation-name: fade; animation-duration: 2s;">a Blender add-on for Splatoon models</span>
     </div>
-    <div style="position:absolute; left:0; top:0; width:100%; height:100%; overflow:hidden; pointer-events: none;">
+    <!-- <div style="position:absolute; left:0; top:0; width:100%; height:100%; overflow:hidden; pointer-events: none;">
         <div class="band" style="opacity: 0; pointer-events: none;">
             <h1 id="huge-title" style="margin-bottom: 5px; margin-top: 100px; opacity: 0; pointer-events: none;">Splatoon Blender</h1>
             <span style="margin-bottom: 134px; font-size: medium; opacity: 0; pointer-events: none;">a Blender add-on for Splatoon models</span>
         </div>
         <div style="z-index: 100; pointer-events: none; position: absolute; height: 999999px; width: 100vw; animation-name: invert-fade; animation-duration: 3s;"></div>
-    </div>
+    </div> -->
 
     <div style="display: flex; text-align: center; align-items: center; justify-content: center; padding-top: 30px; padding-bottom: 30px;">
         <button class="left">Cloth Importer</button>
@@ -124,16 +124,14 @@
             <div>
                 <script type="module">
                     // Setup Canvas \\
-                    window.canvas = document.getElementById("canvas");
-                    window.canvas.width = 1000;
-                    window.canvas.height = 1000;
-                    window.iw = window.canvas.width;
-                    window.ih = window.canvas.height;
+                    window.character_canvas = document.getElementById("character_canvas");
+                    window.character_canvas.width = 1000;
+                    window.character_canvas.height = 1000;
                 </script>
                 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script> -->
-                <script type="module" src="./3D.js"></script>
+                <script type="module" src="./Character.js"></script>
                 <div id="canvas-box" style="max-width: 300px; max-height: 300px; cursor: move; background-color: #333333; border-radius: 6px;">
-                    <canvas id="canvas" style="top: -305px; left: -360px; position: relative; pointer-events: none; max-height: 1000px; height: 100%;"></canvas>
+                    <canvas id="character_canvas" style="top: -305px; left: -360px; position: relative; pointer-events: none; max-height: 1000px; height: 100%;"></canvas>
                 </div>
             </div>
 
@@ -149,6 +147,32 @@
                 <h2 style="margin-top: 0;">Dynamic Inking (in Progress)</h2>
                 <span>You want to ink more than your character? Ink everything with this add-on, set an object to ink surface and another to ink emitter and you are ready!</span>    
             </div>
+        </div>
+    </div>
+
+    <div style="width: 100%; min-height: 300px; background-color: #111; margin-top: 30px; display: flex;">
+        <div id="discord_splash">
+            <script type="module">
+                // Setup Canvas \\
+                window.discord_canvas = document.getElementById("discord_canvas");
+                window.discord_canvas.width = 500;
+                window.discord_canvas.height = 500;
+    
+                document.getElementById("discord_canvas_box").addEventListener('click', (event) =>
+                {
+                    window.addSplash(Math.floor(Math.random()*12)+1, ((event.layerX+75)/33)-7.5, ((-(event.layerY+75)+500)/33)-7.5)
+                })
+            </script>
+            <script type="module" src="./Splat.js"></script>
+            <canvas id="discord_canvas" style="position: relative; margin-top: -350px; pointer-events: none;"></canvas>
+            <div id="discord_canvas_box" style="position: relative; left: 75px; top: 75px; height: 350px; width: 350px;"></div>    
+        </div>
+        <div style="width: 100%; margin-left: -40px; margin-right: 10px;">
+            <h2 id="extrude-title" style="text-align: center; font-weight: 900; font-size: 100px; color: #dadada; margin-top: 10px; margin-left: -60px;">Join the Community</h2>
+            <span style="line-height: 25px; font-size: large;">Discover other Splatoon creators, share your art, learn new skills and have fun in the official Splatoon Blender Discord server. Need game models? Download game files uploaded by the community for your projects. Ask help, report a bug and make suggestions!</span>
+        </div>
+        <div style="">
+            <iframe src="https://discord.com/widget?id=1229019909401346128&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
         </div>
     </div>
 </body>
