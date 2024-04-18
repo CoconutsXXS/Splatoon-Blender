@@ -187,6 +187,12 @@ video.zoomable.left:hover
     color: #929bff;
     text-shadow: 0px 0px 0 rgb(86,99,240),1px 1px 0 rgb(84,97,238),2px 2px 0 rgb(81,94,235),3px 3px 0 rgb(79,92,233),4px 4px 0 rgb(77,90,231),5px 5px 0 rgb(75,88,229),6px 6px 0 rgb(73,86,227),7px 7px 0 rgb(71,84,225),8px 8px 0 rgb(68,81,222),9px 9px 0 rgb(66,79,220),10px 10px 0 rgb(64,77,218),11px 11px 0 rgb(62,75,216),12px 12px 0 rgb(60,73,214),13px 13px 0 rgb(58,71,212),14px 14px 0 rgb(55,68,209),15px 15px 0 rgb(53,66,207),16px 16px 0 rgb(51,64,205),17px 17px 0 rgb(49,62,203),18px 18px 0 rgb(47,60,201),19px 19px 0 rgb(45,58,199),20px 20px 0 rgb(42,55,196),21px 21px 0 rgb(40,53,194),22px 22px 0 rgb(38,51,192),23px 23px  0 rgb(36,49,190),24px 24px 23px rgba(0,0,0,0.6),24px 24px 1px rgba(0,0,0,0.5),0px 0px 23px rgba(0,0,0,.2);
 }
+#huge-title-o
+{
+    animation-duration: 1.5s;
+    color: #e87e0d;
+    text-shadow: 0px 0px 0 rgb(227,123,11),1px -1px 0 rgb(225,121,9),2px -2px 0 rgb(222,118,6),3px -3px 0 rgb(220,116,4),4px -4px 0 rgb(217,113,1),5px -5px 0 rgb(215,111,0),6px -6px 0 rgb(212,108,0),7px -7px 0 rgb(210,106,0),8px -8px 0 rgb(207,103,0),9px -9px 0 rgb(205,101,0),10px -10px 0 rgb(202,98,0),11px -11px 0 rgb(200,96,0),12px -12px 0 rgb(197,93,0),13px -13px 0 rgb(195,91,0),14px -14px 0 rgb(192,88,0),15px -15px 0 rgb(190,86,0),16px -16px 0 rgb(187,83,0),17px -17px 0 rgb(185,81,0),18px -18px 0 rgb(182,78,0),19px -19px 0 rgb(180,76,0),20px -20px 0 rgb(177,73,0),21px -21px 0 rgb(175,71,0),22px -22px 0 rgb(172,68,0),23px -23px 0 rgb(170,66,0),24px -24px 0 rgb(167,63,0),25px -25px  0 rgb(164,60,0),26px -26px 25px rgba(0,0,0,0.6),26px -26px 1px rgba(0,0,0,0.5),0px 0px 25px rgba(0,0,0,.2);
+}
 @keyframes title-intro
 {
     0%

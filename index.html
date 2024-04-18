@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Splatoon Blender</title>
     <link rel="stylesheet" href="index.css">
+    <link rel="shortcut icon" href="logo.png">
+
 
     <meta content="Splatoon Blender Tools" property="og:title" />
     <meta content="Blender add-ons for Splatoon models, character, gears & dynamic inking!" property="og:description" />
@@ -181,6 +183,95 @@
         <div style="margin: 10px;">
             <iframe src="https://discord.com/widget?id=1229019909401346128&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
         </div>
+    </div>
+
+    <div style="margin-top: 50px; display: flex; width: 100%; min-height: 300px; background: linear-gradient(45deg, #e87d0d, #265787);">
+        <div style="width: 20vw;">
+            <div style="margin-left: 30px; margin-top: 200px;">
+                <h2 onclick="window.scrollTo({top: document.getElementsByClassName('tuto')[0].getBoundingClientRect().top-document.body.getBoundingClientRect().top, behavior: 'smooth'})" style="cursor: pointer; color: #265787; font-size: 30px; margin-bottom: 20px;">Handle the Interface</h2>
+                <h2 onclick="window.scrollTo({top: document.getElementsByClassName('tuto')[1].getBoundingClientRect().top-document.body.getBoundingClientRect().top, behavior: 'smooth'})" style="cursor: pointer; color: #265787; font-size: 30px; margin-bottom: 20px;">Install an Add-On</h2>
+                <h2 onclick="window.scrollTo({top: document.getElementsByClassName('tuto')[2].getBoundingClientRect().top-document.body.getBoundingClientRect().top, behavior: 'smooth'})" style="cursor: pointer; color: #265787; font-size: 30px; margin-bottom: 20px;">Create your First Character</h2>
+                <h2 onclick="window.scrollTo({top: document.getElementsByClassName('tuto')[3].getBoundingClientRect().top-document.body.getBoundingClientRect().top, behavior: 'smooth'})" style="cursor: pointer; color: #265787; font-size: 30px; margin-bottom: 20px;">Armature & Poses</h2>
+                <h2 onclick="window.scrollTo({top: document.getElementsByClassName('tuto')[4].getBoundingClientRect().top-document.body.getBoundingClientRect().top, behavior: 'smooth'})" style="cursor: pointer; color: #265787; font-size: 30px; margin-bottom: 20px;">Lighting</h2>
+                <h2 onclick="window.scrollTo({top: document.getElementsByClassName('tuto')[5].getBoundingClientRect().top-document.body.getBoundingClientRect().top, behavior: 'smooth'})" style="cursor: pointer; color: #265787; font-size: 30px; margin-bottom: 20px;">Render</h2>
+            </div>
+        </div>
+        <div style="margin: 25px; margin-left: 10%;">
+            <div style="width: 667px;">
+                <h2 id="huge-title-o" style="text-align: center; margin-top: 10px; margin-bottom: 20px; font-weight: 900; font-size: 130px; color: #dadada; margin-left: -60px;">Tutorials</h2>
+            </div>
+            <img style="height: 500px;" src="./Logo.png">
+        </div>
+        <div style="width: 30vw;"></div>
+    </div>
+
+    <div style="width: 80vw; margin-top: 30px; padding-left: 10vw; padding-right: 10vw; margin-bottom: 50px;" class="tuto">
+        <h2 style="text-align: center; margin-top: 10px; margin-bottom: 20px; font-weight: 800; font-size: 70px; color: #dadada; margin-left: -60px;">Handle the Interface</h2>
+        <span style="line-height: 25px; font-size: large; color: #dadada75;">
+            Blender has a classic 3D interface easy to manipulate. First of all, you will need to remove the default objects in the scene by pressing <b style="color:#e87d0d">A</b> to <b style="color: #e5953fba;">select all the objects</b>. Press <b style="color:#e87d0d">X</b> to <b style="color: #e5953fba;">delete the selected objects</b>, now you should have a empty scene.
+
+            <br><br>Here is the essentials keys to manipulate the view in Blender:
+            <br>To <b style="color: #e5953fba;">rotate your view</b> hold the <b style="color:#e87d0d">scroll click</b> and move the mouse. You can also hold the top right axis indicators if you don't have scroll.
+            <br>To <b style="color: #e5953fba;">move your view</b> hold the <b style="color:#e87d0d">scroll click and left click</b> and move your mouse. You can also hold the top right hand icon if you don't have scroll.
+            <br>To <b style="color: #e5953fba;">bring closer the view</b> you just need to <b style="color:#e87d0d">scroll</b>. You can also hold the top right magnifying glass icon if you don't have scroll.
+            <br>If you want to <b style="color: #e5953fba;">focus on a object</b> press the <b style="color:#e87d0d">numpad ","</b>.
+
+            <br><br>Now let's talk about object manipulation.
+            Any object has a <b style="color: #e5953fba;">transform</b> composed of a <b style="color: #e5953fba;">location</b>, a <b style="color: #e5953fba;">rotation</b> and a <b style="color: #e5953fba;">scale</b>. To modify these parameters you can use the tool at the left but I recommand to use keys:
+            <br>To <b style="color: #e5953fba;">move</b> an object (change the location) press <b style="color:#e87d0d">G</b> and control the movement with the mouse.
+            <br>To <b style="color: #e5953fba;">rotate</b> an object press <b style="color:#e87d0d">R</b> and control the rotation with the mouse.
+            <br>To <b style="color: #e5953fba;">scale</b> an object (change the size) press <b style="color:#e87d0d">S</b> and control the scaling with the mouse.
+            <br>When you are moving/rotating/scaling an object you press <b style="color:#e87d0d">X</b>, <b style="color:#e87d0d">Y</b> or <b style="color:#e87d0d">Z</b> to apply this modification on a specific axis. For exemple if I want object to be higher I will press G + Z.
+
+            <br><br>Now you have the most important key to start Blender!
+        </span>
+    </div>
+
+    <div style="width: 80vw; margin-top: 30px; padding-left: 10vw; padding-right: 10vw; margin-bottom: 50px;" class="tuto">
+        <h2 style="text-align: center; margin-top: 10px; margin-bottom: 20px; font-weight: 800; font-size: 70px; color: #dadada; margin-left: -60px;">Install Add-Ons</h2>
+        <span style="line-height: 25px; font-size: large; color: #dadada75;">
+            On Blender installing add-ons is really easy, press <b style="color:#e87d0d">Command + ,</b> to open prefenrences and go to the add-ons category. After that, click on install and choose your downloaded .zip file. When it is installed you can enable the add-on. 
+        </span>
+    </div>
+
+    <div style="width: 80vw; margin-top: 30px; padding-left: 10vw; padding-right: 10vw; margin-bottom: 50px;" class="tuto">
+        <h2 style="text-align: center; margin-top: 10px; margin-bottom: 20px; font-weight: 800; font-size: 70px; color: #dadada; margin-left: -60px;">Create a Character</h2>
+        <span style="line-height: 25px; font-size: large; color: #dadada75;">
+            After installing the Splatoon Character Creator add-on, press <b style="color:#e87d0d">Shift + A</b>, go to Mesh and click on Splatoon Character. Toggle the menu at the bottom left to access to all the parameters. To have a better preview of your character go in the viewport render/shading by clicking on the last sphere icon at the top right.
+        </span>
+    </div>
+
+    <div style="width: 80vw; margin-top: 30px; padding-left: 10vw; padding-right: 10vw; margin-bottom: 50px;" class="tuto">
+        <h2 style="text-align: center; margin-top: 10px; margin-bottom: 20px; font-weight: 800; font-size: 70px; color: #dadada; margin-left: -60px;">Armature & Poses</h2>
+        <span style="line-height: 25px; font-size: large; color: #dadada75;">
+            For now your character is in rest position (or T-pose), to give a pose to your character you need to mode its armature. An armature is an object made of bones which can deform an mesh. To move the bones and deform your character go to the pose mode by selecting the armature, expending the top left menu and clicking on "Pose Mode".
+            <br>Bones are movable like objects with G, R and S. But for most of bones you will just need to rotate them.
+        </span>
+    </div>
+
+    <div style="width: 80vw; margin-top: 30px; padding-left: 10vw; padding-right: 10vw; margin-bottom: 50px;" class="tuto">
+        <h2 style="text-align: center; margin-top: 10px; margin-bottom: 20px; font-weight: 800; font-size: 70px; color: #dadada; margin-left: -60px;">Lighting</h2>
+        <span style="line-height: 25px; font-size: large; color: #dadada75;">
+            After posing your character you need to add some lights to make the scene more alive. To do this press <b style="color:#e87d0d">Shift + A</b> and go to lights. There is 4 types of light: 
+            <a style="color: #265787; font-weight: 500;" href="https://docs.blender.org/manual/en/latest/render/lights/light_object.html#point-light" target="_blank">the point</a>,
+            <a style="color: #265787; font-weight: 500;" href="https://docs.blender.org/manual/en/latest/render/lights/light_object.html#spot-light" target="_blank">the spot</a>,
+            <a style="color: #265787; font-weight: 500;" href="https://docs.blender.org/manual/en/latest/render/lights/light_object.html#sun-light" target="_blank">the sun</a> and 
+            <a style="color: #265787; font-weight: 500;" href="https://docs.blender.org/manual/en/latest/render/lights/light_object.html#area-light" target="_blank">the area</a>. 
+            You can modify the light properties by going in the light tab (green ampoule icon at the right). You can of course move, rotate and scale lights like any objects.
+        </span>
+    </div>
+
+    <div style="width: 80vw; margin-top: 30px; padding-left: 10vw; padding-right: 10vw; margin-bottom: 50px;" class="tuto">
+        <h2 style="text-align: center; margin-top: 10px; margin-bottom: 20px; font-weight: 800; font-size: 70px; color: #dadada; margin-left: -60px;">Render</h2>
+        <span style="line-height: 25px; font-size: large; color: #dadada75;">
+            To make an image of your scene you will need a camera. To create one press <b style="color:#e87d0d">Shift + A</b> and click on "Camera". To move easily your camera press <b style="color:#e87d0d">N</b>, go to view and click on "Lock Camera to View". After this press <b style="color:#e87d0d">Numpad 0</b> and move your view. When you are satisfied of your camera position, disable "Lock Camera to View".
+            <br>In Blender there is 3 (and in 4.2 version there is 4) render engine: 
+            <a style="color: #265787; font-weight: 500;" href="https://docs.blender.org/manual/en/latest/render/eevee/introduction.html" target="_blank">EEVEE</a>, 
+            <a style="color: #265787; font-weight: 500;" href="https://docs.blender.org/manual/en/latest/render/cycles/introduction.html" target="_blank">Cycles</a> & 
+            <a style="color: #265787; font-weight: 500;" href="https://docs.blender.org/manual/en/latest/render/workbench/introduction.html" target="_blank">Workbench</a>.
+            To choose the render engine go in the render tab (camera icon) and expend the Render Engine menu. In this tab you can choose other parameters for your render.
+            <br>To make a render press <b style="color:#e87d0d">F12</b> or go to Render at the top and click on "Render Image". When your image is rendered press <b style="color:#e87d0d">Alt + S</b> to save it.
+        </span>
     </div>
 </body>
 </html>
