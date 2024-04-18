@@ -32,11 +32,17 @@
     </div> -->
 
     <div style="display: flex; text-align: center; align-items: center; justify-content: center; padding-top: 30px; padding-bottom: 30px;">
-        <button class="left">Cloth Importer</button>
-        <button class="left">Character Creator</button>
+        <form method="get" action="./add-ons/cloth.zip">
+            <button type="submit" class="left">Cloth Importer</button>
+        </form>
+        <button class="left" onclick='window.open("https://drive.google.com/uc?export=download&id=1ESO53aROGguwqeiQoGGhdSTxz1fytKQ9", "_blank")'>Character Creator</button>
         <button style="font-size: 60px; font-weight: 600; padding: 10px; padding-left: 50px; padding-right: 50px;">Complete Kit</button>
-        <button disabled class="right">Dynamic Ink</button>
-        <button class="right">Model Importer</button>
+        <form method="get" action="./add-ons/ink.zip">
+            <button class="right">Dynamic Ink</button>
+        </form>
+        <form method="get" action="./add-ons/model.zip">
+            <button class="right">Model Importer</button>
+        </form>
     </div>
 
     <div style="display: flex;">
