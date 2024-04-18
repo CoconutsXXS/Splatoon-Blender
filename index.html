@@ -33,15 +33,15 @@
 
     <div style="display: flex; text-align: center; align-items: center; justify-content: center; padding-top: 30px; padding-bottom: 30px;">
         <form method="get" action="./add-ons/cloth.zip">
-            <button type="submit" class="left">Cloth Importer</button>
+            <button type="submit" class="left" id="cloth-download">Cloth Importer</button>
         </form>
-        <button class="left" onclick='window.open("https://drive.google.com/uc?export=download&id=1ESO53aROGguwqeiQoGGhdSTxz1fytKQ9", "_blank")'>Character Creator</button>
-        <button style="font-size: 60px; font-weight: 600; padding: 10px; padding-left: 50px; padding-right: 50px;">Complete Kit</button>
+        <button id="character-download" class="left" onclick='window.open("https://drive.google.com/uc?export=download&id=1ESO53aROGguwqeiQoGGhdSTxz1fytKQ9", "_blank")'>Character Creator</button>
+        <button style="font-size: 60px; font-weight: 600; padding: 10px; padding-left: 50px; padding-right: 50px;" onclick="document.getElementById('model-download').click();document.getElementById('cloth-download').click();document.getElementById('ink-download').click();document.getElementById('character-download').click()">Complete Kit</button>
         <form method="get" action="./add-ons/ink.zip">
-            <button class="right">Dynamic Ink</button>
+            <button id="ink-download" class="right">Dynamic Ink</button>
         </form>
         <form method="get" action="./add-ons/model.zip">
-            <button class="right">Model Importer</button>
+            <button id="model-download" class="right">Model Importer</button>
         </form>
     </div>
 
