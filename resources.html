@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Splatoon Resources</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="shortcut icon" href="Logo Low.png">
+
+
+    <meta content="Splatoon Blender - Resources" property="og:title" />
+    <meta content="Blender add-ons for Splatoon models, character, gears & dynamic inking! Download all the official Splatoon models ready to be imported in one click with the add-on!" property="og:description" />
+    <meta content="https://coconutsxxs.github.io/Splatoon-Blender/Resources" property="og:url" />
+    <meta content="https://i.ibb.co/CV5mJ4V/Logo.png" property="og:image" />
+    <meta name="og:image" itemprop="image" content="https://i.ibb.co/CV5mJ4V/Logo.png">
+    <meta content="#e87e0d" data-react-helmet="true" name="theme-color" />
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+<body style="background-color: #1f1f1f;">
+    <script type="module" src="./resources/Previewer.js"></script>
+    <script type="module">
+        const scene = await window.loadScene(document.getElementById('aaa'))
+        console.log(scene)
+        window.loadModel('Fig_AltanaDrumA', scene)
+    </script>
+    <div style="border-radius: 20px; background-color: #1f1f1f; padding: 10px;">
+        <div style="display: flex; padding: 10px; border-radius: 15px; background-color: #2f2f2f; width: fit-content; border-top-right-radius: 50px; border-bottom-right-radius: 50px;">
+            <canvas id="aaa" width="65px" height="65px"></canvas>
+            <div>
+                <span style="margin-left: 10px; color: #a8a8a8; font-size: large;">Altana Drum A</span>
+                <br>
+                <span style="margin-left: 10px; color: #a8a8a860; font-size: medium;">456 Go</span>    
+            </div>
+            <button style="height: 65px; width: 65px; padding: 0; margin-right: 0;">
+                <svg fill="#e87d0d60" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="65px" height="65px" viewBox="0 0 40 40" xml:space="preserve">
+                    <g><path d="M20,0C8.973,0,0,8.973,0,20c0,11.027,8.973,20,20,20c11.027,0,20-8.973,20-20C40,8.973,31.027,0,20,0z M27.756,23.465l-6.279,5.332C21.051,29.158,20.525,29.34,20,29.34c-0.526,0-1.052-0.182-1.478-0.543l-6.279-5.332c-0.959-0.816-1.077-2.256-0.262-3.217c0.815-0.959,2.255-1.078,3.216-0.262l2.521,2.141v-9.186c0-1.26,1.021-2.281,2.282-2.281c1.26,0,2.281,1.021,2.281,2.281v9.186l2.521-2.141c0.962-0.814,2.401-0.697,3.218,0.262C28.834,21.209,28.716,22.648,27.756,23.465z"/></g>
+                </svg>
+            </button>
+        </div>
+    </div>
+</body>
+</html>

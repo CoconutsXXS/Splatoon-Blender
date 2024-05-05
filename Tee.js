@@ -167,7 +167,7 @@ roughnessMap.colorSpace = THREE.NoColorSpace
 
 var emissiveMap = textureLoader.load('./custom_tee/Tee Emission.png')
 emissiveMap.flipY = false;
-roughnessMap.colorSpace = THREE.SRGBColorSpace
+emissiveMap.colorSpace = THREE.SRGBColorSpace
 
 var lastTtype = ''
 window.updateTee = async function(color = "#FF0000", image, type = 'F', team='Big Man', teamImage)
