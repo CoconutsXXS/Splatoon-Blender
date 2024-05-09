@@ -20,27 +20,407 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 </head>
-<body style="background-color: #1f1f1f;">
-    <script type="module" src="./resources/Previewer.js"></script>
-    <script type="module">
-        const scene = await window.loadScene(document.getElementById('aaa'))
-        console.log(scene)
-        window.loadModel('Fig_AltanaDrumA', scene)
-    </script>
-    <div style="border-radius: 20px; background-color: #1f1f1f; padding: 10px;">
-        <div style="display: flex; padding: 10px; border-radius: 15px; background-color: #2f2f2f; width: fit-content; border-top-right-radius: 50px; border-bottom-right-radius: 50px;">
-            <canvas id="aaa" width="65px" height="65px"></canvas>
-            <div>
-                <span style="margin-left: 10px; color: #a8a8a8; font-size: large;">Altana Drum A</span>
-                <br>
-                <span style="margin-left: 10px; color: #a8a8a860; font-size: medium;">456 Go</span>    
+<body style="background-color: #1f1f1f; scrollbar-color: #1f1F1F #3f3F3F;">
+    <div style="position: absolute; height: 100%; z-index: 10;">
+        <div style="top:0; position: sticky;" id="full-screen">
+            <canvas id="big-preview" style="width: 100vw; height: 100vh; margin: 0;"></canvas>
+    
+            <div style="top:0; position: absolute; width: 100vw; height: 100vh; pointer-events: none; display: flex;">
+                <div style="background-color: #1f1f1fcf; width: 40vw; min-width: 350px; max-width: 500px; pointer-events:all;">
+                    <div style="display: flex;">
+                        <button class="resource-button" onclick="document.getElementById('full-screen').style.display = 'none'" style="width: 50px; height: 50px; margin-top: 20px; padding: 0;">
+                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 212.982 212.982" style="padding: 12.5px; width:25px; height: 25px" xml:space="preserve">
+                            <g id="Close">
+                                <path style="fill-rule:evenodd;clip-rule:evenodd;" d="M131.804,106.491l75.936-75.936c6.99-6.99,6.99-18.323,0-25.312
+                                    c-6.99-6.99-18.322-6.99-25.312,0l-75.937,75.937L30.554,5.242c-6.99-6.99-18.322-6.99-25.312,0c-6.989,6.99-6.989,18.323,0,25.312
+                                    l75.937,75.936L5.242,182.427c-6.989,6.99-6.989,18.323,0,25.312c6.99,6.99,18.322,6.99,25.312,0l75.937-75.937l75.937,75.937
+                                    c6.989,6.99,18.322,6.99,25.312,0c6.99-6.99,6.99-18.322,0-25.312L131.804,106.491z"/>
+                            </svg>
+                        </button>
+                        <h2 id="clean-name" style="text-align: center; margin-top: 29px;">Fig_AcousticGuitar00_ShareTex_01</h2>
+                    </div>
+                    <h3 id="raw-name" style="text-align: center;">Fig_AcousticGuitar00_ShareTex_01</h3>
+                    <img id="big-icon" style="width: 50%; text-align: center; margin-left: 25%;">
+                    <button class="resource-button" id="big-download-button" style="width: calc(100% - 50px); margin-top: 20px;">Download</button>
+                    <span style="margin: 20px;">Model previewer doesn't support team color texture modification, result can be black/white.</span>
+                </div>
             </div>
-            <button style="height: 65px; width: 65px; padding: 0; margin-right: 0;">
-                <svg fill="#e87d0d60" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="65px" height="65px" viewBox="0 0 40 40" xml:space="preserve">
+        </div>
+    </div>
+
+    <div style="width: 100vw; margin: 0; margin-bottom: 40px; min-height: 400px;" id="resource-wall">
+        <h1 id="resource-name" style="z-index: 0; position: absolute; margin: 0; color: #ffffff50; -moz-user-select: none; -webkit-user-select: none; -ms-user-select: none; user-select: none; font-family: Splat-Bold; line-height: 170px;">Locker Models</h1>
+
+        <div style="display: flex;">
+            <button class="wall-button" style="position: relative; margin-top: 20vh; margin-left: 30px; height: 60px; width: 60px; padding: 0; rotate: 90deg;">
+                <svg fill="#ffffff65" width="60px" height="60px" viewBox="0 0 40 40">
+                    <g><path d="M20,0C8.973,0,0,8.973,0,20c0,11.027,8.973,20,20,20c11.027,0,20-8.973,20-20C40,8.973,31.027,0,20,0z M27.756,23.465l-6.279,5.332C21.051,29.158,20.525,29.34,20,29.34c-0.526,0-1.052-0.182-1.478-0.543l-6.279-5.332c-0.959-0.816-1.077-2.256-0.262-3.217c0.815-0.959,2.255-1.078,3.216-0.262l2.521,2.141v-9.186c0-1.26,1.021-2.281,2.282-2.281c1.26,0,2.281,1.021,2.281,2.281v9.186l2.521-2.141c0.962-0.814,2.401-0.697,3.218,0.262C28.834,21.209,28.716,22.648,27.756,23.465z"/></g>
+                </svg>
+            </button>
+            <div style="width: calc(100% - 250px);"></div>
+            <button class="wall-button" style="position: relative; margin-top: 20vh; margin-left: 30px; height: 60px; width: 60px; padding: 0; rotate: -90deg;">
+                <svg fill="#ffffff65" width="60px" height="60px" viewBox="0 0 40 40">
+                    <g><path d="M20,0C8.973,0,0,8.973,0,20c0,11.027,8.973,20,20,20c11.027,0,20-8.973,20-20C40,8.973,31.027,0,20,0z M27.756,23.465l-6.279,5.332C21.051,29.158,20.525,29.34,20,29.34c-0.526,0-1.052-0.182-1.478-0.543l-6.279-5.332c-0.959-0.816-1.077-2.256-0.262-3.217c0.815-0.959,2.255-1.078,3.216-0.262l2.521,2.141v-9.186c0-1.26,1.021-2.281,2.282-2.281c1.26,0,2.281,1.021,2.281,2.281v9.186l2.521-2.141c0.962-0.814,2.401-0.697,3.218,0.262C28.834,21.209,28.716,22.648,27.756,23.465z"/></g>
+                </svg>
+            </button>
+        </div>
+
+        <script>
+            const sectionColor =
+            [
+                {
+                    name: 'Locker Models',
+                    colorA: 'aa410f',
+                    colorB: 'ac8ef6',
+                    list: ['Fig_AcousticGuitar00','Fig_AcousticGuitar00_ShareTex_01','Fig_AcousticGuitar00_ShareTex_02','Fig_AcousticGuitar00_ShareTex_03','Fig_AltanaDrumA','Fig_AltanaDrumB','Fig_AltanaRecordPlayer','Fig_AmplifierL','Fig_AmplifierM','Fig_AmplifierS','Fig_Arcadegame','Fig_AttacheCase00','Fig_Backpack00','Fig_Backpack00_ShareTex_01','Fig_Backpack00_ShareTex_02','Fig_Backpack00_ShareTex_03','Fig_Backpack00_ShareTex_04','Fig_Backpack00_ShareTex_05','Fig_BankaraMikoshi00','Fig_BankaraMikoshi00_Cstm01','Fig_BankaraMikoshi00_Cstm02','Fig_BasketBall00','Fig_BasketBall00_ShareTex_01','Fig_BasketBall00_ShareTex_02','Fig_BasketBall00_ShareTex_03','Fig_BasketBall00_ShareTex_04','Fig_BasketBall00_ShareTex_05','Fig_BatchLetters','Fig_BatchLetters_ShareTex_01','Fig_BatchLetters_ShareTex_02','Fig_BatchLetters_ShareTex_03','Fig_BigLantern','Fig_BigLanternSakura','Fig_BigLanternSun','Fig_BiopsyBean','Fig_BiopsyEye','Fig_BoilingTube00','Fig_BoilingTube00_Cstm01','Fig_BoilingTube00_Cstm02','Fig_BoilingTube00_Cstm03','Fig_BoilingTube00_Cstm04','Fig_BoilingTube00_Cstm05','Fig_BoilingTube00_Cstm06','Fig_Book_00','Fig_Book_01','Fig_Box00L','Fig_Box00LHard','Fig_Box00S','Fig_Box01L','Fig_BrainmanStrap','Fig_Broom00','Fig_Broom00_ShareTex_01','Fig_Bucket00','Fig_Bucket01','Fig_Bunker01','Fig_Bunker02','Fig_Can00','Fig_Can01','Fig_Can02','Fig_CandyCan00','Fig_CarBus00','Fig_CarMegapolis','Fig_CarTruck00','Fig_CarTruck00_Cstm01','Fig_CerealBox00','Fig_CheeseBox','Fig_Clam','Fig_ClamGreat','Fig_CoffeeCupPaper00','Fig_CoffeeSiphon','Fig_ColorCone','Fig_Comic00_00','Fig_Comic01_00','Fig_Comic02_00','Fig_ConcreteBlockSq','Fig_CoolerBox','Fig_CoopDiver','Fig_CoopDozer','Fig_CoopHelicopter00','Fig_CoopIkuraDrop','Fig_CoopIkuraGolden01','Fig_CoopIkuraGolden02','Fig_CoopIkuraGoldenG','Fig_CoopRelayIkuraBox','Fig_CoopSakepuncherBaby','Fig_CoopSakepuncherMother','Fig_CoopSalmon','Fig_CoopSalmonArtillery','Fig_CoopSalmonBaby','Fig_CoopSalmonBagman','Fig_CoopSalmonBand00','Fig_CoopSalmonBig','Fig_CoopSalmonBigKing','Fig_CoopSalmonBomb','Fig_CoopSalmonCup','Fig_CoopSalmonDolphin','Fig_CoopSalmonGeyser','Fig_CoopSalmonGuardian','Fig_CoopSalmonJawKing00','Fig_CoopSalmonRocket','Fig_CoopSalmonSaucer','Fig_CoopSalmonSnake','Fig_CoopSalmonSnakeKing','Fig_CoopSalmonSwing_Pillar','Fig_CoopSalmonTower','Fig_CrabDoll','Fig_DancingFlower','Fig_Daypack00','Fig_Daypack00_ShareTex_01','Fig_Daypack00_ShareTex_02','Fig_Daypack00_ShareTex_03','Fig_Daypack00_ShareTex_04','Fig_DeliveryBox00','Fig_DeliveryBox01','Fig_Dogu','Fig_DotCusion00','Fig_DotCusion01','Fig_DrawstringBag00','Fig_DrawstringBag00_ShareTex_01','Fig_DrawstringBag00_ShareTex_02','Fig_DrawstringBag00_ShareTex_03','Fig_DrawstringBag00_ShareTex_04','Fig_DrawstringBagShrimp00','Fig_DrinkCase','Fig_DustBox02','Fig_ElectricGuitar00','Fig_ElectricGuitar00_ShareTex_01','Fig_ElectricGuitar00_ShareTex_02','Fig_ElectricGuitar00_ShareTex_03','Fig_ElectricGuitar00_ShareTex_04','Fig_ElectricGuitar00_ShareTex_05','Fig_ElectricPot00','Fig_ElectricalCord','Fig_FireExtinguisher','Fig_FluffyCushion00','Fig_GameCube','Fig_GameandWatch','Fig_Gameboy','Fig_GardenEelDoll00','Fig_GardenEelDoll00_ShareTex_01','Fig_GardenEelDoll00_ShareTex_02','Fig_GardenEelDoll00_ShareTex_03','Fig_GateCrane','Fig_GateSanshinChicken','Fig_GateSanshinPig','Fig_GateSanshinSnake','Fig_GateTurtle','Fig_GeneralBoxL','Fig_GeneralBoxNoPaintL','Fig_GeneralBoxNoPaintS','Fig_GeneralBoxS','Fig_Generator','Fig_GoalShachi','Fig_HandlelessTeaCup00','Fig_HireoSofvi00','Fig_HireoSofvi00_ShareTex_01','Fig_HireoSofvi00_ShareTex_02','Fig_IceBox','Fig_Ikaman','Fig_IkamanAnother00','Fig_IkamanAnother01','Fig_IkattaStone','Fig_IkuraBottle','Fig_InstantNoodle00','Fig_InstantNoodle00_Cstm01','Fig_InstantNoodle00_Cstm02','Fig_InstantNoodle00_Cstm03','Fig_InstantNoodle00_Cstm04','Fig_IronBasket00','Fig_JennyHaniver','Fig_JuiceBox00','Fig_JuiceBox00_ShareTex_01','Fig_JuiceBox00_ShareTex_02','Fig_JuiceBox00_ShareTex_03','Fig_JuiceBox00_ShareTex_04','Fig_JuiceBox00_ShareTex_05','Fig_LacrosseStick00','Fig_LacrosseStick00_Cstm01','Fig_LacrosseStick00_Cstm02','Fig_LacrosseStick00_Cstm03','Fig_LacrosseStick00_Cstm04','Fig_LacrosseStick00_Cstm05','Fig_LaundryDetergent00','Fig_LaundryDetergent01','Fig_LaundryLiquidDetergent00','Fig_LaundryLiquidDetergent00_ShareTex_01','Fig_LaundryLiquidDetergent00_ShareTex_02','Fig_LunchBox00','Fig_LunchBox00_Cstm01','Fig_LunchBox00_Cstm02','Fig_LunchBox00_Cstm03','Fig_LunchBox00_Cstm04','Fig_Magazine00','Fig_Measurement','Fig_MegapolisHydrant','Fig_MegapolisTrashBin','Fig_MegapolisWoodPallet','Fig_Miche','Fig_MiniGameReward01','Fig_MiniGameReward02','Fig_MiniGameReward03','Fig_MirrorAunSculpture00','Fig_MirrorAunSculpture00_Cstm01','Fig_MirrorLantern00','Fig_MirrorMudskipperSculpture00','Fig_MirrorMudskipperSculpture00_Cstm01','Fig_MirrorOfferingBox00','Fig_Moai','Fig_Mop00','Fig_Mop00_ShareTex_01','Fig_MrShrug','Fig_MsnArmor','Fig_MsnBox00','Fig_MsnBoxTargetL00','Fig_MsnBoxTargetL00_ShareTex_01','Fig_MsnGrindRailRing','Fig_MsnMovePainter','Fig_MsnSnakeBlockBase','Fig_MsnSponge','Fig_MsnSwitchShock','Fig_MsnWeaponParts','Fig_MugCup00','Fig_MzShrug','Fig_NES','Fig_NamacoPhone','Fig_NamazuDummy','Fig_NewsPaper','Fig_Nintendo64','Fig_OrcaFossil','Fig_PaintBrush00','Fig_PaintBrush00_Cstm01','Fig_PaintBrush00_Cstm02','Fig_PaintBrush00_Cstm03','Fig_PaintBrush00_Cstm04','Fig_ParabolicAntenna','Fig_PettanDoll','Fig_PhotoStand','Fig_PipeChair00','Fig_PlantCoral00','Fig_PlantFlowerVase00','Fig_Plaster00','Fig_Plaster01','Fig_PlasticBottle00','Fig_PlasticBottle00_Cstm01','Fig_PlasticBottle00_Cstm02','Fig_PlasticBottle00_Cstm03','Fig_PlasticBottle00_Cstm04','Fig_PlasticBottle00_Cstm05','Fig_PlasticBottle00_Cstm06','Fig_PlasticBottle00_Cstm07','Fig_PotteryFigurine00','Fig_Printer','Fig_PropaneGas','Fig_RingBinder00','Fig_RingBinder00_ShareTex_01','Fig_RingBinder00_ShareTex_02','Fig_RingBinder00_ShareTex_03','Fig_RingBinder00_ShareTex_04','Fig_RingBinder00_ShareTex_05','Fig_SNES','Fig_SakeBalloon','Fig_SakeFloatingLantern00','Fig_SakeFloatingLantern00_ShareTex_01','Fig_SakeFloatingLantern00_ShareTex_02','Fig_SakeNeonA','Fig_SakeNeonB','Fig_SakeNeonC','Fig_SakeNeonD','Fig_Sakebeko','Fig_Sampler00','Fig_Sazae','Fig_SdodrAnglerfishToy','Fig_SdodrBook','Fig_SdodrMobile','Fig_SdodrPancake','Fig_SdodrPuzzle','Fig_SdodrRolltoy','Fig_SdodrToypiano','Fig_SdodrZako','Fig_SdodrZakoBig','Fig_SdodrZakoBombBlow','Fig_SdodrZakoChargerTower','Fig_SdodrZakoEscape','Fig_SdodrZakoHopper','Fig_SdodrZakoShell','Fig_SdodrZakoSmall','Fig_SdodrZakoSprinkler','Fig_SdodrZakoTree','Fig_SdodrZakoTreeMissile','Fig_ServerRoom','Fig_Shachihoko','Fig_SharkTooth','Fig_Shelter','Fig_Shovel','Fig_ShrimpBess00','Fig_SighterTarget','Fig_SighterTargetCoop00','Fig_SighterTargetLarge','Fig_SkateBoard00','Fig_SkateBoard01','Fig_Snack00','Fig_Snack01','Fig_Snack02','Fig_Snack07','Fig_Snack07_Cstm01','Fig_Snack07_Cstm02','Fig_SnowGlobe00','Fig_Snowmobile','Fig_Spawner','Fig_SquidCushion00','Fig_SquidCushionWhite','Fig_SquidDoll00','Fig_SquidDollLong00','Fig_SquidDollLong01','Fig_SquidDollLong01_ShareTex_01','Fig_Stepladder00','Fig_StrapInkFish','Fig_StrapOctopus','Fig_StudioCushion00','Fig_Submarine','Fig_SurimiNeon00','Fig_SurimiTVscreen','Fig_TakeoutBox00','Fig_TakeoutBox00_ShareTex_01','Fig_TakeoutBox00_ShareTex_02','Fig_TakeoutBox00_ShareTex_03','Fig_Thickbook00','Fig_Thickbook00_Cstm01','Fig_Thickbook00_Cstm02','Fig_Thickbook00_Cstm03','Fig_Thickbook00_Cstm04','Fig_Thinker','Fig_TissueBox','Fig_Toaster00','Fig_Torii','Fig_Towel00','Fig_Towel00_Cstm01','Fig_Towel00_Cstm02','Fig_Towel00_Cstm03','Fig_Towel00_Cstm04','Fig_Towel00_Cstm05','Fig_Towel00_Cstm06','Fig_Transceiver','Fig_Trap','Fig_Trophy','Fig_TrophyClam','Fig_TrophyHoko','Fig_TrophyVS','Fig_TrophyYagura','Fig_Tuna','Fig_TunnelBigNamazu','Fig_TunnelSquidFountain','Fig_Umbrella00','Fig_UmbrellaNostalgia','Fig_VideoGame00','Fig_VideoGame01','Fig_VideoGame02','Fig_WaterBottle00','Fig_WaterBottle00_ShareTex_01','Fig_WaterBottle00_ShareTex_02','Fig_WaterBottle00_ShareTex_03','Fig_WaterBottle00_ShareTex_04','Fig_WaterBottle00_ShareTex_05','Fig_WoodenBoat','Fig_WorldContainer','Fig_Yagura'],
+                    directory: 'Locker/'
+                },
+                {
+                    name: 'Weapon Models',
+                    colorA: '24b100',
+                    colorB: '0cae6e',
+                    list: ['Wmn_Blaster_Coop','Wmn_Blaster_Light','Wmn_Blaster_LightLong_Cstm11','Wmn_Blaster_LightShort','Wmn_Blaster_LightShort_Cstm01','Wmn_Blaster_Light_Cstm01','Wmn_Blaster_Long','Wmn_Blaster_Middle','Wmn_Blaster_Middle_Cstm01','Wmn_Blaster_NormalSdodr','Wmn_Blaster_Precision','Wmn_Blaster_Precision_Cstm01','Wmn_Blaster_Short','Wmn_Blaster_Short_Cstm01','Wmn_Brush_Heavy','Wmn_Brush_Heavy_Cstm01','Wmn_Brush_Mini','Wmn_Brush_Mini_Cstm01','Wmn_Brush_Normal','Wmn_Brush_NormalSdodr','Wmn_Brush_Normal_Cstm01','Wmn_Charger_Coop','Wmn_Charger_Keeper','Wmn_Charger_Keeper_Cstm01','Wmn_Charger_Light','Wmn_Charger_Long','Wmn_Charger_Long.','Wmn_Charger_LongScope_Cstm01','Wmn_Charger_NormalSdodr','Wmn_Charger_NormalT','Wmn_Charger_NormalTScope_Cstm01','Wmn_Charger_Pencil','Wmn_Charger_Pencil_Cstm01','Wmn_Charger_Quick','Wmn_Charger_Quick_Cstm01','Wmn_Maneuver_Coop','Wmn_Maneuver_Dual','Wmn_Maneuver_Dual_Cstm01','Wmn_Maneuver_Gallon','Wmn_Maneuver_Gallon_Cstm01','Wmn_Maneuver_Long','Wmn_Maneuver_NormalSdodr','Wmn_Maneuver_NormalT','Wmn_Maneuver_NormalT_Cstm01','Wmn_Maneuver_Short','Wmn_Maneuver_Short_Cstm01','Wmn_Maneuver_Stepper','Wmn_Maneuver_Stepper_Cstm01','Wmn_Roller_BrushNormal','Wmn_Roller_Compact','Wmn_Roller_Compact_Cstm01','Wmn_Roller_Heavy','Wmn_Roller_Heavy_Cstm01','Wmn_Roller_Hunter','Wmn_Roller_Hunter_Cstm01','Wmn_Roller_NormalSdodr','Wmn_Roller_NormalT','Wmn_Roller_NormalT_Cstm01','Wmn_Roller_Wide','Wmn_Roller_Wide_Cstm01','Wmn_Saber_Coop','Wmn_Saber_Light','Wmn_Saber_Light_Cstm01','Wmn_Saber_Normal','Wmn_Saber_NormalSdodr','Wmn_Saber_Normal_Cstm01','Wmn_Shelter_Compact','Wmn_Shelter_Compact_Cstm01','Wmn_Shelter_Coop','Wmn_Shelter_Focus','Wmn_Shelter_Normal','Wmn_Shelter_NormalSdodr','Wmn_Shelter_Normal_Cstm01','Wmn_Shelter_Wide','Wmn_Shelter_Wide_Cstm01','Wmn_Shooter_Blaze','Wmn_Shooter_Blaze_Cstm01','Wmn_Shooter_Expert','Wmn_Shooter_Expert_Cstm01','Wmn_Shooter_First','Wmn_Shooter_First_Cstm01','Wmn_Shooter_Flash','Wmn_Shooter_Flash_Cstm01','Wmn_Shooter_Gravity','Wmn_Shooter_Gravity_Cstm01','Wmn_Shooter_Heavy','Wmn_Shooter_Heavy_Cstm01','Wmn_Shooter_Long','Wmn_Shooter_Long_Cstm01','Wmn_Shooter_Msn0Lv0','Wmn_Shooter_Normal','Wmn_Shooter_NormalB','Wmn_Shooter_NormalSdodr','Wmn_Shooter_NormalT','Wmn_Shooter_NormalT_Cstm01','Wmn_Shooter_Precision','Wmn_Shooter_QuickLong','Wmn_Shooter_QuickLong_Cstm01','Wmn_Shooter_QuickMiddle','Wmn_Shooter_QuickMiddle_Cstm01','Wmn_Shooter_RvLv0','Wmn_Shooter_RvSdodr','Wmn_Shooter_Short_Cstm01','Wmn_Shooter_Short_Cstm11','Wmn_Shooter_TripleMiddle','Wmn_Shooter_TripleMiddle_Cstm01','Wmn_Shooter_TripleQuick','Wmn_Shooter_TripleQuick_Cstm01','Wmn_Slosher_Bathtub','Wmn_Slosher_Bathtub_Cstm01','Wmn_Slosher_Coop','Wmn_Slosher_Diffusion','Wmn_Slosher_Diffusion_Cstm01','Wmn_Slosher_Double','Wmn_Slosher_Double_Cstm01','Wmn_Slosher_Launcher','Wmn_Slosher_Launcher_Cstm01','Wmn_Slosher_NormalSdodr','Wmn_Slosher_StrongT','Wmn_Slosher_StrongT_Cstm01','Wmn_Slosher_Washtub','Wmn_Slosher_Washtub_Cstm01','Wmn_Spinner_Downpour','Wmn_Spinner_Downpour_Cstm01','Wmn_Spinner_HyperShort','Wmn_Spinner_HyperT','Wmn_Spinner_NormalSdodr','Wmn_Spinner_QuickT','Wmn_Spinner_QuickT_Cstm01','Wmn_Spinner_Serein','Wmn_Spinner_Serein_Cstm01','Wmn_Spinner_StandardT','Wmn_Spinner_StandardT_Cstm01','Wmn_Stringer_Coop','Wmn_Stringer_Normal','Wmn_Stringer_NormalSdodr','Wmn_Stringer_Normal_Cstm01','Wmn_Stringer_Short','Wmn_Stringer_Short_Cstm01'],
+                    directory: 'Weapons/'
+                },
+                {
+                    name: 'Head Gear Models',
+                    colorA: '08bd79',
+                    colorB: '231395',
+                    list: ['ACC003 Tentaclinger Earring','AMB000 Squid Hairclip','AMB001 Samurai Helmet','AMB002 Power Mask','AMB003 Squid Clip-Ons','AMB004 Squinja Mask Mk II','AMB005 Power Mask Mk I','AMB006 Pearlescent Crown S','AMB007 Marinated Headphones','AMB009 Steel Helm','AMB010 Fresh Fish Head','AMB012 Sushi Sous-Chef Band','AMB013 Chaos Helm','AMB016 Squinja Mask Mk I','AMB017 Pearlescent Crown L','AMB019 Onaga Mask','AMB020 Manta Mask','CAP000 Urchins Cap','CAP001 Lightweight Cap','CAP002 Takoroka Mesh','CAP003 Streetstyle Cap','CAP004 Squid-Stitch Cap','CAP005 Squidvader Cap','CAP006 Camo Mesh','CAP007 Five-Panel Cap','CAP008 Zekko Mesh','CAP009 Backward Cap','CAP011 Jet Cap','CAP012 Cycling Cap','CAP014 Cycle King Cap','CAP019 King Flip Mesh','CAP020 Hickory Work Cap','CAP021 Woolly Urchins Classic','CAP023 Jellyvader Cap','CAP028 Ink-Black Flap Cap','CAP031 Cap_n Cap','CAP032 Vintage Biker Cap','CAP033 Flounder Flap Cap','CAP034 Dustcloud Cap','CAP035 Seafoam Cap','CAP036 Wharfside Cap','CAP037 Clue-Detecting Cap','CAP038 Headlamp Hat','CAP039 Swim Cap','COP002 Green Slopsuit','COP003 Yellow Slopsuit','COP004 Pink Slopsuit','COP005 Blue Slopsuit','COP006 Black Slopsuit','COP007 White Slopsuit','COP008 Orange Gloopsuit','COP009 Black Gloopsuit','COP011 Brown Gloopsuit','COP012 Polka-Dot Slopsuit','COP013 Camo Slopsuit','COP014 Koi Slopsuit','COP015 Peach Gloopsuit','COP017 Berry Gloopsuit','COP100 Headlamp Helmet','COP101 Dust Blocker 2000','COP102 Welding Mask','COP104 Octoleet Goggles','COP111 Lo-Vis Visor','COP112 Five-Alarm Helmet','COP113 Astro Helm','COP114 360 All-Scopes','COP116 Deep Sinker Helm','COP117 Commander Cap','COP118 See-an-Enemy HUD','COP119 Retro Future Helmet','COP120 3D Glasses','COP121 El Rey Calamar','EYE000 Retro Specs','EYE002 Pilot Goggles','EYE003 Tinted Shades','EYE004 Black Arrowbands','EYE005 Snorkel Mask','EYE006 White Arrowbands','EYE007 Fake Contacts','EYE008 18K Aviators','EYE010 Octoglasses','EYE011 Half-Rim Glasses','EYE013 Zekko Cap','EYE015 Annaki Beret & Glasses','EYE016_F Swim Goggles F','EYE016_M Swim Goggles M','EYE018_F Toni Kensa Goggles F','EYE018_M Toni Kensa Goggles M','EYE021 Ink-Tinted Goggles','EYE022 Retro Framers','EYE023 Glassless Glasses','EYE024 Triple-Deck Specs','EYE025 Invisifloats','EYE026 Moto Shades','EYE027 Annaki Charms','EYE028 Glam Clam Specs','EYE029 Retro BluFocals','EYE030 Sea-Me-Nots','EYE031 Hipster Horn-Rims','FST000 White Headband','HAP016 Undead Head','HAP017 The Plankton Walker','HAP018 Swim Reaper','HAP019 Bleak Beak','HAP020 Dapperdasher Hat','HAP021 Coral Wreath','HAP023 Octopearl Crown','HAP024 Teal Pinhole Shades','HAP025 Green Pinhole Shades','HAP026 Pink Pinhole Shades','HAP027 Yellow Pinhole Shades','HAT000 Safari Hat','HAT001 Jungle Hat','HAT002 Camping Hat','HAT003 Blowfish Bell Hat','HAT004 Bamboo Hat','HAT006 Classic Straw Boater','HAT008 Bucket Hat','HAT010 Tulip Parasol','HAT011 Fugu Bell Hat','HAT012 Seashell Bamboo Hat','HAT013 Hothouse Hat','HAT014 Mountie Hat','HAT015 Classic Bowler','HAT016 Jean Dream Bucket','HAT017 Howdy Hat','HAT018 Urchin Understitch','HAT019 Beachcomber','HAT020 Z+F Flair Bowler','HAT021 Hat-Trick Bell Hat','HBD001 B-ball Headband','HBD002 Squash Headband','HBD003 Tennis Headband','HBD004 Jogging Headband','HBD007 FishFry Biscuit Bandana','HBD008 Black FishFry Bandana','HBD009 Squidband','HDP001 Designer Headphones','HDP003 Squidfin Hook Cans','HDP004 Squidlife Headphones','HDP007 Ocho OctoPhones','HDP008 Cephalo Pods','HDP009 Ocho OctoPhones Blancos','HDP010 Aux Boxes','HDP011 Dustcloud _Phones','HDP012 Seafoam _Phones','INV000 INVISIBLE','MET000 Bike Helmet','MET002 Stealth Goggles','MET004 Skate Helmet','MET005 Visor Skate Helmet','MET007 Hockey Helmet','MET008 Matte Bike Helmet','MET009 Octo Tackle Helmet Deco','MET011 Deca Tackle Visor Helmet','MET012 Winkle Stripe Helm','MET013 Party Hard Hat','MET015 Away-Team Catcher','MET016 Scrum Cap','MET017 Barrelfish Headgear','MET018 Barrelfish Home Helmet','MET019 ZedFry Helmet','MET020 Slipstream Helmet Pro','MET021 Slipstream Helmet','MSK000 Gas Mask','MSK001 Paintball Mask','MSK002_F Paisley Bandana F','MSK002_M Paisley Bandana M','MSK003_F Skull Bandana F','MSK003_M Skull Bandana M','MSK004 Painter_s Mask','MSK005 Annaki Mask','MSK007 Squid Facemask','MSK008 Firefin Facemask','MSK009 King Facemask','MSK010 Motocross Nose Guard','MSK011 Forge Mask','MSK015 Air Gills DX','MSK017 Meetcha Mask','MSK018 Stealth Squidbeak Shield','MSN000 Hero Headset Replica','MSN109 Teddy Band','MSN110 Fuzz-Octoling Goggles','MSN111 Fuzz-Octoling Seaweed Goggles','MSN301 Survival Ear','MSN302 Hero Brain Lv1','MSN303 Hero Brain Lv2','MSN304 Hero Brain Lv3','MSN305 Hero Brain ST','MSN306 Hero Mindset Replica','NCP000 Bobble Hat','NCP001 Short Beanie','NCP002 Striped Beanie','NCP004 Special-Forces Beret','NCP005 Squid Nordic','NCP011 Sneaky Beanie','SDODR201 Order Regulator Replica','SDODR202 Controller VM','SDODR203 Parallel Mask','SDODR204 Pearl Plushie','TRG000 Stay Crusty Cap','VIS000 Golf Visor','VIS002 Sun Visor'],
+                    directory: 'Head/'
+                },
+                {
+                    name: 'Cloth Models',
+                    colorA: 'f64479',
+                    colorB: '8e38fb',
+                    list: ['AMB000 School Uniform A','AMB001 Samurai Jacket','AMB002 Power Armor','AMB003 School Cardigan A','AMB004_F Squinja Suit F','AMB004_M Squinja Suit M','AMB005 Power Armor Mk I','AMB006 Pearlescent Hoodie','AMB007_F Marinated Top F','AMB007_M Marinated Top M','AMB008_F Enchanted Robe A F','AMB008_M Enchanted Robe A M','AMB009_F Steel Platemail F','AMB009_M Steel Platemail M','AMB010 Fresh Fish Gloves','AMB011 Schoolyard Scrap Jack','AMB012 Black-Belt Gi','AMB013 Chaos Commander Suit','AMB014 School Uniform B','AMB015 School Cardigan B','AMB017 Enchanted Robe B','AMB018_F Chomp Top F','AMB018_M Chomp Top M','AMB019_F Eelneck Tank F','AMB019_M Eelneck Tank M','AMB020 Big Slick','COP001 Orange Slopsuit','COP002 Green Slopsuit','COP003 Yellow Slopsuit','COP004 Pink Slopsuit','COP005 Blue Slopsuit','COP006 Black Slopsuit','COP007 White Slopsuit','COP008 Orange Gloopsuit','COP009 Black Gloopsuit','COP010 Yellow Gloopsuit','COP011 Brown Gloopsuit','COP012 Polka-Dot Slopsuit','COP013 Camo Slopsuit','COP014 Koi Slopsuit','COP015 Peach Gloopsuit','COP016 Lime Gloopsuit','COP017 Berry Gloopsuit','COP100 Squiddor Polo','COP101 Anchor Life Vest','COP102 Juice Parka','COP103 Garden Gear','COP104 Crustwear XXL','COP105 North-Country Parka','COP106_F Octoleet Armor F','COP106_M Octoleet Armor M','COP108 Dev Uniform','COP111 Commander Tunic','COP112 Astro Wear','COP113 Retro Future Suit','COP114 Brinestone Jacket','COP115 SplatJack 5000','COP116 Hacker Jacket','COP117 Cooler Jacket','FST001_F Basic Tee F','FST001_M Basic Tee M','FST001_V1 Basic Tee Adjusted','FST002_F Fresh Octo Tee F','FST002_M Fresh Octo Tee M','FST002_V1 Fresh Octo Tee Adjusted','HAP001_F Splatfest Tee F','HAP001_M Splatfest Tee M','HAP001_V1 Splatfest Tee Adjusted','JKT000 Olive Ski Jacket','JKT001 Takoroka Nylon Vintage','JKT002 Berry Ski Jacket','JKT003 Varsity Jacket','JKT004 School Jersey','JKT005 Green Cardigan','JKT006 Black Inky Rider','JKT007 White Inky Rider','JKT008 Retro Gamer Jersey','JKT009 Orange Cardigan','JKT010 Forge Inkling Parka','JKT011 Forge Octarian Jacket','JKT012 Blue Sailor Suit','JKT013 White Sailor Suit','JKT014 Squid Satin Jacket','JKT015 Zapfish Satin Jacket','JKT016 Krak-On 528','JKT017 Chilly Mountain Coat','JKT018 Takoroka Windcrusher','JKT019 Matcha Down Jacket','JKT020 FA-01 Jacket','JKT021 FA-01 Reversed','JKT022 Pullover Coat','JKT023 Kensa Coat','JKT024 Birded Corduroy Jacket','JKT025 Deep-Octo Satin Jacket','JKT026 Zekko Redleaf Coat','JKT027 Lemon Mountain Coat','JKT028 Zekko Jade Coat','JKT029 Light Bomber Jacket','JKT033 Navy Eminence Jacket','JKT034 Tumeric Zekko Coat','JKT035 Custom Painted F-3','JKT036 Dark Bomber Jacket','JKT038 White Leather F-3','JKT039 Chili-Pepper Ski Jacket','JKT040 Whale-Knit Sweater','JKT041 Rockin_ Leather Jacket','JKT042_F Kung-Fu Zip-Up F','JKT042_M Kung-Fu Zip-Up M','JKT043_F Panda Kung-Fu Zip-Up F','JKT043_M Panda Kung-Fu Zip-Up M','JKT045 Arctic Monster Parka','JKT046 Barazushi Anorak','JKT047 Patchwork Bomber','JKT048 Airflow & Hustle Jacket','JKT049 Ink-Black Paddle Jack','JKT050 Orca Bolero','JKT051 Cream Tundra Fleece','JKT052 Rugby Fleece','JKT053 Annaki Anchored Coat','JKT054 Dusty Field Jacket','JKT055 Light-Bright Paddle Jack','JKT056 Penguin Bolero','JKT057 Barazushi Tuff Duffel','JKT058 Barazushi Peacoat','JKT059 Indigo Boss Haori','JKT060 Lime Ski Jacket','JKT061 Takoroka Nineties Nylon','JKT062 Barazushi Liner Shell','JKT063 Tenured Turtleneck','JKT064 Annaki Tuff Duffel','MSN000 Hero Jacket Replica','MSN004 Armor Jacket Replica','MSN110 Fuzz-Octoling Armor','MSN200_F Octoling Armor F','MSN200_M Octoling Armor M','MSN301 Survival Suit','MSN302 Hero Suit Lv1','MSN303 Hero Suit Lv2','MSN304 Hero Suit Lv3','MSN305 Hero Suit ST','MSN306 Hero Suit Replica','MSN310 Legendary Cape','PLO000 Shrimp-Pink Polo','PLO001 Striped Rugby','PLO002 Tricolor Rugby','PLO003 Sage Polo','PLO004 Black Polo','PLO005_F Cycling Shirt F','PLO005_M Cycling Shirt M','PLO006_F Cycle King Jersey F','PLO006_M Cycle King Jersey M','PLO007 Slipstream United','PLO008 FC Albacore','PLO009 Rugby King 10','PLO010 Rugby King 08','PRK000 Camo Zip Hoodie','PRK000_V1 Camo Zip Hoodie Adjusted','PRK001 Green Zip Hoodie','PRK001_V1 Green Zip Hoodie Adjusted','PRK002 Zekko Hoodie','PRK002_V1 Zekko Hoodie Adjusted','PRK004 Shirt with Blue Hoodie','PRK005 Grape Hoodie','PRK005_V1 Grape Hoodie Adjusted','PRK006 Gray Hoodie','PRK006_V1 Gray Hoodie Adjusted','PRK007 Hothouse Hoodie','PRK007_V1 Hothouse Hoodie Adjusted','PRK008 Pink Hoodie','PRK009 Olive Zekko Parka','PRK009_V1 Olive Zekko Parka Adjusted','PRK010 Black Hoodie','PRK010_V1 Black Hoodie Adjusted','PRK012 Sudadera Roja','PRK013 Dustcloud Hoodie','PRK013_V1 Dustcloud Hoodie Adjusted','PRK014 Sudadera Celeste','PRK015 Seafoam Hoodie','PRK015_V1 Seafoam Hoodie Adjusted','SDODR200_F Order Suit Replica F','SDODR200_M Order Suit Replica M','SHT000 Lumberjack Shirt','SHT001 Rodeo Shirt','SHT002 Green-Check Shirt','SHT003 White Shirt','SHT004 Urchins Jersey','SHT005 Aloha Shirt','SHT006 Red-Check Shirt','SHT007 Baby-Jelly Shirt','SHT008 Baseball Jersey','SHT009 Gray Mixed Shirt','SHT010 Vintage Check Shirt','SHT011 Round-Collar Shirt','SHT012 Logo Aloha Shirt','SHT013 Striped Shirt','SHT014 Linen Shirt','SHT015 Shirt & Tie','SHT017 Hula Punk Shirt','SHT018 Octobowler Shirt','SHT019 Inkfall Shirt','SHT020 Crimson Parashooter','SHT021 Baby-Jelly Shirt & Tie','SHT022 Prune Parashooter','SHT023 Red Hula Punk with Tie','SHT024 Chili Octo Aloha','SHT025 Annaki Flannel Hoodie','SHT026 Ink-Wash Shirt','SHT027 Dots-on-Dots Shirt','SHT028 Toni K. Baseball Jersey','SHT030 Seahorse Shoreliner','SHT031 Button-Clown Shirt','SHT032 Trooper Top','SHT033 Business Animal','SHT034 Fancyfish Stitch','SHT036 Fashion Splash Shirt','SHT037 Hype Stripe Button Up','SHT038 Base White Button Up','SHT039 Rad Plaid Casual','SHT040 Urban Upcycle Top','SHT041 Barrelfish Baseball Uni','SWT000 Gray College Sweat','SWT000_V1 Gray College Sweat Adjusted','SWT001 Squidmark Sweat','SWT001_V1 Squidmark Sweat Adjusted','SWT002 Retro Sweat','SWT002_V1 Retro Sweat Adjusted','SWT003 Firefin Navy Sweat','SWT003_V1 Firefin Navy Sweat Adjusted','SWT004 Navy College Sweat','SWT004_V1 Navy College Sweat Adjusted','SWT005 Reel Sweat','SWT005_V1 Reel Sweat Adjusted','SWT006 Anchor Sweat','SWT006_V1 Anchor Sweat Adjusted','SWT007 Negative Longcuff Sweater','SWT008 Short Knit Layers','SWT009 Positive Longcuff Sweater','SWT010 Annaki Blue Cuff','SWT011 Annaki Yellow Cuff','SWT012 Annaki Red Cuff','SWT013 N-Pacer Sweat','SWT013_V1 N-Pacer Sweat Adjusted','SWT014 Octarian Retro','SWT014_V1 Octarian Retro Adjusted','SWT015 Takoroka Jersey','SWT016 Manatee Swag Sweat','SWT016_V1 Manatee Swag Sweat Adjusted','SWT017 Apex Sweater','SWT017_V1 Apex Sweater Adjusted','SWT018 Octo Jumper Away','SWT019 Octo Jumper Home','SWT020 Moby Knit','SWT020_V1 Moby Knit Adjusted','SWT021 Lemon Hoodless','SWT021_V1 Lemon Hoodless Adjusted','SWT022 Motley Hoodless','SWT022_V1 Motley Hoodless Adjusted','SWT023 Lime Hoodless','SWT023_V1 Lime Hoodless Adjusted','SWT024 Fuzzly Sweater','SWT024_V1 Fuzzly Sweater Adjusted','TEL000_F White Striped LS F','TEL000_M White Striped LS M','TEL001_F Black LS F','TEL001_M Black LS M','TEL002_F Purple Camo LS F','TEL002_M Purple Camo LS M','TEL003_F Navy Striped LS F','TEL003_M Navy Striped LS M','TEL004_F Zekko Baseball LS F','TEL004_M Zekko Baseball LS M','TEL005_F Varsity Baseball LS F','TEL005_M Varsity Baseball LS M','TEL006_F Black Baseball LS F','TEL006_M Black Baseball LS M','TEL007_F White Baseball LS F','TEL007_M White Baseball LS M','TEL008_F White LS F','TEL008_M White LS M','TEL009_F Green Striped LS F','TEL009_M Green Striped LS M','TEL010_F Squidmark LS F','TEL010_M Squidmark LS M','TEL011_F Zink LS F','TEL011_M Zink LS M','TEL012_F Striped Peaks LS F','TEL012_M Striped Peaks LS M','TEL013_F Pink Easy-Stripe Shirt F','TEL013_M Pink Easy-Stripe Shirt M','TEL014 Inkopolis Squaps Jersey','TEL015_F Annaki Drive Tee  F','TEL015_M Annaki Drive Tee  M','TEL016_F Lime Easy-Stripe Shirt F','TEL016_M Lime Easy-Stripe Shirt M','TEL017_F Annaki Evolution Tee F','TEL017_M Annaki Evolution Tee M','TEL018_F Zekko Long Carrot Tee F','TEL018_M Zekko Long Carrot Tee M','TEL019_F Zekko Long Radish Tee F','TEL019_M Zekko Long Radish Tee M','TEL020_F Black Cuttlegear LS F','TEL020_M Black Cuttlegear LS M','TEL021_F Takoroka Crazy Baseball LS F','TEL021_M Takoroka Crazy Baseball LS M','TEL022_F Red Cuttlegear LS F','TEL022_M Red Cuttlegear LS M','TEL023_F Khaki 16-Bit FishFry F','TEL023_M Khaki 16-Bit FishFry M','TEL024_F Blue 16-Bit FishFry F','TEL024_M Blue 16-Bit FishFry M','TEL026 Ink-Black Tangle Top','TEL027 Deepsea Tangle Top','TEL028_F Sharkfin Raglan F','TEL028_M Sharkfin Raglan M','TES000_F White Tee F','TES000_M White Tee M','TES000_V1 White Tee Adjusted','TES001_F Black Squideye F','TES001_M Black Squideye M','TES001_V1 Black Squideye Adjusted','TES003_F Sky-Blue Squideye F','TES003_M Sky-Blue Squideye M','TES003_V1 Sky-Blue Squideye Adjusted','TES004_F Rockenberg White F','TES004_M Rockenberg White M','TES004_V1 Rockenberg White Adjusted','TES005_F Rockenberg Black F','TES005_M Rockenberg Black M','TES005_V1 Rockenberg Black Adjusted','TES006_F Black Tee F','TES006_M Black Tee M','TES006_V1 Black Tee Adjusted','TES007_F Sunny-Day Tee F','TES007_M Sunny-Day Tee M','TES007_V1 Sunny-Day Tee Adjusted','TES008_F Rainy-Day Tee F','TES008_M Rainy-Day Tee M','TES008_V1 Rainy-Day Tee Adjusted','TES009 Reggae Tee','TES009_V1 Reggae Tee Adjusted','TES010_F Fugu Tee F','TES010_M Fugu Tee M','TES010_V1 Fugu Tee Adjusted','TES011_F Mint Tee F','TES011_M Mint Tee M','TES011_V1 Mint Tee Adjusted','TES012_F Grape Tee F','TES012_M Grape Tee M','TES012_V1 Grape Tee Adjusted','TES013_F Red Vector Tee F','TES013_M Red Vector Tee M','TES013_V1 Red Vector Tee Adjusted','TES014_F Gray Vector Tee F','TES014_M Gray Vector Tee M','TES014_V1 Gray Vector Tee Adjusted','TES015_F Blue Peaks Tee F','TES015_M Blue Peaks Tee M','TES015_V1 Blue Peaks Tee Adjusted','TES016_F Ivory Peaks Tee F','TES016_M Ivory Peaks Tee M','TES016_V1 Ivory Peaks Tee Adjusted','TES017_F Squid-Stitch Tee F','TES017_M Squid-Stitch Tee M','TES017_V1 Squid-Stitch Tee Adjusted','TES018_F Pirate-Stripe Tee F','TES018_M Pirate-Stripe Tee M','TES018_V1 Pirate-Stripe Tee Adjusted','TES019_F Sailor-Stripe Tee F','TES019_M Sailor-Stripe Tee M','TES019_V1 Sailor-Stripe Tee Adjusted','TES020_F White 8-Bit FishFry F','TES020_M White 8-Bit FishFry M','TES020_V1 White 8-Bit FishFry Adjusted','TES021_F Black 8-Bit FishFry F','TES021_M Black 8-Bit FishFry M','TES021_V1 Black 8-Bit FishFry Adjusted','TES022_F White Anchor Tee F','TES022_M White Anchor Tee M','TES022_V1 White Anchor Tee Adjusted','TES023_F Black Anchor Tee F','TES023_M Black Anchor Tee M','TES023_V1 Black Anchor Tee Adjusted','TES026_F Carnivore Tee F','TES026_M Carnivore Tee M','TES026_V1 Carnivore Tee Adjusted','TES027_F Pearl Tee F','TES027_M Pearl Tee M','TES027_V1 Pearl Tee Adjusted','TES028_F Octo Tee F','TES028_M Octo Tee M','TES028_V1 Octo Tee Adjusted','TES029_F Herbivore Tee F','TES029_M Herbivore Tee M','TES029_V1 Herbivore Tee Adjusted','TES030_F Black V-Neck Tee F','TES030_M Black V-Neck Tee M','TES030_V1 Black V-Neck Tee Adjusted','TES031 White Deca Logo Tee','TES031_V1 White Deca Logo Tee Adjusted','TES032 Half-Sleeve Sweater','TES033 King Jersey','TES034_F Gray 8-Bit FishFry F','TES034_M Gray 8-Bit FishFry M','TES034_V1 Gray 8-Bit FishFry Adjusted','TES035_F White V-Neck Tee F','TES035_M White V-Neck Tee M','TES035_V1 White V-Neck Tee Adjusted','TES036_F White Urchin Rock Tee F','TES036_M White Urchin Rock Tee M','TES036_V1 White Urchin Rock Tee Adjusted','TES037_F Black Urchin Rock Tee F','TES037_M Black Urchin Rock Tee M','TES037_V1 Black Urchin Rock Tee Adjusted','TES038_F Wet Floor Band Tee F','TES038_M Wet Floor Band Tee M','TES038_V1 Wet Floor Band Tee Adjusted','TES039_F Squid Squad Band Tee F','TES039_M Squid Squad Band Tee M','TES039_V1 Squid Squad Band Tee Adjusted','TES040 Navy Deca Logo Tee','TES040_V1 Navy Deca Logo Tee Adjusted','TES041 Mister Shrug Tee','TES042_F Chirpy Chips Band Tee F','TES042_M Chirpy Chips Band Tee M','TES042_V1 Chirpy Chips Band Tee Adjusted','TES043_F Hightide Era Band Tee F','TES043_M Hightide Era Band Tee M','TES043_V1 Hightide Era Band Tee Adjusted','TES046_F ω-3 Tee F','TES046_M ω-3 Tee M','TES046_V1 ω-3 Tee Adjusted','TES047_F Annaki Polpo-Pic Tank F','TES047_M Annaki Polpo-Pic Tank M','TES048_F Firewave Tee F','TES048_M Firewave Tee M','TES048_V1 Firewave Tee Adjusted','TES049 Takoroka Galactic Tie Dye','TES049_V1 Takoroka Galactic Tie Dye Adjusted','TES050 Takoroka Rainbow Tie Dye','TES050_V1 Takoroka Rainbow Tie Dye Adjusted','TES051 Missus Shrug Tee','TES052_F League Tee F','TES052_M League Tee M','TES052_V1 League Tee Adjusted','TES053_F Friend Tee F','TES053_M Friend Tee M','TES053_V1 Friend Tee Adjusted','TES054_F Tentatek Slogan Tee F','TES054_M Tentatek Slogan Tee M','TES054_V1 Tentatek Slogan Tee Adjusted','TES055_F Icewave Tee F','TES055_M Icewave Tee M','TES055_V1 Icewave Tee Adjusted','TES056 Octoking HK Jersey','TES057 Dakro Nana Tee','TES057_V1 Dakro Nana Tee Adjusted','TES058 Dakro Golden Tee','TES058_V1 Dakro Golden Tee Adjusted','TES059_F Black Velour Octoking Tee  F','TES059_M Black Velour Octoking Tee  M','TES059_V1 Black Velour Octoking Tee  Adjusted','TES060_F Green Velour Octoking Tee F','TES060_M Green Velour Octoking Tee M','TES060_V1 Green Velour Octoking Tee Adjusted','TES063 Tri-Shred Tee','TES064 Tentatek Tandem','TES064_V1 Tentatek Tandem Adjusted','TES066_F Annaki Choker Tee F','TES066_M Annaki Choker Tee M','TES067_F Annaki Bracelet Tee F','TES067_M Annaki Bracelet Tee M','TES068_F White Retro Tee F','TES068_M White Retro Tee M','TES068_V1 White Retro Tee Adjusted','TES069_F Blue Retro Tee F','TES069_M Blue Retro Tee M','TES069_V1 Blue Retro Tee Adjusted','TES070_F Tan Retro Tee F','TES070_M Tan Retro Tee M','TES070_V1 Tan Retro Tee Adjusted','TES071_F Barazushi Wrap F','TES071_M Barazushi Wrap M','TES072_F Barazushi Rice Tee F','TES072_M Barazushi Rice Tee M','TES072_V1 Barazushi Rice Tee Adjusted','TES073_F Barazushi Black Tee F','TES073_M Barazushi Black Tee M','TES073_V1 Barazushi Black Tee Adjusted','TES074_F Barazushi Sakura Tee F','TES074_M Barazushi Sakura Tee M','TES074_V1 Barazushi Sakura Tee Adjusted','TES075_F Octosquid Tandem Tee F','TES075_M Octosquid Tandem Tee M','TES075_V1 Octosquid Tandem Tee Adjusted','TES076_F Tri-Squid Tee F','TES076_M Tri-Squid Tee M','TES076_V1 Tri-Squid Tee Adjusted','TES077_F Tri-Octo Tee F','TES077_M Tri-Octo Tee M','TES077_V1 Tri-Octo Tee Adjusted','TES078_F Takoroka m Crab F','TES078_M Takoroka m Crab M','TES078_V1 Takoroka m Crab Adjusted','TES079_F Takoroka m Alien F','TES079_M Takoroka m Alien M','TES079_V1 Takoroka m Alien Adjusted','TES081 Takoroka Tandem','TES081_V1 Takoroka Tandem Adjusted','TES082 Pineapple Ringer','TES083 Apple Ringer','TES084_F Vaporwave Tee F','TES084_M Vaporwave Tee M','TES084_V1 Vaporwave Tee Adjusted','TES085_F Duskwave Tee F','TES085_M Duskwave Tee M','TES085_V1 Duskwave Tee Adjusted','TES086 Lyco-P Streetstyle Tee','TES087 Slate Streetstyle Tee','TES088_F Eelzebub Tee F','TES088_M Eelzebub Tee M','TES088_V1 Eelzebub Tee Adjusted','TES090 Lime BlobMob Tee','TES090_V1 Lime BlobMob Tee Adjusted','TES091 Berry BlobMob Tee','TES091_V1 Berry BlobMob Tee Adjusted','TES092_F White Z+F Tee F','TES092_M White Z+F Tee M','TES092_V1 White Z+F Tee Adjusted','TES093_F Navy Z+F Tee F','TES093_M Navy Z+F Tee M','TES093_V1 Navy Z+F Tee Adjusted','TES094_F Plum Barazushi Wrap F','TES094_M Plum Barazushi Wrap M','TES095 King Mesh Tee','TLY000_F White Layered LS F','TLY000_M White Layered LS M','TLY000_V1 White Layered LS Adjusted','TLY001_F Yellow Layered LS F','TLY001_M Yellow Layered LS M','TLY001_V1 Yellow Layered LS Adjusted','TLY002_F Camo Layered LS F','TLY002_M Camo Layered LS M','TLY002_V1 Camo Layered LS Adjusted','TLY003_F Black Layered LS F','TLY003_M Black Layered LS M','TLY003_V1 Black Layered LS Adjusted','TLY004_F Zink Layered LS F','TLY004_M Zink Layered LS M','TLY004_V1 Zink Layered LS Adjusted','TLY005_F Layered Anchor LS F','TLY005_M Layered Anchor LS M','TLY005_V1 Layered Anchor LS Adjusted','TLY006_F Choco Layered LS F','TLY006_M Choco Layered LS M','TLY006_V1 Choco Layered LS Adjusted','TLY007_F Part-Time Pirate F','TLY007_M Part-Time Pirate M','TLY007_V1 Part-Time Pirate Adjusted','TLY008_F Layered Vector LS F','TLY008_M Layered Vector LS M','TLY008_V1 Layered Vector LS Adjusted','TLY009_F Green Tee F','TLY009_M Green Tee M','TLY009_V1 Green Tee Adjusted','TLY010_F Red Tentatek Tee F','TLY010_M Red Tentatek Tee M','TLY010_V1 Red Tentatek Tee Adjusted','TLY011_F Blue Tentatek Tee F','TLY011_M Blue Tentatek Tee M','TLY011_V1 Blue Tentatek Tee Adjusted','TLY013_F Squid Yellow Layered LS F','TLY013_M Squid Yellow Layered LS M','TLY013_V1 Squid Yellow Layered LS Adjusted','TNK000 B-ball Jersey (Home)','TNK001_F B-ball Jersey (Away) F','TNK001_M B-ball Jersey (Away) M','TNK003_F White King Tank F','TNK003_M White King Tank M','TNK004_F Slash King Tank F','TNK004_M Slash King Tank M','TNK005_F Navy King Tank F','TNK005_M Navy King Tank M','TNK006_F Lob-Stars Jersey F','TNK006_M Lob-Stars Jersey M','TNK007 Umibozu Road Jersey','TNK008 Umibozu Home Jersey','TRG000 Crispy Crustume','TRG001 Frivolous Paw Suit','VST000 Mountain Vest','VST001 Forest Vest','VST002 Dark Urban Vest','VST003 Yellow Urban Vest','VST004 Squid-Pattern Waistcoat','VST005 Squidstar Waistcoat','VST007 Fishing Vest','VST008 Front-Zip Vest','VST009 Silver Tentatek Vest','VST010 Khaki Ranger Vest','VST011 Red Battlecrab Shell','VST012 Lime Battlecrab Shell','VST013 Distressed Vest','VST014 Black Ranger Vest','VST015 Dark Distressed Vest','VST016 Tentatek Slipstream Vest','VST017 Teal Body Warmer'],
+                    directory: 'Cloth/'
+                },
+                {
+                    name: 'Shooes Models',
+                    colorA: '4913aa',
+                    colorB: 'ac8ef6',
+                    list: ['AMB000 School Shoes + Hi Socks','AMB001 Samurai Shoes','AMB002 Power Boots','AMB003 Baggy-Sock Fringe Loafs','AMB004 Squinja Boots','AMB005 Power Boots Mk I','AMB006 Pearlescent Kicks','AMB007 Marinated Slip-Ons','AMB008 Enchanted Boots','AMB009 Steel Greaves','AMB010 Fresh Fish Feet','AMB011 Knotty Bois','AMB012 Kick Dampeners','AMB013 Chaos Kicks','AMB014 Base School Shoes','AMB015 Base Fringed Loafers','AMB018 Faux Sharkskin Platfins','AMB019 Eel Heel Socks','AMB020 Big Muds','BOT000 Moto Boots','BOT001 Tan Work Boots','BOT002 Red Work Boots','BOT003 Blue Moto Boots','BOT004 Green Rain Boots','BOT005 Acerola Rain Boots','BOT006 Punk Whites','BOT007 Punk Cherries','BOT008 Punk Yellows','BOT009 Bubble Rain Boots','BOT010 Snowy Down Boots','BOT011 Icy Down Boots','BOT012 Hunting Boots','BOT013 Punk Nights','BOT014 Deepsea Leather Boots','BOT016 Annaki Arachno Boots','BOT017 New-Leaf Leather Boots','BOT018 Tea-Green Hunting Boots','BOT019 Blu-Shift Moto Boots','BOT020 Skipjack Work Boots','BOT021 Arctic Duck Boots','BOT022 Field Duck Boots','BOT023 Red Hammertreads','BOT024 Dappled Hammertreads','BOT025 Punk Pinks','BOT026 Fuzzy Boots','BOT027 Transom Note Boots','BOT028 Red-Shift Moto Boots','BOT029 Spiked Duck Boots','BOT030 Buckle-Down Boots','CFS000 Blueberry Casuals','CFS001 Plum Casuals','COP101 Angry Rain Boots','COP102 Nonslip Senseis','COP103 Octoleet Boots','COP105_F Flipper Floppers F','COP105_M Flipper Floppers M','COP107 Trevally Derby Rollers','COP108 Brinestone Boots','COP109 Knockout Boots','FST000 Cream Basics','HAP008 Shivery Squidkid III','HAP009 Fried Squidkid III','HAP010 Big Squidkid III','HAP011 Chained DC Toejamz','HAP012 Jeweled DC Toejamz','HAP013 Swirled DC Toejamz','HAP014 Trifecta Duck Boots','HAP015 Trifecta Hi-Tops','HAP016 Trifecta Sandals','HAP016_V1 Trifecta Sandals Adjusted','LTS000 White Kicks','LTS001 Cherry Kicks','LTS002 Turquoise Kicks','LTS003 Squink Wingtips','LTS004_F Roasted Brogues F','LTS004_M Roasted Brogues M','LTS004_V1 Roasted Brogues Adjusted','LTS005 Kid Clams','LTS006 Smoky Wingtips','LTS007 Navy Red-Soled Wingtips','LTS008 Gray Yellow-Soled Wingtips','LTS009 Inky Kid Clams','LTS010 Annaki Habaneros','LTS011 Annaki Tigers','LTS013 Desert Chukkas','LTS014 Dark-Roast Boaties','LTS015 Tricolor Boaties','MSN000 Hero Runner Replicas','MSN004 Armor Boot Replicas','MSN110 Fuzz-Octoling Boots','MSN200_F Octoling Boots F','MSN200_M Octoling Boots M','MSN301 Survival Foot','MSN302 Hero Boots Lv1','MSN303 Hero Boots Lv2','MSN304 Hero Boots Lv3','MSN305 Hero Boots ST','MSN306 Hero Boot Replicas','MSN310 Legendary Sandals','SDL000 Oyster Clogs','SDL000_V1 Oyster Clogs Adjusted','SDL001 Choco Clogs','SDL001_V1 Choco Clogs Adjusted','SDL003 Neon Delta Straps','SDL004 Black Flip-Flops','SDL005 Snow Delta Straps','SDL006 Luminous Delta Straps','SDL006_V1 Luminous Delta Straps Adjusted','SDL007 Red FishFry Sandals','SDL007_V1 Red FishFry Sandals Adjusted','SDL008 Yellow FishFry Sandals','SDL008_V1 Yellow FishFry Sandals Adjusted','SDL009 Musselforge Flip-Flops','SDL010 Cuttlefish Sandies','SDL011 Arrow Toesies Blu','SDL012 BlobMob Flip-Flops','SDL013 Orange Dadfoot Sandals','SDL013_V1 Orange Dadfoot Sandals Adjusted','SDL014 Arrow Toesies Purp','SDL015 Annaki Strappy Sandals','SDL016 Squid Bone Unslips','SDL017 Pink Dadfoot Sandals','SDL017_V1 Pink Dadfoot Sandals Adjusted','SDL018 Cyan Dadfoot Sandals','SDL018_V1 Cyan Dadfoot Sandals Adjusted','SDL019 Navy Toejamz','SDL020 Red Toejamz','SDL021 Yellow Toejamz','SDL022 Green Toejamz','SDODR200 Order Boot Replicas','SHI000 Red Hi-Horses','SHI001 Zombie Hi-Horses','SHI002 Cream Hi-Tops','SHI003 Purple Hi-Horses','SHI004 Hunter Hi-Tops','SHI005 Red Hi-Tops','SHI006 Gold Hi-Horses','SHI008 Shark Moccasins','SHI009 Mawcasins','SHI010 Chocolate Dakroniks','SHI011 Cyan Dakroniks','SHI012 Black Dakroniks','SHI013 Piranha Moccasins','SHI014 White Norimaki 750s','SHI015 Black Norimaki 750s','SHI016 Sunset Orca Hi-Tops','SHI017 Red & Black Squidkid IV','SHI018 Blue & Black Squidkid IV','SHI019 Gray Sea-Slug Hi-Tops','SHI020 Orca Hi-Tops','SHI022 Navy Enperrials','SHI023 Amber Sea Slug Hi-Tops','SHI024 Yellow Iromaki 750s','SHI025 Red & White Squidkid V','SHI026 Honey & Orange Squidkid V','SHI027 Sun & Shade Squidkid IV','SHI028 Orca Woven Hi-Tops','SHI029 Green Iromaki 750s','SHI030 Purple Iromaki 750s','SHI031 Red Iromaki 750s','SHI032 Blue Iromaki 750s','SHI033 Orange Iromaki 750s','SHI034 Red Power Stripes','SHI035 Blue Power Stripes','SHI036 Toni Kensa Black Hi-Tops','SHI037 Sesame Salt 270s','SHI038 Black & Blue Squidkid V','SHI039 Orca Passion Hi-Tops','SHI040 Truffle Canvas Hi-Tops','SHI042 Force ReBoots','SHI043 Tenya OctoReds','SHI044 Tenya OctoPurps','SHI045 Pearl 01STERs','SHI046 Zebrafish Hi-Tops','SHI047 Dustcloud Hi-Tops','SHI048 Seafoam Hi-Tops','SHI049 White Lo-Vert Hi-Tops','SHI050 Blue & Black Squidkid III','SHI051 Red & White Squidkid III','SHI052 Onyx 01STERs','SHI053 Crab-Trap Squidkid III','SHT000 Pink Trainers','SHT001 Orange Arrows','SHT002 Neon Sea Slugs','SHT003 White Arrows','SHT004 Cyan Trainers','SHT005 Blue Sea Slugs','SHT006 Red Sea Slugs','SHT007 Purple Sea Slugs','SHT008 Crazy Arrows','SHT009 Black Trainers','SHT010 Violet Trainers','SHT011 Canary Trainers','SHT012 Yellow-Mesh Sneakers','SHT013 Arrow Pull-Ons','SHT014 Orange-Mesh Sneakers','SHT015 N-Pacer CaO','SHT016 N-Pacer Ag','SHT017 N-Pacer Au','SHT018 Sea Slug Volt 95s','SHT019 Athletic Arrows','SHT020 U Jellys','SHT021 Hyper Guppies','SHT022 Turbo Tabi Red','SHT023 E-JECT 30XX','SHT024 Slamgerine Slip-Ons','SHT025 Mako Bucket Hi-Tops','SHT026 Blue Shrimpsiders','SHT027 E-JECT 30VV','SHT028 OB Gaiter Waders','SHT030 Noir Guppies','SLO000 Blue Lo-Tops','SLO000_V1 Blue Lo-Tops Adjusted','SLO001 Banana Basics','SLO002 LE Lo-Tops','SLO002_V1 LE Lo-Tops Adjusted','SLO003 White Seahorses','SLO004 Orange Lo-Tops','SLO004_V1 Orange Lo-Tops Adjusted','SLO005 Black Seahorses','SLO006 Clownfish Basics','SLO007 Yellow Seahorses','SLO008 White 3-Straps','SLO009 Red 3-Straps','SLO010 Soccer Shoes','SLO011 LE Soccer Shoes','SLO011_V1 LE Soccer Shoes Adjusted','SLO012 Sunny Climbing Shoes','SLO013 Birch Climbing Shoes','SLO014 Green Lace-Ups','SLO014_V1 Green Lace-Ups Adjusted','SLO015 White Laceless Dakroniks','SLO016 Blue Laceless Dakroniks','SLO017 Suede Gray Lace-Ups','SLO018 Suede Nation Lace-Ups','SLO019 Suede Marine Lace-Ups','SLO020 Toni Kensa Soccer Shoes','SLO020_V1 Toni Kensa Soccer Shoes Adjusted','SLO021 Wasabi Tabi','SLO022 Suede Basics','SLO023 Ink-Black Clam 600s','SLO024 Suede Bosses','SLO025 White Clam 600s','SLO026 Stamina Cycling Shoes','SLO026_V1 Stamina Cycling Shoes Adjusted','SLO027 Energy Cycling Shoes','SLO027_V1 Energy Cycling Shoes Adjusted','SLP000 Blue Slip-Ons','SLP001 Red Slip-Ons','SLP002 Squid-Stitch Slip-Ons','SLP003 Polka-Dot Slip-Ons','SLP004 ZedFry Slip-Ons','TRG000 Fry Tops','TRG001 Burden of Floof','TRS000 Trail Boots','TRS001 Custom Trail Boots','TRS002 Pro Trail Boots'],
+                    directory: 'Shoes/'
+                },
+            ]
+            let currentSection = 0
+            document.getElementsByClassName('wall-button')[0].addEventListener('click', () =>
+            {
+                currentSection--;
+                updateSection()
+            })
+            document.getElementsByClassName('wall-button')[1].addEventListener('click', () =>
+            {
+                currentSection++;
+                updateSection()
+            })
+
+            function updateSection()
+            {
+                if(currentSection < 0){currentSection=0; return}
+                if(currentSection > currentSection.length-1){currentSection=currentSection.length-1; return}
+
+                document.querySelector(':root').style.setProperty('--m-color-a', '#'+sectionColor[currentSection].colorA)
+                document.querySelector(':root').style.setProperty('--m-color-b', '#'+sectionColor[currentSection].colorB)
+                document.querySelector(':root').style.setProperty('--m-color-a-alpha', '#'+sectionColor[currentSection].colorA+'50')
+                document.querySelector(':root').style.setProperty('--m-color-b-alpha', '#'+sectionColor[currentSection].colorB+'50')
+
+                document.getElementById('resource-name').innerText = sectionColor[currentSection].name
+
+                window.directory = sectionColor[currentSection].directory
+                window.list = sectionColor[currentSection].list      
+                
+                window.updateAllModels()
+            }
+
+            window.addEventListener('load', () => updateSection())
+        </script>
+    </div>
+
+    <script type="module" src="./resources/Previewer.js"></script>
+    <script src="./Zip.js"></script>
+    <script type="module">
+        window.list = ['Fig_AcousticGuitar00','Fig_AcousticGuitar00_ShareTex_01','Fig_AcousticGuitar00_ShareTex_02','Fig_AcousticGuitar00_ShareTex_03','Fig_AltanaDrumA','Fig_AltanaDrumB','Fig_AltanaRecordPlayer','Fig_AmplifierL','Fig_AmplifierM','Fig_AmplifierS','Fig_Arcadegame','Fig_AttacheCase00','Fig_Backpack00','Fig_Backpack00_ShareTex_01','Fig_Backpack00_ShareTex_02','Fig_Backpack00_ShareTex_03','Fig_Backpack00_ShareTex_04','Fig_Backpack00_ShareTex_05','Fig_BankaraMikoshi00','Fig_BankaraMikoshi00_Cstm01','Fig_BankaraMikoshi00_Cstm02','Fig_BasketBall00','Fig_BasketBall00_ShareTex_01','Fig_BasketBall00_ShareTex_02','Fig_BasketBall00_ShareTex_03','Fig_BasketBall00_ShareTex_04','Fig_BasketBall00_ShareTex_05','Fig_BatchLetters','Fig_BatchLetters_ShareTex_01','Fig_BatchLetters_ShareTex_02','Fig_BatchLetters_ShareTex_03','Fig_BigLantern','Fig_BigLanternSakura','Fig_BigLanternSun','Fig_BiopsyBean','Fig_BiopsyEye','Fig_BoilingTube00','Fig_BoilingTube00_Cstm01','Fig_BoilingTube00_Cstm02','Fig_BoilingTube00_Cstm03','Fig_BoilingTube00_Cstm04','Fig_BoilingTube00_Cstm05','Fig_BoilingTube00_Cstm06','Fig_Book_00','Fig_Book_01','Fig_Box00L','Fig_Box00LHard','Fig_Box00S','Fig_Box01L','Fig_BrainmanStrap','Fig_Broom00','Fig_Broom00_ShareTex_01','Fig_Bucket00','Fig_Bucket01','Fig_Bunker01','Fig_Bunker02','Fig_Can00','Fig_Can01','Fig_Can02','Fig_CandyCan00','Fig_CarBus00','Fig_CarMegapolis','Fig_CarTruck00','Fig_CarTruck00_Cstm01','Fig_CerealBox00','Fig_CheeseBox','Fig_Clam','Fig_ClamGreat','Fig_CoffeeCupPaper00','Fig_CoffeeSiphon','Fig_ColorCone','Fig_Comic00_00','Fig_Comic01_00','Fig_Comic02_00','Fig_ConcreteBlockSq','Fig_CoolerBox','Fig_CoopDiver','Fig_CoopDozer','Fig_CoopHelicopter00','Fig_CoopIkuraDrop','Fig_CoopIkuraGolden01','Fig_CoopIkuraGolden02','Fig_CoopIkuraGoldenG','Fig_CoopRelayIkuraBox','Fig_CoopSakepuncherBaby','Fig_CoopSakepuncherMother','Fig_CoopSalmon','Fig_CoopSalmonArtillery','Fig_CoopSalmonBaby','Fig_CoopSalmonBagman','Fig_CoopSalmonBand00','Fig_CoopSalmonBig','Fig_CoopSalmonBigKing','Fig_CoopSalmonBomb','Fig_CoopSalmonCup','Fig_CoopSalmonDolphin','Fig_CoopSalmonGeyser','Fig_CoopSalmonGuardian','Fig_CoopSalmonJawKing00','Fig_CoopSalmonRocket','Fig_CoopSalmonSaucer','Fig_CoopSalmonSnake','Fig_CoopSalmonSnakeKing','Fig_CoopSalmonSwing_Pillar','Fig_CoopSalmonTower','Fig_CrabDoll','Fig_DancingFlower','Fig_Daypack00','Fig_Daypack00_ShareTex_01','Fig_Daypack00_ShareTex_02','Fig_Daypack00_ShareTex_03','Fig_Daypack00_ShareTex_04','Fig_DeliveryBox00','Fig_DeliveryBox01','Fig_Dogu','Fig_DotCusion00','Fig_DotCusion01','Fig_DrawstringBag00','Fig_DrawstringBag00_ShareTex_01','Fig_DrawstringBag00_ShareTex_02','Fig_DrawstringBag00_ShareTex_03','Fig_DrawstringBag00_ShareTex_04','Fig_DrawstringBagShrimp00','Fig_DrinkCase','Fig_DustBox02','Fig_ElectricGuitar00','Fig_ElectricGuitar00_ShareTex_01','Fig_ElectricGuitar00_ShareTex_02','Fig_ElectricGuitar00_ShareTex_03','Fig_ElectricGuitar00_ShareTex_04','Fig_ElectricGuitar00_ShareTex_05','Fig_ElectricPot00','Fig_ElectricalCord','Fig_FireExtinguisher','Fig_FluffyCushion00','Fig_GameCube','Fig_GameandWatch','Fig_Gameboy','Fig_GardenEelDoll00','Fig_GardenEelDoll00_ShareTex_01','Fig_GardenEelDoll00_ShareTex_02','Fig_GardenEelDoll00_ShareTex_03','Fig_GateCrane','Fig_GateSanshinChicken','Fig_GateSanshinPig','Fig_GateSanshinSnake','Fig_GateTurtle','Fig_GeneralBoxL','Fig_GeneralBoxNoPaintL','Fig_GeneralBoxNoPaintS','Fig_GeneralBoxS','Fig_Generator','Fig_GoalShachi','Fig_HandlelessTeaCup00','Fig_HireoSofvi00','Fig_HireoSofvi00_ShareTex_01','Fig_HireoSofvi00_ShareTex_02','Fig_IceBox','Fig_Ikaman','Fig_IkamanAnother00','Fig_IkamanAnother01','Fig_IkattaStone','Fig_IkuraBottle','Fig_InstantNoodle00','Fig_InstantNoodle00_Cstm01','Fig_InstantNoodle00_Cstm02','Fig_InstantNoodle00_Cstm03','Fig_InstantNoodle00_Cstm04','Fig_IronBasket00','Fig_JennyHaniver','Fig_JuiceBox00','Fig_JuiceBox00_ShareTex_01','Fig_JuiceBox00_ShareTex_02','Fig_JuiceBox00_ShareTex_03','Fig_JuiceBox00_ShareTex_04','Fig_JuiceBox00_ShareTex_05','Fig_LacrosseStick00','Fig_LacrosseStick00_Cstm01','Fig_LacrosseStick00_Cstm02','Fig_LacrosseStick00_Cstm03','Fig_LacrosseStick00_Cstm04','Fig_LacrosseStick00_Cstm05','Fig_LaundryDetergent00','Fig_LaundryDetergent01','Fig_LaundryLiquidDetergent00','Fig_LaundryLiquidDetergent00_ShareTex_01','Fig_LaundryLiquidDetergent00_ShareTex_02','Fig_LunchBox00','Fig_LunchBox00_Cstm01','Fig_LunchBox00_Cstm02','Fig_LunchBox00_Cstm03','Fig_LunchBox00_Cstm04','Fig_Magazine00','Fig_Measurement','Fig_MegapolisHydrant','Fig_MegapolisTrashBin','Fig_MegapolisWoodPallet','Fig_Miche','Fig_MiniGameReward01','Fig_MiniGameReward02','Fig_MiniGameReward03','Fig_MirrorAunSculpture00','Fig_MirrorAunSculpture00_Cstm01','Fig_MirrorLantern00','Fig_MirrorMudskipperSculpture00','Fig_MirrorMudskipperSculpture00_Cstm01','Fig_MirrorOfferingBox00','Fig_Moai','Fig_Mop00','Fig_Mop00_ShareTex_01','Fig_MrShrug','Fig_MsnArmor','Fig_MsnBox00','Fig_MsnBoxTargetL00','Fig_MsnBoxTargetL00_ShareTex_01','Fig_MsnGrindRailRing','Fig_MsnMovePainter','Fig_MsnSnakeBlockBase','Fig_MsnSponge','Fig_MsnSwitchShock','Fig_MsnWeaponParts','Fig_MugCup00','Fig_MzShrug','Fig_NES','Fig_NamacoPhone','Fig_NamazuDummy','Fig_NewsPaper','Fig_Nintendo64','Fig_OrcaFossil','Fig_PaintBrush00','Fig_PaintBrush00_Cstm01','Fig_PaintBrush00_Cstm02','Fig_PaintBrush00_Cstm03','Fig_PaintBrush00_Cstm04','Fig_ParabolicAntenna','Fig_PettanDoll','Fig_PhotoStand','Fig_PipeChair00','Fig_PlantCoral00','Fig_PlantFlowerVase00','Fig_Plaster00','Fig_Plaster01','Fig_PlasticBottle00','Fig_PlasticBottle00_Cstm01','Fig_PlasticBottle00_Cstm02','Fig_PlasticBottle00_Cstm03','Fig_PlasticBottle00_Cstm04','Fig_PlasticBottle00_Cstm05','Fig_PlasticBottle00_Cstm06','Fig_PlasticBottle00_Cstm07','Fig_PotteryFigurine00','Fig_Printer','Fig_PropaneGas','Fig_RingBinder00','Fig_RingBinder00_ShareTex_01','Fig_RingBinder00_ShareTex_02','Fig_RingBinder00_ShareTex_03','Fig_RingBinder00_ShareTex_04','Fig_RingBinder00_ShareTex_05','Fig_SNES','Fig_SakeBalloon','Fig_SakeFloatingLantern00','Fig_SakeFloatingLantern00_ShareTex_01','Fig_SakeFloatingLantern00_ShareTex_02','Fig_SakeNeonA','Fig_SakeNeonB','Fig_SakeNeonC','Fig_SakeNeonD','Fig_Sakebeko','Fig_Sampler00','Fig_Sazae','Fig_SdodrAnglerfishToy','Fig_SdodrBook','Fig_SdodrMobile','Fig_SdodrPancake','Fig_SdodrPuzzle','Fig_SdodrRolltoy','Fig_SdodrToypiano','Fig_SdodrZako','Fig_SdodrZakoBig','Fig_SdodrZakoBombBlow','Fig_SdodrZakoChargerTower','Fig_SdodrZakoEscape','Fig_SdodrZakoHopper','Fig_SdodrZakoShell','Fig_SdodrZakoSmall','Fig_SdodrZakoSprinkler','Fig_SdodrZakoTree','Fig_SdodrZakoTreeMissile','Fig_ServerRoom','Fig_Shachihoko','Fig_SharkTooth','Fig_Shelter','Fig_Shovel','Fig_ShrimpBess00','Fig_SighterTarget','Fig_SighterTargetCoop00','Fig_SighterTargetLarge','Fig_SkateBoard00','Fig_SkateBoard01','Fig_Snack00','Fig_Snack01','Fig_Snack02','Fig_Snack07','Fig_Snack07_Cstm01','Fig_Snack07_Cstm02','Fig_SnowGlobe00','Fig_Snowmobile','Fig_Spawner','Fig_SquidCushion00','Fig_SquidCushionWhite','Fig_SquidDoll00','Fig_SquidDollLong00','Fig_SquidDollLong01','Fig_SquidDollLong01_ShareTex_01','Fig_Stepladder00','Fig_StrapInkFish','Fig_StrapOctopus','Fig_StudioCushion00','Fig_Submarine','Fig_SurimiNeon00','Fig_SurimiTVscreen','Fig_TakeoutBox00','Fig_TakeoutBox00_ShareTex_01','Fig_TakeoutBox00_ShareTex_02','Fig_TakeoutBox00_ShareTex_03','Fig_Thickbook00','Fig_Thickbook00_Cstm01','Fig_Thickbook00_Cstm02','Fig_Thickbook00_Cstm03','Fig_Thickbook00_Cstm04','Fig_Thinker','Fig_TissueBox','Fig_Toaster00','Fig_Torii','Fig_Towel00','Fig_Towel00_Cstm01','Fig_Towel00_Cstm02','Fig_Towel00_Cstm03','Fig_Towel00_Cstm04','Fig_Towel00_Cstm05','Fig_Towel00_Cstm06','Fig_Transceiver','Fig_Trap','Fig_Trophy','Fig_TrophyClam','Fig_TrophyHoko','Fig_TrophyVS','Fig_TrophyYagura','Fig_Tuna','Fig_TunnelBigNamazu','Fig_TunnelSquidFountain','Fig_Umbrella00','Fig_UmbrellaNostalgia','Fig_VideoGame00','Fig_VideoGame01','Fig_VideoGame02','Fig_WaterBottle00','Fig_WaterBottle00_ShareTex_01','Fig_WaterBottle00_ShareTex_02','Fig_WaterBottle00_ShareTex_03','Fig_WaterBottle00_ShareTex_04','Fig_WaterBottle00_ShareTex_05','Fig_WoodenBoat','Fig_WorldContainer','Fig_Yagura']
+        let preset = document.getElementById('default')
+        document.body.appendChild(preset)
+        window.directory = 'Locker/'
+
+        window.updateAllModels = function()
+        {
+            document.getElementById('list').innerHTML = ''
+
+            // Create
+            for(let n of window.list)
+            {
+                if(preset == null){continue}
+                let element = preset.cloneNode(true)
+                document.getElementById('list').appendChild(element)
+                element.style.display = 'inline-flex'
+                element.id = ''
+                element.childNodes[1].setAttribute('mode-name', n)
+                element.childNodes[7].childNodes[1].setAttribute('fill', '#4F4F4F')
+                element.childNodes[5].childNodes[1].innerText = n.split('_')[Math.min(1, n.split('_').length-1)].replace(/([A-Z])/g, ' $1').trim().replace(/\B(?=(\d{2})+(?!\d))/g, " ")
+                element.childNodes[5].childNodes[5].innerText = n
+                if(window.directory == 'Weapons/')
+                {
+                    element.childNodes[5].childNodes[1].innerText = n.slice(4, n.length).replaceAll('_', ' ')
+                }
+                if(window.directory == 'Head/' || window.directory == 'Cloth/' || window.directory == 'Shoes/')
+                {
+                    element.childNodes[5].childNodes[1].innerText = n.slice(n.split(' ')[0].length, n.length)
+                }
+                
+
+                let rawN = n
+                
+                const isCustom = n.includes('_Cstm')
+
+                let variationIndex = '00'
+                if(n.includes('_ShareTex_'))
+                {
+                    variationIndex = n.charAt(n.indexOf('_ShareTex_')+10)+n.charAt(n.indexOf('_ShareTex_')+11)
+                    n = n.slice(0, -14)+variationIndex
+                    if(!n.endsWith(variationIndex))
+                    {
+                        if(n.endsWith('00')){n=n.slice(0, -2)}
+                        n+=variationIndex
+                    }
+                }
+                else if(n.includes('_Cstm'))
+                {
+                    variationIndex = n.charAt(n.indexOf('_Cstm')+5)+n.charAt(n.indexOf('_Cstm')+6)
+                    n = n.slice(0, -7)
+                    if(!n.endsWith(variationIndex))
+                    {
+                        if(n.endsWith('00')){n=n.slice(0, -2)}
+                        n+=variationIndex
+                    }
+                }
+                else
+                {
+                    variationIndex = n.substring(n.length-2)
+                }
+
+                element.childNodes[7].addEventListener('click', async (e) =>
+                {
+                    if(element.childNodes[7].getAttribute('ready') != 'true')
+                    {
+                        enableElement(element, true)
+                        element.childNodes[7].setAttribute('ready', 'true')
+                    }
+                })
+
+                element.childNodes[5].childNodes[1].addEventListener('click', (e) =>
+                {
+                    window.selectFull(element, rawN)
+                })
+
+                element.childNodes[1].style.display = 'none'
+                element.childNodes[3].style.display = 'none'
+                element.childNodes[3].src = './resources/'+window.directory.slice(0, -1)+' Image/'+n+'.png'
+
+                let startImagePath = './resources/'+window.directory.slice(0, -1)+' Image/'
+
+                //resources/Weapons Image/Wmn_Blaster_LightShort01.png
+                let n2 = n
+                let rawN2 = rawN
+
+                if(window.directory == 'Head/'){n = 'Hed_'+n.split(' ')[0].replace('_M', '').replace('_F', '')}
+                if(window.directory == 'Cloth/'){n = 'Clt_'+n.split(' ')[0].replace('_M', '').replace('_F', '')}
+                if(window.directory == 'Shoes/'){n = 'Shs_'+n.split(' ')[0].replace('_M', '').replace('_F', '')}
+
+                element.childNodes[3].src = startImagePath+n+'.png'
+                fetch(startImagePath+n+'.png')
+                .then(async response =>
+                {
+                    if((await new Response(await response.arrayBuffer()).text()).startsWith('<!DOCTYPE html>'))
+                    {
+                        var resp2 = await fetch(startImagePath+rawN2+'.png');
+                        if(!(await new Response(await resp2.arrayBuffer()).text()).startsWith('<!DOCTYPE html>'))
+                        {
+                            console.log(startImagePath+rawN2+'.png')
+                            element.childNodes[3].src = startImagePath+rawN2+'.png'
+                            element.childNodes[3].style.display = 'block'
+                            return
+                        }
+
+                        n2 += '_'+variationIndex
+                        element.childNodes[3].src = startImagePath+n2+'.png'
+
+                        fetch(startImagePath+n2+'.png')
+                        .then(async response =>
+                        {
+                            if((await new Response(await response.arrayBuffer()).text()).startsWith('<!DOCTYPE html>'))
+                            {
+                                n2 = n2.slice(0, -5)
+                                n2 += '00_'+variationIndex
+                                element.childNodes[3].src = startImagePath+n2+'.png'
+
+                                fetch(startImagePath+n2+'.png')
+                                .then(async response =>
+                                {
+                                    fetch(startImagePath+n2+'.png')
+                                    .then(async response =>
+                                    {
+                                        if((await new Response(await response.arrayBuffer()).text()).startsWith('<!DOCTYPE html>'))
+                                        {
+                                            n2 = n2.slice(0, -5)
+                                            n2 += '_'+variationIndex
+                                            element.childNodes[3].src = startImagePath+n2+'.png'
+
+                                            fetch(startImagePath+n2+'.png')
+                                            .then(async response =>
+                                            {
+                                                if((await new Response(await response.arrayBuffer()).text()).startsWith('<!DOCTYPE html>'))
+                                                {
+                                                    // element.childNodes[3].src = './resources/Other/Dummy.png'
+                                                    element.childNodes[3].src = './resources/'+window.directory.slice(0, -1)+' Image/Dummy.png'
+                                                }
+                                                element.childNodes[3].style.display = 'block'
+                                            })
+                                        }
+                                        else
+                                        {
+                                            element.childNodes[3].style.display = 'block'
+                                        }
+                                    })
+                                })
+                            }
+                            else
+                            {
+                                element.childNodes[3].style.display = 'block'
+                            }
+                        })
+                    }
+                    else
+                    {
+                        element.childNodes[3].style.display = 'block'
+                    }
+                })
+            }
+            preset.style.display = 'none'
+
+            // Interactionify
+            for(var child of document.getElementById('list').childNodes)
+            {
+                if(child.nodeName != 'DIV'){continue}
+
+                child.childNodes[3].addEventListener('mousedown', (e) =>
+                {
+                    enableElement(e.target.parentNode)
+                })
+            }
+        }
+        window.updateAllModels()
+
+        async function wait(time)
+        {
+            return new Promise((resolve) =>
+            {
+                setTimeout(resolve, time)
+            });
+        }
+        async function enableElement(child, directDownload = false)
+        {
+            if(child.nodeName != "DIV"){return}
+            if(child.getAttribute('treedified') == 'true'){return}
+            var name = child.childNodes[1].getAttribute('mode-name')
+            if(name == ''){return}
+
+            child.childNodes[3].style.display = 'none'
+            child.childNodes[1].style.display = 'block'
+
+            child.childNodes[7].disabled = true
+            child.setAttribute('treedified', 'true')
+
+            const scene = await window.loadScene(child.childNodes[1])
+            const textures = await window.loadModel(name, scene.scene, scene.camera)
+
+            child.childNodes[7].classList.add('loaded')
+            child.childNodes[7].addEventListener('click', async (e) =>
+            {
+                var name = child.childNodes[1].getAttribute('mode-name')
+
+                let z = new Zip(child.childNodes[5].childNodes[1].innerText);
+
+                let list = []
+
+                textures.forEach(m =>
+                {
+                    console.log({path: 'resources/'+window.directory+name+'/'+m+'.png', name:m+'.png'})
+                    list.push({path: 'resources/'+window.directory+name+'/'+m+'.png', name:m+'.png'});
+                })
+                list.push({path: 'resources/'+window.directory+name+'/'+name+'.dae', name:name+'.dae'});
+
+                await z.fecth2zip(list, '');
+                console.log("end")
+                z.makeZip()
+            })
+
+            child.childNodes[7].disabled = false
+            scene.loop();
+            if(directDownload){ child.childNodes[7].click; }
+        }
+    </script>
+    <div id="list" style="border-radius: 20px; background-color: #1f1f1f00; scrollbar-color: #1f1F1F #3f3F3F;">
+        <div id="default" style="max-width: 300px; width: 300px; display:inline-flex; margin: 10px; border-radius: 15px; background-color: #2f2f2f; border-top-right-radius: 50px; border-bottom-right-radius: 50px;">
+            <canvas mode-name="Fig_PaintBrush00_Cstm04" width="85px" height="85px" style="cursor: move;"></canvas>
+            <img width="85px" height="85px" style="cursor: move;">
+            <div style="margin-top: 10px;margin-left: 10px; line-break: anywhere; width: 110px;">
+                <span style="font-size: large; cursor: pointer;" class="clickable-text">Loading...</span>
+                <br>
+                <span style="color: #a8a8a850; font-size: medium;"></span>
+            </div>
+            <button class="download-model">
+                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="65px" height="65px" viewBox="0 0 40 40" xml:space="preserve">
                     <g><path d="M20,0C8.973,0,0,8.973,0,20c0,11.027,8.973,20,20,20c11.027,0,20-8.973,20-20C40,8.973,31.027,0,20,0z M27.756,23.465l-6.279,5.332C21.051,29.158,20.525,29.34,20,29.34c-0.526,0-1.052-0.182-1.478-0.543l-6.279-5.332c-0.959-0.816-1.077-2.256-0.262-3.217c0.815-0.959,2.255-1.078,3.216-0.262l2.521,2.141v-9.186c0-1.26,1.021-2.281,2.282-2.281c1.26,0,2.281,1.021,2.281,2.281v9.186l2.521-2.141c0.962-0.814,2.401-0.697,3.218,0.262C28.834,21.209,28.716,22.648,27.756,23.465z"/></g>
                 </svg>
             </button>
         </div>
     </div>
+
+    <script type="module">
+        document.getElementById('full-screen').style.display = 'none'
+
+        let bigCanvas = document.getElementById('big-preview')
+
+        bigCanvas.width = window.innerWidth
+        bigCanvas.height = window.innerHeight
+
+        const scene = await window.loadScene(bigCanvas)
+
+        window.addEventListener('resize', () =>
+        {
+            bigCanvas.width = window.innerWidth
+            bigCanvas.height = window.innerHeight
+
+            // Update camera
+            scene.camera.aspect = bigCanvas.width / bigCanvas.height
+            scene.camera.updateProjectionMatrix()
+
+            // Update renderer
+            scene.renderer.setSize(bigCanvas.width, bigCanvas.height);
+            scene.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            scene.loop()
+        })
+
+        window.selectFull = async function(element, name)
+        {
+            scene.scene.children = []
+            const materials = await window.loadModel(name, scene.scene, scene.camera, 1)
+
+            document.getElementById('clean-name').innerText = element.childNodes[5].childNodes[1].innerText
+            document.getElementById('raw-name').innerText = element.childNodes[5].childNodes[5].innerText
+            document.getElementById('big-icon').src = element.childNodes[3].src
+
+            document.getElementById('full-screen').style.display = 'block'
+
+            document.getElementById('big-download-button').onclick = () => {element.childNodes[7].click()}
+
+            scene.loop()
+        }
+    </script>
 </body>
 </html>

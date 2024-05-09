@@ -28,24 +28,48 @@ class Zip {
         return this.reverse(((-1^n)>>>0).toString(16).padStart(8,'0'));
     }
     
-    fecth2zip(filesArray,folder=''){
-        filesArray.forEach(f=>{
+    async fecth2zip(filesArray,folder='')
+    {
+        for(var f of filesArray)
+        {
             var fileUrl = f.path
             let resp;               
-            fetch(fileUrl).then(response=>{
-                resp=response;
-                return response.arrayBuffer();
-            }).then(blob=>{
-                new Response(blob).arrayBuffer().then(buffer=>{
-                    console.log(`File: ${fileUrl} load`);
-                    let uint=[...new Uint8Array(buffer)];
-                    uint.modTime=resp.headers.get('Last-Modified');
-                    uint.fileUrl=`${this.name}/${folder}${f.name}`;                            
-                    this.zip[fileUrl]=uint;
-                });
-            });             
-        });
+            var response = await fetch(fileUrl)
+            
+            resp=response;
+            var blob = await response.arrayBuffer();
+
+            // if((await new Response(blob).text()).startsWith('<!DOCTYPE html>')){continue}
+
+            var buffer = await new Response(blob).arrayBuffer()
+
+            console.log(`File: ${fileUrl} load`);
+            let uint=[...new Uint8Array(buffer)];
+            uint.modTime=resp.headers.get('Last-Modified');
+            uint.fileUrl=`${this.name}/${folder}${f.name}`;
+
+            console.log(uint)
+            this.zip[fileUrl]=uint;
+        };
     }
+
+    fecth2zipold(filesArray,folder=''){
+		filesArray.forEach(fileUrl=>{
+			let resp;				
+			fetch(fileUrl).then(response=>{
+				resp=response;
+				return response.arrayBuffer();
+			}).then(blob=>{
+				new Response(blob).arrayBuffer().then(buffer=>{
+					console.log(`File: ${fileUrl} load`);
+					let uint=[...new Uint8Array(buffer)];
+					uint.modTime=resp.headers.get('Last-Modified');
+					uint.fileUrl=`${this.name}/${folder}${fileUrl}`;							
+					this.zip[fileUrl]=uint;
+				});
+			});				
+		});
+	}
     
     str2zip(name,str,folder){
         let uint=[...new Uint8Array(this.str2dec(str))];
@@ -75,6 +99,7 @@ class Zip {
         let offSetLocalHeader='00 00 00 00';
         let zip=this.zip;
         for(const name in zip){
+            if(zip[name].fileUrl == undefined){continue}
             let modTime=(()=>{
                 const lastMod=new Date(zip[name].modTime);
                 const hour=this.dec2bin(lastMod.getHours(),5);

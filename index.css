@@ -5,6 +5,11 @@ body
     overflow-x: hidden;
     perspective: 800px;
     position:relative;
+    scrollbar-color: #1f1F1F #3f3F3F;
+    --scrollbar-color-thumb: #1f1F1F;
+    --scrollbar-color-track: #3f3F3F;
+    --scrollbar-width: thin;
+    --scrollbar-width-legacy: 10px;
 }
 ::-moz-selection
 {
@@ -92,6 +97,12 @@ button.discord:hover
     background-size: 100%;
     background-position: 50% 50%;
     box-shadow: rgb(126, 136, 255) -30px 0px 65px, rgb(27, 38, 159) 30px 0px 65px;
+}
+button:disabled
+{
+    background: #535353;
+    color: #000;
+    box-shadow: none;
 }
 button.left:disabled
 {
@@ -182,6 +193,71 @@ video.zoomable.right:hover
 video.zoomable.left:hover
 {
     transform: scale3d(2, 2, 2) rotate3d(0, 1, 0, 10deg) translate3d(0px, -50px, 0)
+}
+
+.clickable-text{color: #a8a8a8;}
+.clickable-text:hover{color: #265787;}
+
+:root
+{
+    --m-color-a: #aa410f;
+    --m-color-b: #ac8ef6;
+    --m-color-a-alpha: #aa410f50;
+    --m-color-b-alpha: #ac8ef650;
+}
+
+#resource-wall
+{
+    background: linear-gradient(70deg, var(--m-color-a), var(--m-color-b));
+    box-shadow: var(--m-color-a) 0 50px 300px;
+    transition: all 0.1s;
+}
+.wall-button
+{
+    background: #00000000;
+    box-shadow: none;
+    transition: all 0.15s;
+    filter: brightness(1);
+}
+.wall-button:hover
+{
+    box-shadow: #00000050 -5px 5px 0;
+    filter: brightness(3);
+}
+
+.download-model
+{
+    box-shadow: var(--m-color-a-alpha) 0 0 40px;
+    margin-top: 10px;
+    margin-right: 10px;
+
+    height: 65px;
+    width: 65px;
+    
+    padding: 0;
+    background: #00000000;
+
+    transition: all 0.1s;
+    scale: 0.95;
+}
+.download-model:hover
+{
+    box-shadow: var(--m-color-a) 0 0 100px;
+    background: var(--m-color-b)
+}
+.download-model > svg{scale: 1.05; fill: #4f4f4f; filter: blur(0.3px);}
+.download-model.loaded:hover{background: var(--m-color-a-alpha);}
+.download-model.loaded > svg{scale: 1.05; fill: var(--m-color-b); filter: blur(0);}
+
+.resource-button
+{
+    background: linear-gradient(45deg, var(--m-color-a), var(--m-color-b));
+    box-shadow: var(--m-color-a-alpha) -10px 0px 50px, var(--m-color-b-alpha) 10px 0px 50px;
+    transition: all 0.2s;
+}
+.resource-button:hover
+{
+    box-shadow: var(--m-color-a) -10px 0px 40px, var(--m-color-b) 10px 0px 40px;
 }
 
 /* 3D Text */
@@ -447,4 +523,13 @@ video.zoomable.left:hover
   font-family: "Barlow", sans-serif;
   font-weight: 900;
   font-style: italic;
-}  
+}
+
+@font-face {
+    font-family: Alterna;
+    src: url(./SpAlterna-Regular.otf);
+}
+@font-face {
+    font-family: Splat-Bold;
+    src: url(./BlitzBold.otf);
+}
