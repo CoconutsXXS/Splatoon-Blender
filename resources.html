@@ -22,7 +22,7 @@
 </head>
 <body style="background-color: #1f1f1f; scrollbar-color: #1f1F1F #3f3F3F;">
     <div style="position: absolute; height: 100%; z-index: 10;">
-        <div style="top:0; position: sticky;" id="full-screen">
+        <div style="top:0; position: sticky; display: none;" id="full-screen">
             <canvas id="big-preview" style="width: 100vw; height: 100vh; margin: 0;"></canvas>
     
             <div style="top:0; position: absolute; width: 100vw; height: 100vh; pointer-events: none; display: flex;">
@@ -103,6 +103,13 @@
                     list: ['AMB000 School Shoes + Hi Socks','AMB001 Samurai Shoes','AMB002 Power Boots','AMB003 Baggy-Sock Fringe Loafs','AMB004 Squinja Boots','AMB005 Power Boots Mk I','AMB006 Pearlescent Kicks','AMB007 Marinated Slip-Ons','AMB008 Enchanted Boots','AMB009 Steel Greaves','AMB010 Fresh Fish Feet','AMB011 Knotty Bois','AMB012 Kick Dampeners','AMB013 Chaos Kicks','AMB014 Base School Shoes','AMB015 Base Fringed Loafers','AMB018 Faux Sharkskin Platfins','AMB019 Eel Heel Socks','AMB020 Big Muds','BOT000 Moto Boots','BOT001 Tan Work Boots','BOT002 Red Work Boots','BOT003 Blue Moto Boots','BOT004 Green Rain Boots','BOT005 Acerola Rain Boots','BOT006 Punk Whites','BOT007 Punk Cherries','BOT008 Punk Yellows','BOT009 Bubble Rain Boots','BOT010 Snowy Down Boots','BOT011 Icy Down Boots','BOT012 Hunting Boots','BOT013 Punk Nights','BOT014 Deepsea Leather Boots','BOT016 Annaki Arachno Boots','BOT017 New-Leaf Leather Boots','BOT018 Tea-Green Hunting Boots','BOT019 Blu-Shift Moto Boots','BOT020 Skipjack Work Boots','BOT021 Arctic Duck Boots','BOT022 Field Duck Boots','BOT023 Red Hammertreads','BOT024 Dappled Hammertreads','BOT025 Punk Pinks','BOT026 Fuzzy Boots','BOT027 Transom Note Boots','BOT028 Red-Shift Moto Boots','BOT029 Spiked Duck Boots','BOT030 Buckle-Down Boots','CFS000 Blueberry Casuals','CFS001 Plum Casuals','COP101 Angry Rain Boots','COP102 Nonslip Senseis','COP103 Octoleet Boots','COP105_F Flipper Floppers F','COP105_M Flipper Floppers M','COP107 Trevally Derby Rollers','COP108 Brinestone Boots','COP109 Knockout Boots','FST000 Cream Basics','HAP008 Shivery Squidkid III','HAP009 Fried Squidkid III','HAP010 Big Squidkid III','HAP011 Chained DC Toejamz','HAP012 Jeweled DC Toejamz','HAP013 Swirled DC Toejamz','HAP014 Trifecta Duck Boots','HAP015 Trifecta Hi-Tops','HAP016 Trifecta Sandals','HAP016_V1 Trifecta Sandals Adjusted','LTS000 White Kicks','LTS001 Cherry Kicks','LTS002 Turquoise Kicks','LTS003 Squink Wingtips','LTS004_F Roasted Brogues F','LTS004_M Roasted Brogues M','LTS004_V1 Roasted Brogues Adjusted','LTS005 Kid Clams','LTS006 Smoky Wingtips','LTS007 Navy Red-Soled Wingtips','LTS008 Gray Yellow-Soled Wingtips','LTS009 Inky Kid Clams','LTS010 Annaki Habaneros','LTS011 Annaki Tigers','LTS013 Desert Chukkas','LTS014 Dark-Roast Boaties','LTS015 Tricolor Boaties','MSN000 Hero Runner Replicas','MSN004 Armor Boot Replicas','MSN110 Fuzz-Octoling Boots','MSN200_F Octoling Boots F','MSN200_M Octoling Boots M','MSN301 Survival Foot','MSN302 Hero Boots Lv1','MSN303 Hero Boots Lv2','MSN304 Hero Boots Lv3','MSN305 Hero Boots ST','MSN306 Hero Boot Replicas','MSN310 Legendary Sandals','SDL000 Oyster Clogs','SDL000_V1 Oyster Clogs Adjusted','SDL001 Choco Clogs','SDL001_V1 Choco Clogs Adjusted','SDL003 Neon Delta Straps','SDL004 Black Flip-Flops','SDL005 Snow Delta Straps','SDL006 Luminous Delta Straps','SDL006_V1 Luminous Delta Straps Adjusted','SDL007 Red FishFry Sandals','SDL007_V1 Red FishFry Sandals Adjusted','SDL008 Yellow FishFry Sandals','SDL008_V1 Yellow FishFry Sandals Adjusted','SDL009 Musselforge Flip-Flops','SDL010 Cuttlefish Sandies','SDL011 Arrow Toesies Blu','SDL012 BlobMob Flip-Flops','SDL013 Orange Dadfoot Sandals','SDL013_V1 Orange Dadfoot Sandals Adjusted','SDL014 Arrow Toesies Purp','SDL015 Annaki Strappy Sandals','SDL016 Squid Bone Unslips','SDL017 Pink Dadfoot Sandals','SDL017_V1 Pink Dadfoot Sandals Adjusted','SDL018 Cyan Dadfoot Sandals','SDL018_V1 Cyan Dadfoot Sandals Adjusted','SDL019 Navy Toejamz','SDL020 Red Toejamz','SDL021 Yellow Toejamz','SDL022 Green Toejamz','SDODR200 Order Boot Replicas','SHI000 Red Hi-Horses','SHI001 Zombie Hi-Horses','SHI002 Cream Hi-Tops','SHI003 Purple Hi-Horses','SHI004 Hunter Hi-Tops','SHI005 Red Hi-Tops','SHI006 Gold Hi-Horses','SHI008 Shark Moccasins','SHI009 Mawcasins','SHI010 Chocolate Dakroniks','SHI011 Cyan Dakroniks','SHI012 Black Dakroniks','SHI013 Piranha Moccasins','SHI014 White Norimaki 750s','SHI015 Black Norimaki 750s','SHI016 Sunset Orca Hi-Tops','SHI017 Red & Black Squidkid IV','SHI018 Blue & Black Squidkid IV','SHI019 Gray Sea-Slug Hi-Tops','SHI020 Orca Hi-Tops','SHI022 Navy Enperrials','SHI023 Amber Sea Slug Hi-Tops','SHI024 Yellow Iromaki 750s','SHI025 Red & White Squidkid V','SHI026 Honey & Orange Squidkid V','SHI027 Sun & Shade Squidkid IV','SHI028 Orca Woven Hi-Tops','SHI029 Green Iromaki 750s','SHI030 Purple Iromaki 750s','SHI031 Red Iromaki 750s','SHI032 Blue Iromaki 750s','SHI033 Orange Iromaki 750s','SHI034 Red Power Stripes','SHI035 Blue Power Stripes','SHI036 Toni Kensa Black Hi-Tops','SHI037 Sesame Salt 270s','SHI038 Black & Blue Squidkid V','SHI039 Orca Passion Hi-Tops','SHI040 Truffle Canvas Hi-Tops','SHI042 Force ReBoots','SHI043 Tenya OctoReds','SHI044 Tenya OctoPurps','SHI045 Pearl 01STERs','SHI046 Zebrafish Hi-Tops','SHI047 Dustcloud Hi-Tops','SHI048 Seafoam Hi-Tops','SHI049 White Lo-Vert Hi-Tops','SHI050 Blue & Black Squidkid III','SHI051 Red & White Squidkid III','SHI052 Onyx 01STERs','SHI053 Crab-Trap Squidkid III','SHT000 Pink Trainers','SHT001 Orange Arrows','SHT002 Neon Sea Slugs','SHT003 White Arrows','SHT004 Cyan Trainers','SHT005 Blue Sea Slugs','SHT006 Red Sea Slugs','SHT007 Purple Sea Slugs','SHT008 Crazy Arrows','SHT009 Black Trainers','SHT010 Violet Trainers','SHT011 Canary Trainers','SHT012 Yellow-Mesh Sneakers','SHT013 Arrow Pull-Ons','SHT014 Orange-Mesh Sneakers','SHT015 N-Pacer CaO','SHT016 N-Pacer Ag','SHT017 N-Pacer Au','SHT018 Sea Slug Volt 95s','SHT019 Athletic Arrows','SHT020 U Jellys','SHT021 Hyper Guppies','SHT022 Turbo Tabi Red','SHT023 E-JECT 30XX','SHT024 Slamgerine Slip-Ons','SHT025 Mako Bucket Hi-Tops','SHT026 Blue Shrimpsiders','SHT027 E-JECT 30VV','SHT028 OB Gaiter Waders','SHT030 Noir Guppies','SLO000 Blue Lo-Tops','SLO000_V1 Blue Lo-Tops Adjusted','SLO001 Banana Basics','SLO002 LE Lo-Tops','SLO002_V1 LE Lo-Tops Adjusted','SLO003 White Seahorses','SLO004 Orange Lo-Tops','SLO004_V1 Orange Lo-Tops Adjusted','SLO005 Black Seahorses','SLO006 Clownfish Basics','SLO007 Yellow Seahorses','SLO008 White 3-Straps','SLO009 Red 3-Straps','SLO010 Soccer Shoes','SLO011 LE Soccer Shoes','SLO011_V1 LE Soccer Shoes Adjusted','SLO012 Sunny Climbing Shoes','SLO013 Birch Climbing Shoes','SLO014 Green Lace-Ups','SLO014_V1 Green Lace-Ups Adjusted','SLO015 White Laceless Dakroniks','SLO016 Blue Laceless Dakroniks','SLO017 Suede Gray Lace-Ups','SLO018 Suede Nation Lace-Ups','SLO019 Suede Marine Lace-Ups','SLO020 Toni Kensa Soccer Shoes','SLO020_V1 Toni Kensa Soccer Shoes Adjusted','SLO021 Wasabi Tabi','SLO022 Suede Basics','SLO023 Ink-Black Clam 600s','SLO024 Suede Bosses','SLO025 White Clam 600s','SLO026 Stamina Cycling Shoes','SLO026_V1 Stamina Cycling Shoes Adjusted','SLO027 Energy Cycling Shoes','SLO027_V1 Energy Cycling Shoes Adjusted','SLP000 Blue Slip-Ons','SLP001 Red Slip-Ons','SLP002 Squid-Stitch Slip-Ons','SLP003 Polka-Dot Slip-Ons','SLP004 ZedFry Slip-Ons','TRG000 Fry Tops','TRG001 Burden of Floof','TRS000 Trail Boots','TRS001 Custom Trail Boots','TRS002 Pro Trail Boots'],
                     directory: 'Shoes/'
                 },
+                {
+                    name: 'Characters',
+                    colorA: 'ac8ef6',
+                    colorB: 'd1aa07',
+                    list: ['Npc_BankaraIdolA','Npc_BankaraIdolA_Maple','Npc_BankaraIdolA_Stove','Npc_BankaraIdolB','Npc_BankaraIdolB_Maple','Npc_BankaraIdolB_Stove','Npc_BankaraIdolC','Npc_BankaraIdolC_Maple','Npc_BankaraIdolC_Stove','Npc_Commander','Npc_Commander_Dried','Npc_CustomShopJr','Npc_CustomShop_Fsodr','Npc_ElevatorOperator_Sdodr','Npc_FishHead','Npc_HeadGearShop','Npc_HeadGearShopB','Npc_HeadGearShop_Fsodr','Npc_HeadGearShop_Sdodr','Npc_IdolA','Npc_IdolA_Maple','Npc_IdolA_Stove','Npc_IdolB','Npc_IdolB_Maple','Npc_IdolB_Stove','Npc_Jerry00','Npc_JerryLocalLobby','Npc_JerryPlayerMake','Npc_Judge','Npc_JudgeJr','Npc_KnickKnacksShop','Npc_PartyGoods','Npc_RailKingSpace','Npc_SalmonBaby','Npc_SalmonKing','Npc_ShoesShop','Npc_ShoesShop_Fsodr','Npc_ShoesShop_Sdodr','Npc_ShopAunty','Npc_TentaclesA','Npc_TentaclesA_Sdodr','Npc_TentaclesB','Npc_TentaclesB_Sdodr','Npc_TopsShop','Npc_TopsShop_Fsodr','Npc_TopsShop_Sdodr','Npc_WeaponsShop','Npc_WeaponsShop_Fsodr'],
+                    directory: 'Character/'
+                },
             ]
             let currentSection = 0
             document.getElementsByClassName('wall-button')[0].addEventListener('click', () =>
@@ -119,7 +126,7 @@
             function updateSection()
             {
                 if(currentSection < 0){currentSection=0; return}
-                if(currentSection > currentSection.length-1){currentSection=currentSection.length-1; return}
+                if(currentSection > sectionColor.length-1){currentSection=sectionColor.length-1; return}
 
                 document.querySelector(':root').style.setProperty('--m-color-a', '#'+sectionColor[currentSection].colorA)
                 document.querySelector(':root').style.setProperty('--m-color-b', '#'+sectionColor[currentSection].colorB)
@@ -363,7 +370,9 @@
             if(directDownload){ child.childNodes[7].click; }
         }
     </script>
-    <div id="list" style="border-radius: 20px; background-color: #1f1f1f00; scrollbar-color: #1f1F1F #3f3F3F;">
+
+    <!-- Soft Items -->
+    <div id="list" style="display: block; border-radius: 20px; background-color: #1f1f1f00; scrollbar-color: #1f1F1F #3f3F3F;">
         <div id="default" style="max-width: 300px; width: 300px; display:inline-flex; margin: 10px; border-radius: 15px; background-color: #2f2f2f; border-top-right-radius: 50px; border-bottom-right-radius: 50px;">
             <canvas mode-name="Fig_PaintBrush00_Cstm04" width="85px" height="85px" style="cursor: move;"></canvas>
             <img width="85px" height="85px" style="cursor: move;">
@@ -371,6 +380,23 @@
                 <span style="font-size: large; cursor: pointer;" class="clickable-text">Loading...</span>
                 <br>
                 <span style="color: #a8a8a850; font-size: medium;"></span>
+            </div>
+            <button class="download-model">
+                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="65px" height="65px" viewBox="0 0 40 40" xml:space="preserve">
+                    <g><path d="M20,0C8.973,0,0,8.973,0,20c0,11.027,8.973,20,20,20c11.027,0,20-8.973,20-20C40,8.973,31.027,0,20,0z M27.756,23.465l-6.279,5.332C21.051,29.158,20.525,29.34,20,29.34c-0.526,0-1.052-0.182-1.478-0.543l-6.279-5.332c-0.959-0.816-1.077-2.256-0.262-3.217c0.815-0.959,2.255-1.078,3.216-0.262l2.521,2.141v-9.186c0-1.26,1.021-2.281,2.282-2.281c1.26,0,2.281,1.021,2.281,2.281v9.186l2.521-2.141c0.962-0.814,2.401-0.697,3.218,0.262C28.834,21.209,28.716,22.648,27.756,23.465z"/></g>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Heavy Items -->
+    <div id="list-heavy" style="display: none; border-radius: 20px; background-color: #1f1f1f00; scrollbar-color: #1f1F1F #3f3F3F;">
+        <div id="default" style="max-width: 600px; width: 600px; display:inline-flex; margin: 10px; border-radius: 15px; background-color: #2f2f2f;">
+            <img width="250px" height="200px" style="cursor: move;">
+            <div style="margin-top: 10px;margin-left: 10px; line-break: anywhere; width: 250px;">
+                <span style="font-size:x-large; color: #f4f4f490; font-weight: 700; cursor: pointer;" class="clickable-text">Loading...</span>
+                <br>
+                <span style="color: #a8a8a850; font-size: medium;">The map is loading</span>
             </div>
             <button class="download-model">
                 <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="65px" height="65px" viewBox="0 0 40 40" xml:space="preserve">
