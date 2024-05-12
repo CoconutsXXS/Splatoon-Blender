@@ -372,12 +372,12 @@ async function loadModel(name, scene, camera, adjustFactor = 1)
                     var texPath = path
                     if(isVariation)
                     {
-                        texPath = Splatoon-Blender+'/resources/'+window.directory+name+'/'
-                        // texPath = Splatoon-Blender+'/resources/'+window.directory+name.slice(0, -7)+'/'
+                        texPath = startPath+'/resources/'+window.directory+name+'/'
+                        // texPath = startPath+'/resources/'+window.directory+name.slice(0, -7)+'/'
                     }
                     else if(isCustom)
                     {
-                        texPath = Splatoon-Blender+'/resources/'+window.directory+name.slice(0, -7)+'/'
+                        texPath = startPath+'/resources/'+window.directory+name.slice(0, -7)+'/'
                     }
 
                     console.log(texPath)
