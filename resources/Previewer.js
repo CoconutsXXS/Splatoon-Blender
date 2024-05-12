@@ -1,5 +1,5 @@
 import * as THREE from 'https://unpkg.com/three/build/three.module.js';
-import { ColladaLoader } from '../ColladaLoader';
+import { ColladaLoader } from '../ColladaLoader.js';
 
 Array.prototype.max = function() {
     return Math.max.apply(null, this);
