@@ -1,6 +1,8 @@
 import * as THREE from 'https://unpkg.com/three/build/three.module.js';
 import { ColladaLoader } from '../ColladaLoader.js';
 
+const startPath = 'Splatoon-Blender'
+
 Array.prototype.max = function() {
     return Math.max.apply(null, this);
 };
@@ -220,7 +222,7 @@ function asyncCollada(modelPath)
 }
 async function loadModel(name, scene, camera, adjustFactor = 1)
 {
-    var path = './resources/'+window.directory+name+'/';
+    var path = startPath+'/resources/'+window.directory+name+'/';
     const center = new THREE.Object3D();
     scene.add(center)
 
@@ -238,7 +240,7 @@ async function loadModel(name, scene, camera, adjustFactor = 1)
     {
         variationIndex = name.charAt(name.indexOf('_ShareTex_')+10)+name.charAt(name.indexOf('_ShareTex_')+11)
 
-        path = './resources/'+window.directory+name.slice(0, -12)+'/'
+        path = startPath+'/resources/'+window.directory+name.slice(0, -12)+'/'
         modelPath = path+name.slice(0, -12)+".dae"
 
         if((await asyncCollada(modelPath)) == null)
@@ -370,12 +372,12 @@ async function loadModel(name, scene, camera, adjustFactor = 1)
                     var texPath = path
                     if(isVariation)
                     {
-                        texPath = './resources/'+window.directory+name+'/'
-                        // texPath = './resources/'+window.directory+name.slice(0, -7)+'/'
+                        texPath = Splatoon-Blender+'/resources/'+window.directory+name+'/'
+                        // texPath = Splatoon-Blender+'/resources/'+window.directory+name.slice(0, -7)+'/'
                     }
                     else if(isCustom)
                     {
-                        texPath = './resources/'+window.directory+name.slice(0, -7)+'/'
+                        texPath = Splatoon-Blender+'/resources/'+window.directory+name.slice(0, -7)+'/'
                     }
 
                     console.log(texPath)
