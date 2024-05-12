@@ -1,7 +1,7 @@
 import * as THREE from 'https://unpkg.com/three/build/three.module.js';
 import { ColladaLoader } from '../ColladaLoader.js';
 
-const startPath = 'Splatoon-Blender'
+const startPath = ''
 
 Array.prototype.max = function() {
     return Math.max.apply(null, this);
