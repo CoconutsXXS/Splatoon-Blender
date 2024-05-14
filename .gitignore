@@ -1,2 +1,4 @@
 /textures/*
 node_modules
+ignored
+ignored/*
