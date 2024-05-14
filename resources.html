@@ -152,10 +152,17 @@
         let preset = document.getElementById('default')
         document.body.appendChild(preset)
         window.directory = 'Locker/'
+        let savedCat = {}
 
         window.updateAllModels = function()
         {
+            console.log("Update Section")
             document.getElementById('list').innerHTML = ''
+
+            if(savedCat[window.directory] != undefined)
+            {
+                document.getElementById('list').innerHTML = savedCat[window.directory]
+            }
 
             // Create
             for(let n of window.list)
@@ -237,7 +244,35 @@
                 if(window.directory == 'Cloth/'){n = 'Clt_'+n.split(' ')[0].replace('_M', '').replace('_F', '')}
                 if(window.directory == 'Shoes/'){n = 'Shs_'+n.split(' ')[0].replace('_M', '').replace('_F', '')}
 
-                element.childNodes[3].src = startImagePath+n+'.png'
+                
+                iconFinding()
+                async function iconFinding()
+                {
+                    element.childNodes[3].src = startImagePath+n+'.png'
+                    if(await imageExist(element.childNodes[3].src)){element.childNodes[3].style.display = 'block'; return}
+
+                    element.childNodes[3].src = startImagePath+rawN2+'.png'
+                    if(await imageExist(element.childNodes[3].src)){element.childNodes[3].style.display = 'block'; return}
+
+                    n2 += '_'+variationIndex
+                    element.childNodes[3].src = startImagePath+n2+'.png'
+                    if(await imageExist(element.childNodes[3].src)){element.childNodes[3].style.display = 'block'; return}
+
+                    n2 = n2.slice(0, -5)
+                    n2 += '00_'+variationIndex
+                    element.childNodes[3].src = startImagePath+n2+'.png'
+                    if(await imageExist(element.childNodes[3].src)){element.childNodes[3].style.display = 'block'; return}
+
+                    n2 = n2.slice(0, -5)
+                    n2 += '_'+variationIndex
+                    element.childNodes[3].src = startImagePath+n2+'.png'
+                    if(await imageExist(element.childNodes[3].src)){element.childNodes[3].style.display = 'block'; return}
+
+                    element.childNodes[3].src = './resources/'+window.directory.slice(0, -1)+' Image/Dummy.png'
+                }
+                
+                continue;
+
                 fetch(startImagePath+n+'.png')
                 .then(async response =>
                 {
@@ -318,8 +353,9 @@
                     enableElement(e.target.parentNode)
                 })
             }
+
+            //savedCat[window.directory] = document.getElementById('list').innerHTML
         }
-        window.updateAllModels()
 
         async function wait(time)
         {
@@ -368,6 +404,26 @@
             child.childNodes[7].disabled = false
             scene.loop();
             if(directDownload){ child.childNodes[7].click; }
+        }
+    
+        async function imageExist(path)
+        {
+            return new Promise((resolve, reject) => 
+            {
+                fetch(path)
+                .then(async response =>
+                {
+                    if((await new Response(await response.arrayBuffer()).text()).startsWith('<!DOCTYPE html>'))
+                    {
+                        resolve(false)
+                    }
+                    else
+                    {
+                        resolve(true)
+                    }
+
+                })
+            })
         }
     </script>
 
