@@ -4,7 +4,6 @@ import { ColladaLoader } from '../ColladaLoader.js';
 const startPath = 'https://coconutsxxs.github.io/Splatoon-Blender'
 // const startPath = '../'
 
-
 Array.prototype.max = function() {
     return Math.max.apply(null, this);
 };
