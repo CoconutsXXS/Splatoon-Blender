@@ -260,6 +260,40 @@ video.zoomable.left:hover
     box-shadow: var(--m-color-a) -10px 0px 40px, var(--m-color-b) 10px 0px 40px;
 }
 
+input[type=range]
+{
+    margin-top: 10px;
+    -webkit-appearance: none;
+    height: 5px;
+    background: #1f1f1f;
+    outline: none;
+    border-radius: 10px;
+    -webkit-transition: .1s;
+    transition: opacity .1s;  
+}
+input[type=range]::-webkit-slider-thumb
+{
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    background: #e87e0d;
+    cursor: pointer;
+    outline: none;
+    border: #00000000;
+    border-radius: 100px;
+}
+input[type=range]::-moz-range-thumb
+{
+    width: 15px;
+    height: 15px;
+    background: #e87e0d;
+    cursor: pointer;
+    outline: none;
+    border: #00000000;
+    border-radius: 100px;
+}
+
 /* 3D Text */
 #huge-title
 {

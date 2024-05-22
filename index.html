@@ -37,7 +37,7 @@
         <form method="get" action="./add-ons/cloth.zip">
             <button type="submit" class="left" id="cloth-download">Cloth Importer</button>
         </form>
-        <button id="character-download" class="left" onclick='window.open("https://drive.google.com/uc?export=download&id=1ESO53aROGguwqeiQoGGhdSTxz1fytKQ9", "_blank")'>Character Creator</button>
+        <button id="character-download" class="left" onclick='window.open("https://drive.usercontent.google.com/download?id=1ESO53aROGguwqeiQoGGhdSTxz1fytKQ9&export=download", "_blank")'>Character Creator</button>
         <button style="font-size: 60px; font-weight: 600; padding: 10px; padding-left: 50px; padding-right: 50px;" onclick="document.getElementById('model-download').click();document.getElementById('cloth-download').click();document.getElementById('ink-download').click();document.getElementById('character-download').click()">Complete Kit</button>
         <form method="get" action="./add-ons/ink.zip">
             <button id="ink-download" class="right">Dynamic Ink</button>
@@ -185,198 +185,227 @@
         </div>
     </div>
 
-    <div style="width: fit-content; min-height: 300px; background-color: #111; margin-top: 30px; margin-left: 30px; display: flex; border-radius: 30px;">
-        <div>
-            <script type="module">
-                // Setup Canvas \\
-                window.tee_customizer = document.getElementById("tee_customizer");
-                window.tee_customizer.width =700;
-                window.tee_customizer.height = 500;
-            </script>
-            <script type="module" src="./Tee.js"></script>
-            <script src="./Zip.js"></script>
-            <script>
-                window.teeColor = document.getElementById('tee-color').value
-                window.teeSize = document.getElementById('tee-size').value
-                window.teeTeam = document.getElementById('tee-team').value
-            </script>
-            <script type="module">
-                function changeTee()
-                {
-                    var file = undefined
-                    if(document.getElementById('tee-image').files[0] != undefined){file = URL.createObjectURL(document.getElementById('tee-image').files[0])}
-
-                    var file2 = undefined
-                    if(document.getElementById('tee-image-team').files[0] != undefined){file2 = URL.createObjectURL(document.getElementById('tee-image-team').files[0])}
-                    window.updateTee(window.teeColor, file, window.teeSize, window.teeTeam, file2)
-                }
-                async function TeeTexture()
-                {
-                    var file = undefined
-                    if(document.getElementById('tee-image').files[0] != undefined){file = URL.createObjectURL(document.getElementById('tee-image').files[0])}
-
-                    var file2 = undefined
-                    if(document.getElementById('tee-image-team').files[0] != undefined){file2 = URL.createObjectURL(document.getElementById('tee-image-team').files[0])}
-
-                    const result = await window.teamColoredTexture(window.teeColor, file, window.teeTeam, file2);
-                    return result
-                }
-
-                document.getElementById('tee-texture-download').addEventListener('click', async (e) =>
-                {
-                    var link = document.createElement('a');
-                    link.download = 'Custom_Splatfest_Tee_Alb.png';
-                    link.href = (await TeeTexture()).source.data.toDataURL()
-                    link.click();
-                })
-                document.getElementById('tee-model-download').addEventListener('click', async (e) =>
-                {
-                    (await TeeTexture()).source.data.toBlob(async (blob) =>
+    <div style="display: flex;">
+        <div style="width: fit-content; min-height: 300px; background-color: #111; margin-top: 30px; margin-left: 30px; display: flex; border-radius: 30px;">
+            <div>
+                <script type="module">
+                    // Setup Canvas \\
+                    window.tee_customizer = document.getElementById("tee_customizer");
+                    window.tee_customizer.width =700;
+                    window.tee_customizer.height = 500;
+                </script>
+                <script type="module" src="./Tee.js"></script>
+                <script src="./Zip.js"></script>
+                <script>
+                    window.teeColor = document.getElementById('tee-color').value
+                    window.teeSize = document.getElementById('tee-size').value
+                    window.teeTeam = document.getElementById('tee-team').value
+                </script>
+                <script type="module">
+                    function changeTee()
                     {
-                        var textUrl = await URL.createObjectURL(blob)
-                        let z = new Zip('Custom Splatfest Tee '+teeSize);
-
-                        console.log(textUrl)
-                        var filesArray=
-                        [
-                            {path:textUrl, name:'m_body_alb.png'},
-                            {path:'custom_tee/model/m_body_emm.png', name:'m_body_emm.png'},
-                            {path:'custom_tee/model/m_body_nrm.png', name:'m_body_nrm.png'},
-                            {path:'custom_tee/model/m_body_tcl.png', name:'m_body_tcl.png'},
-                            {path:'custom_tee/model/m_body_rgh.png', name:'m_body_rgh.png'},
-                        ];
-                        
-                        if(teeSize == 'F')
-                        {
-                            filesArray.push({path:'custom_tee/Female Tee.dae', name:'Fest Tee.dae'})
-                        }
-                        if(teeSize == 'M')
-                        {
-                            filesArray.push({path:'custom_tee/Male Tee.dae', name:'Fest Tee.dae'})
-                        }
-                        if(teeSize == 'Large')
-                        {
-                            filesArray.push({path:'custom_tee/Large Tee.dae', name:'Fest Tee.dae'})
-                        }
-
-                        z.fecth2zip(filesArray,'');
-
-                        setTimeout(() =>
-                        {
-                            z.makeZip()
-                        }, 1000)
+                        var file = undefined
+                        if(document.getElementById('tee-image').files[0] != undefined){file = URL.createObjectURL(document.getElementById('tee-image').files[0])}
+    
+                        var file2 = undefined
+                        if(document.getElementById('tee-image-team').files[0] != undefined){file2 = URL.createObjectURL(document.getElementById('tee-image-team').files[0])}
+                        window.updateTee(window.teeColor, file, window.teeSize, window.teeTeam, file2)
+                    }
+                    async function TeeTexture()
+                    {
+                        var file = undefined
+                        if(document.getElementById('tee-image').files[0] != undefined){file = URL.createObjectURL(document.getElementById('tee-image').files[0])}
+    
+                        var file2 = undefined
+                        if(document.getElementById('tee-image-team').files[0] != undefined){file2 = URL.createObjectURL(document.getElementById('tee-image-team').files[0])}
+    
+                        const result = await window.teamColoredTexture(window.teeColor, file, window.teeTeam, file2);
+                        return result
+                    }
+    
+                    document.getElementById('tee-texture-download').addEventListener('click', async (e) =>
+                    {
+                        var link = document.createElement('a');
+                        link.download = 'Custom_Splatfest_Tee_Alb.png';
+                        link.href = (await TeeTexture()).source.data.toDataURL()
+                        link.click();
                     })
-                })
-
-                function updateImageTee()
-                {
-                    if(document.getElementById('tee-image').files[0] == undefined){return}
-                    var fr = new FileReader();
-                    fr.onload = function () {
-                        document.getElementById('tee-image-preview').src = fr.result;
-                        document.getElementById('tee-image-preview').style.display = 'block'
-                    }
-                    fr.readAsDataURL(document.getElementById('tee-image').files[0]);
-                    
-                    //window.updateTee(window.teeColor, URL.createObjectURL(document.getElementById('tee-image').files[0]), window.teeSize)
-                    changeTee()
-                }
-                updateImageTee()
-                updateCustomTeamTee()
-                document.getElementById('tee-image').addEventListener('input', (e) => {updateImageTee()})
-
-
-                document.getElementById('tee-image-team').addEventListener('input', (e) =>
-                {
-                    document.getElementById('tee-team').selectedIndex = 3
-                    document.getElementById('tee-team').value = 'custom'
-                    updateCustomTeamTee()
-                })
-
-                function updateCustomTeamTee()
-                {
-                    if(document.getElementById('tee-image-team').files[0] == undefined){return}
-                    var fr = new FileReader();
-                    fr.onload = function () {
-                        document.getElementById('tee-image-team-preview').src = fr.result;
-                        document.getElementById('tee-image-team-preview').style.display = 'block'
-                    }
-                    fr.readAsDataURL(document.getElementById('tee-image-team').files[0]);
-                    
-                    //window.updateTee(window.teeColor, URL.createObjectURL(document.getElementById('tee-image').files[0]), window.teeSize)
-                    changeTee()
-                }
-
-                document.getElementById('tee-color').addEventListener('input', (e) =>
-                {
-                    window.teeColor = e.target.value;
-                    changeTee();
-                    document.getElementById('tee-color-display').style.background = e.target.value;
-                })
-                document.getElementById('tee-color-display').style.background = document.getElementById('tee-color').value;
-                document.getElementById('tee-size').addEventListener('change', (e) =>
-                {
-                    window.teeSize = e.target.value;
-                    changeTee()
-                })
-                document.getElementById('tee-team').addEventListener('change', (e) =>
-                {
-                    window.teeTeam = e.target.value;
-                    changeTee();
-                    if(e.target.value == 'custom')
+                    document.getElementById('tee-model-download').addEventListener('click', async (e) =>
                     {
-                        document.getElementById('tee-image-team').click()
+                        (await TeeTexture()).source.data.toBlob(async (blob) =>
+                        {
+                            var textUrl = await URL.createObjectURL(blob)
+                            let z = new Zip('Custom Splatfest Tee '+teeSize);
+    
+                            console.log(textUrl)
+                            var filesArray=
+                            [
+                                {path:textUrl, name:'m_body_alb.png'},
+                                {path:'custom_tee/model/m_body_emm.png', name:'m_body_emm.png'},
+                                {path:'custom_tee/model/m_body_nrm.png', name:'m_body_nrm.png'},
+                                {path:'custom_tee/model/m_body_tcl.png', name:'m_body_tcl.png'},
+                                {path:'custom_tee/model/m_body_rgh.png', name:'m_body_rgh.png'},
+                            ];
+                            
+                            if(teeSize == 'F')
+                            {
+                                filesArray.push({path:'custom_tee/Female Tee.dae', name:'Fest Tee.dae'})
+                            }
+                            if(teeSize == 'M')
+                            {
+                                filesArray.push({path:'custom_tee/Male Tee.dae', name:'Fest Tee.dae'})
+                            }
+                            if(teeSize == 'Large')
+                            {
+                                filesArray.push({path:'custom_tee/Large Tee.dae', name:'Fest Tee.dae'})
+                            }
+    
+                            z.fecth2zip(filesArray,'');
+    
+                            setTimeout(() =>
+                            {
+                                z.makeZip()
+                            }, 1000)
+                        })
+                    })
+    
+                    function updateImageTee()
+                    {
+                        if(document.getElementById('tee-image').files[0] == undefined){return}
+                        var fr = new FileReader();
+                        fr.onload = function () {
+                            document.getElementById('tee-image-preview').src = fr.result;
+                            document.getElementById('tee-image-preview').style.display = 'block'
+                        }
+                        fr.readAsDataURL(document.getElementById('tee-image').files[0]);
+                        
+                        //window.updateTee(window.teeColor, URL.createObjectURL(document.getElementById('tee-image').files[0]), window.teeSize)
+                        changeTee()
                     }
-                })
-            </script>
+                    updateImageTee()
+                    updateCustomTeamTee()
+                    document.getElementById('tee-image').addEventListener('input', (e) => {updateImageTee()})
+                    document.getElementById('tee-image-size').addEventListener('input', (e) => {updateImageTee()})
+    
+    
+                    document.getElementById('tee-image-team').addEventListener('input', (e) =>
+                    {
+                        document.getElementById('tee-team').selectedIndex = 3
+                        document.getElementById('tee-team').value = 'custom'
+                        updateCustomTeamTee()
+                    })
+    
+                    function updateCustomTeamTee()
+                    {
+                        if(document.getElementById('tee-image-team').files[0] == undefined){return}
+                        var fr = new FileReader();
+                        fr.onload = function () {
+                            document.getElementById('tee-image-team-preview').src = fr.result;
+                            document.getElementById('tee-image-team-preview').style.display = 'block'
+                        }
+                        fr.readAsDataURL(document.getElementById('tee-image-team').files[0]);
+                        
+                        //window.updateTee(window.teeColor, URL.createObjectURL(document.getElementById('tee-image').files[0]), window.teeSize)
+                        changeTee()
+                    }
+    
+                    document.getElementById('tee-color').addEventListener('input', (e) =>
+                    {
+                        window.teeColor = e.target.value;
+                        changeTee();
+                        document.getElementById('tee-color-display').style.background = e.target.value;
+                    })
+                    document.getElementById('tee-color-display').style.background = document.getElementById('tee-color').value;
+                    document.getElementById('tee-size').addEventListener('change', (e) =>
+                    {
+                        window.teeSize = e.target.value;
+                        changeTee()
+                    })
+                    document.getElementById('tee-team').addEventListener('change', (e) =>
+                    {
+                        window.teeTeam = e.target.value;
+                        changeTee();
+                        if(e.target.value == 'custom')
+                        {
+                            document.getElementById('tee-image-team').click()
+                        }
+                    })
+                </script>
+            </div>
+            <div style="width: 100%; margin-left: 0; margin-right: 10px; text-align: center; width: 600px; padding: 50px;">
+                <h2 id="extrude-title-G" style="text-align: center; font-weight: 900; font-size: 100px; color: #dadada; margin-top: 0px; margin-bottom: 20px;">Splatfest Tee Maker</h2>
+                <span style="line-height: 25px; font-size: large;">Create your custom splatfest tee with your color and your logo.</span>
+                <canvas id="tee_customizer" style="position: relative; pointer-events: none; margin-top: -350px; margin-bottom: -350px; margin-left: -350px;"></canvas>
+                <div style="border-radius: 10px; background-color: #333333; padding: 20px; display: flex; width: fit-content; margin-top: 30px;">
+                    <div>
+                        <div style="height: 30px; display: flex; width: fit-content;">
+                            <span style="min-width: 125px; text-align: start;">Color</span>
+                            <input value="#e87d0d" id="tee-color" style="display: none;" type="color">
+                            <button id="tee-color-display" onclick="document.getElementById('tee-color').click()" style="margin-left: 0; border-radius: 10px; border: #00000000; background: #e87d0d; box-shadow: none;"></button>
+                        </div>
+                        <div style="height: 30px; display: flex; margin-top: 10px; width: fit-content;">
+                            <span style="min-width: 125px; text-align: start;">Size</span>
+                            <select id="tee-size" style="border: #00000000; border-radius: 10px; background-color: #e87d0d; color: #141414; font-size: medium; height: 30px; cursor: pointer;">
+                                <option value="F">Female</option>
+                                <option value="M">Male</option>
+                                <option value="Large">Large</option>
+                            </select>   
+                        </div>
+                        <div style="height: 30px; display: flex; margin-top: 10px; width: fit-content;">
+                            <span style="min-width: 125px; text-align: start;">Logo</span>
+                            <input id="tee-image" style="display: none;" type="file" accept="image/*" max="1" maxlength="1">
+                            <button onclick="document.getElementById('tee-image').click()" style="height: 30px; margin-left: 0; border-radius: 10px; border: #00000000; background:#265787; box-shadow: none; padding: 5px; font-size: medium; color: #141414;">Browse</button>
+                        </div>
+                        <div id="tee-image-size" style="height: 30px; display: flex; margin-top: 10px; width: fit-content;">
+                            <span style="min-width: 125px; text-align: start;">Logo Size</span>
+                            <input type="range" min="-20" max="100" value="0" oninput="window.teeLogoSize = Number(this.value)/100;">
+                        </div>
+                        <div style="height: 30px; display: flex; margin-top: 10px; width: fit-content; ">
+                            <span style="min-width: 125px; text-align: start;">Idol Team</span>
+                            <select id="tee-team" style="border: #00000000; border-radius: 10px; background-color: #e87d0d; color: #141414; font-size: medium; height: 30px; cursor: pointer;">
+                                <option value="shiver">Shiver</option>
+                                <option value="frye">Frye</option>
+                                <option value="big man">Big Man</option>
+                                <option value="custom">Custom</option>
+                            </select>   
+                        </div>
+                        <div style="height: 30px; display: flex; margin-top: 10px; width: fit-content;">
+                            <span style="min-width: 125px; text-align: start;">Custom Team</span>
+                            <input id="tee-image-team" style="display: none;" type="file" accept="image/*" max="1" maxlength="1">
+                            <button onclick="document.getElementById('tee-image-team').click()" style="height: 30px; margin-left: 0; border-radius: 10px; border: #00000000; background:#265787; box-shadow: none; padding: 5px; font-size: medium; color: #141414;">Browse</button>
+                        </div>
+                    </div>
+                    <div>
+                        <img onclick="document.getElementById('tee-image').click()" id="tee-image-preview" style="border-radius: 10px; height: 100px; display: none; margin-left: 30px; cursor: pointer;">
+                        <img onclick="document.getElementById('tee-image-team').click()" id="tee-image-team-preview" style="border-radius: 10px; height: 100px; display: none; margin-left: 30px; cursor: pointer;">    
+                    </div>
+                    <div style="text-align: start; margin-left: 20px; width: fit-content;">
+                        <button id="tee-texture-download" style="margin:0;margin-bottom: 20px; border-radius: 10px; font-size: medium; text-align: start;">Download Texture</button>
+                        <button id="tee-model-download" style="margin:0;margin-bottom: 20px; border-radius: 10px; font-size: medium; text-align: start;">Download Model</button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div style="width: 100%; margin-left: 0; margin-right: 10px; text-align: center; width: 600px; padding: 50px;">
-            <h2 id="extrude-title-G" style="text-align: center; font-weight: 900; font-size: 100px; color: #dadada; margin-top: 0px; margin-bottom: 20px;">Splatfest Tee Maker</h2>
-            <span style="line-height: 25px; font-size: large;">Create your custom splatfest tee with your color and your logo.</span>
-            <canvas id="tee_customizer" style="position: relative; pointer-events: none; margin-top: -350px; margin-bottom: -350px; margin-left: -350px;"></canvas>
-            <div style="border-radius: 10px; background-color: #333333; padding: 20px; display: flex; width: fit-content; margin-top: 30px;">
-                <div>
-                    <div style="height: 30px; display: flex; width: fit-content;">
-                        <span style="min-width: 125px; text-align: start;">Color</span>
-                        <input value="#e87d0d" id="tee-color" style="display: none;" type="color">
-                        <button id="tee-color-display" onclick="document.getElementById('tee-color').click()" style="margin-left: 0; border-radius: 10px; border: #00000000; background: #e87d0d; box-shadow: none;"></button>
-                    </div>
-                    <div style="height: 30px; display: flex; margin-top: 10px; width: fit-content;">
-                        <span style="min-width: 125px; text-align: start;">Size</span>
-                        <select id="tee-size" style="border: #00000000; border-radius: 10px; background-color: #e87d0d; color: #141414; font-size: medium; height: 30px; cursor: pointer;">
-                            <option value="F">Female</option>
-                            <option value="M">Male</option>
-                            <option value="Large">Large</option>
-                        </select>   
-                    </div>
-                    <div style="height: 30px; display: flex; margin-top: 10px; width: fit-content;">
-                        <span style="min-width: 125px; text-align: start;">Logo</span>
-                        <input id="tee-image" style="display: none;" type="file" accept="image/*" max="1" maxlength="1">
-                        <button onclick="document.getElementById('tee-image').click()" style="height: 30px; margin-left: 0; border-radius: 10px; border: #00000000; background:#265787; box-shadow: none; padding: 5px; font-size: medium; color: #141414;">Browse</button>
-                    </div>
-                    <div style="height: 30px; display: flex; margin-top: 10px; width: fit-content; ">
-                        <span style="min-width: 125px; text-align: start;">Idol Team</span>
-                        <select id="tee-team" style="border: #00000000; border-radius: 10px; background-color: #e87d0d; color: #141414; font-size: medium; height: 30px; cursor: pointer;">
-                            <option value="shiver">Shiver</option>
-                            <option value="frye">Frye</option>
-                            <option value="big man">Big Man</option>
-                            <option value="custom">Custom</option>
-                        </select>   
-                    </div>
-                    <div style="height: 30px; display: flex; margin-top: 10px; width: fit-content;">
-                        <span style="min-width: 125px; text-align: start;">Custom Team</span>
-                        <input id="tee-image-team" style="display: none;" type="file" accept="image/*" max="1" maxlength="1">
-                        <button onclick="document.getElementById('tee-image-team').click()" style="height: 30px; margin-left: 0; border-radius: 10px; border: #00000000; background:#265787; box-shadow: none; padding: 5px; font-size: medium; color: #141414;">Browse</button>
-                    </div>
-                </div>
-                <div>
-                    <img onclick="document.getElementById('tee-image').click()" id="tee-image-preview" style="border-radius: 10px; height: 100px; display: none; margin-left: 30px; cursor: pointer;">
-                    <img onclick="document.getElementById('tee-image-team').click()" id="tee-image-team-preview" style="border-radius: 10px; height: 100px; display: none; margin-left: 30px; cursor: pointer;">    
-                </div>
-                <div style="text-align: start; margin-left: 20px; width: fit-content;">
-                    <button id="tee-texture-download" style="margin:0;margin-bottom: 20px; border-radius: 10px; font-size: medium; text-align: start;">Download Texture</button>
-                    <button id="tee-model-download" style="margin:0;margin-bottom: 20px; border-radius: 10px; font-size: medium; text-align: start;">Download Model</button>
-                </div>
+
+        <div style="width: fit-content; min-height: 300px; background-color: #111; margin-top: 30px; margin-left: 30px; display: flex; border-radius: 30px;">
+            <div style="width: 100%; margin-left: 0; margin-right: 10px; text-align: center; width: 600px; padding: 50px;">
+                <h2 id="extrude-title-G" style="text-align: center; font-weight: 900; font-size: 100px; color: #dadada; margin-top: 0px; margin-bottom: 20px;">Splatoon Resources</h2>
+                <span style="line-height: 25px; font-size: large;">Find, Download & Preview! Explore the resources pages to find your Splatoon 3 locker, gear, cloth, shoes, weapon and NPC model. All of these models can be auto set up with the Splatoon Model Importer add-on.</span>
+
+                <img id="resource-pub" src="./resource-screenshots/clotha.png" style="border-radius: 10px; width: 100%; margin-top: 30px; cursor: pointer; z-index: 5;">
+                <script>
+                    const screenshotList = ['cloth.png','clotha.png','geara.png','head.png','lockera.png','lockerb.png','lockerc.png','npca.png','npcb.png','shoes.png','shoesa.png','weapon.png']
+                    var screenIndex = 0
+                    document.getElementById('resource-pub').addEventListener('mouseenter', () =>
+                    {
+                        screenIndex+=1;
+                        if(screenIndex > screenshotList.length-1){screenIndex = 0}
+
+                        document.getElementById('resource-pub').src = './resource-screenshots/'+screenshotList[screenIndex];
+                    })
+                </script>
+
+                <button onclick="window.open('./resources', '_blank')" style="background: #265787; box-shadow: none; margin-top: 50px;">Go to Resources</button>
             </div>
         </div>
     </div>

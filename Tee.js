@@ -91,6 +91,8 @@ function rotateAndPaintImage(context, image, angleInRad , positionX, positionY, 
 }
 async function teamColoredTexture(tcl='#FF0000', image, team, teamImage)
 {
+    var size = window.teeLogoSize*500
+
     var _c = document.createElement('canvas');
     _c.width = _c.height = 512
 
@@ -126,7 +128,7 @@ async function teamColoredTexture(tcl='#FF0000', image, team, teamImage)
     ctx.drawImage(_c, 0, 0, 512*4, 512*4)
     if(image != undefined)
     {
-        ctx.drawImage(await loadImage(image), 512*4*0.15, 512*4*0.16, 512*4*0.15, 512*4*0.15)
+        ctx.drawImage(await loadImage(image), 512*4*0.15-size/2, 512*4*0.16-size/2, 512*4*0.15+size, 512*4*0.15+size)
     }
 
     // ctx.drawImage(await loadImage(window.location+team+'.png'), 512*4*0.87, 512*4*0.665, 512*4*0.05, 512*4*0.05)
@@ -154,6 +156,7 @@ async function teamColoredTexture(tcl='#FF0000', image, team, teamImage)
 
     return albedo
 }
+window.teeLogoSize = 0
 window.teamColoredTexture = teamColoredTexture
 
 const textureLoader = new THREE.TextureLoader();
