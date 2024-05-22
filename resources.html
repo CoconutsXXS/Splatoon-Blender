@@ -260,9 +260,10 @@
                     window.selectFull(element, rawN)
                 })
 
-                element.childNodes[1].style.display = 'block'
-                element.childNodes[3].style.display = 'none'
-                element.childNodes[3].src = './resources/'+window.directory.slice(0, -1)+' Image/'+n+'.png'
+                element.childNodes[1].style.display = 'none'
+                element.childNodes[3].style.display = 'block'
+                // element.childNodes[3].src = './resources/'+window.directory.slice(0, -1)+' Image/'+n+'.png'
+                element.childNodes[3].src = './resources/'+window.directory.slice(0, -1)+' Image/Dummy.png'
 
                 let startImagePath = './resources/'+window.directory.slice(0, -1)+' Image/'
 
@@ -274,9 +275,14 @@
                 if(window.directory == 'Cloth/'){n = 'Clt_'+n.split(' ')[0].replace('_M', '').replace('_F', '')}
                 if(window.directory == 'Shoes/'){n = 'Shs_'+n.split(' ')[0].replace('_M', '').replace('_F', '')}
 
-                iconFinding()
+                // iconFinding()
                 async function iconFinding()
                 {
+                    if(element.childNodes[3].getAttribute('loaded') == 'true'){return;}
+
+                    console.log('a');
+                    element.childNodes[3].setAttribute('loaded', 'true');
+
                     element.childNodes[3].src = startImagePath+n+'.png'
                     if(await imageExist(element.childNodes[3].src)){element.childNodes[3].style.display = 'block'; element.childNodes[1].style.display = 'none'; return}
 
@@ -302,6 +308,7 @@
                     element.childNodes[1].style.display = 'none'
                 }
                 
+                element.childNodes[3].onload = function(){iconFinding()}
                 continue;
 
                 fetch(startImagePath+n+'.png')
@@ -462,7 +469,7 @@
     <div id="list" style="display: none; border-radius: 20px; background-color: #1f1f1f00; scrollbar-color: #1f1F1F #3f3F3F;">
         <div id="default" style="max-width: 300px; width: 300px; display:inline-flex; margin: 10px; border-radius: 15px; background-color: #2f2f2f; border-top-right-radius: 50px; border-bottom-right-radius: 50px;">
             <canvas mode-name="Fig_PaintBrush00_Cstm04" width="85px" height="85px" style="cursor: move;"></canvas>
-            <img width="85px" height="85px" style="cursor: move;">
+            <img loading="lazy" width="85px" height="85px" style="cursor: move;">
             <div style="margin-top: 10px;margin-left: 10px; line-break: anywhere; width: 110px;">
                 <span style="font-size: large; cursor: pointer;" class="clickable-text">Loading...</span>
                 <br>
@@ -480,7 +487,7 @@
     <div id="list-heavy" style="display: none; border-radius: 20px; background-color: #1f1f1f00; scrollbar-color: #1f1F1F #3f3F3F;">
         <div id="heavy-default" style="max-width: 600px; width: 600px; display:inline-flex; display: none; margin: 10px; border-radius: 15px; background-color: #2f2f2f;">
             <canvas width="355.55px" height="200px" style="cursor: move;"></canvas>
-            <img width="355.55px" height="200px" style="cursor: move;">
+            <img loading="lazy" width="355.55px" height="200px" style="cursor: move;">
             <div style="margin-top: 10px;margin-left: 10px; line-break: anywhere; width: 250px;">
                 <span style="font-size:x-large; color: #f4f4f490; font-weight: 700; cursor: pointer;" class="clickable-text">Loading...</span>
                 <br>
