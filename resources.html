@@ -28,7 +28,7 @@
             <div style="top:0; position: absolute; width: 100vw; height: 100vh; pointer-events: none; display: flex;">
                 <div style="background-color: #1f1f1fcf; width: 40vw; min-width: 350px; max-width: 500px; pointer-events:all;">
                     <div style="display: flex;">
-                        <button class="resource-button" onclick="document.getElementById('full-screen').style.display = 'none'" style="width: 50px; height: 50px; margin-top: 20px; padding: 0;">
+                        <button class="resource-button" onclick="document.getElementById('full-screen').style.display = 'none'; window.deleteQueryParameter('item');" style="width: 50px; height: 50px; margin-top: 20px; padding: 0;">
                             <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 212.982 212.982" style="padding: 12.5px; width:25px; height: 25px" xml:space="preserve">
                             <g id="Close">
                                 <path style="fill-rule:evenodd;clip-rule:evenodd;" d="M131.804,106.491l75.936-75.936c6.99-6.99,6.99-18.323,0-25.312
@@ -125,38 +125,46 @@
                     isBig: false
                 },
             ]
-            let currentSection = 0
+            window.currentSection = 0
             document.getElementsByClassName('wall-button')[0].addEventListener('click', () =>
             {
-                currentSection--;
+                window.currentSection--;
                 updateSection()
             })
             document.getElementsByClassName('wall-button')[1].addEventListener('click', () =>
             {
-                currentSection++;
+                window.currentSection++;
                 updateSection()
             })
 
             function updateSection()
             {
-                if(currentSection < 0){currentSection=0; return}
-                if(currentSection > sectionColor.length-1){currentSection=sectionColor.length-1; return}
+                if(window.currentSection < 0){window.currentSection=0; return}
+                if(window.currentSection > sectionColor.length-1){window.currentSection=sectionColor.length-1; return}
 
-                document.querySelector(':root').style.setProperty('--m-color-a', '#'+sectionColor[currentSection].colorA)
-                document.querySelector(':root').style.setProperty('--m-color-b', '#'+sectionColor[currentSection].colorB)
-                document.querySelector(':root').style.setProperty('--m-color-a-alpha', '#'+sectionColor[currentSection].colorA+'50')
-                document.querySelector(':root').style.setProperty('--m-color-b-alpha', '#'+sectionColor[currentSection].colorB+'50')
+                document.querySelector(':root').style.setProperty('--m-color-a', '#'+sectionColor[window.currentSection].colorA)
+                document.querySelector(':root').style.setProperty('--m-color-b', '#'+sectionColor[window.currentSection].colorB)
+                document.querySelector(':root').style.setProperty('--m-color-a-alpha', '#'+sectionColor[window.currentSection].colorA+'50')
+                document.querySelector(':root').style.setProperty('--m-color-b-alpha', '#'+sectionColor[window.currentSection].colorB+'50')
 
-                document.getElementById('resource-name').innerText = sectionColor[currentSection].name
+                document.getElementById('resource-name').innerText = sectionColor[window.currentSection].name
 
-                window.directory = sectionColor[currentSection].directory
-                window.list = sectionColor[currentSection].list
-                window.isBig = sectionColor[currentSection].isBig
+                window.directory = sectionColor[window.currentSection].directory
+                window.list = sectionColor[window.currentSection].list
+                window.isBig = sectionColor[window.currentSection].isBig
                 
                 window.updateAllModels()
+                window.setQueryParameter('list', window.currentSection.toString());
             }
 
-            window.addEventListener('load', () => updateSection())
+            window.addEventListener('load', () =>
+            {
+                if(window.getQueryParameter('list') != null)
+                {
+                    window.currentSection = Number(window.getQueryParameter('list'));
+                }
+                updateSection();
+            })
         </script>
     </div>
 
@@ -259,6 +267,10 @@
                 {
                     window.selectFull(element, rawN)
                 })
+                if(window.getQueryParameter('item') == n)
+                {
+                    element.childNodes[5].childNodes[1].click();
+                }
 
                 element.childNodes[1].style.display = 'none'
                 element.childNodes[3].style.display = 'block'
@@ -441,7 +453,7 @@
 
             child.childNodes[7].disabled = false
             scene.loop();
-            if(directDownload){ child.childNodes[7].click; }
+            if(directDownload){ child.childNodes[7].click(); }
         }
     
         async function imageExist(path)
@@ -541,6 +553,40 @@
             document.getElementById('big-download-button').onclick = () => {element.childNodes[7].click()}
 
             scene.loop()
+
+            window.setQueryParameter('item', element.childNodes[5].childNodes[5].innerText)
+            window.setQueryParameter('list', window.currentSection.toString())
+        }
+
+        window.deleteQueryParameter = function(name)
+        {
+            if ('URLSearchParams' in window)
+            {
+                const url = new URL(window.location)
+                url.searchParams.delete(name);
+                history.pushState(null, '', url);
+            }
+        }
+        window.setQueryParameter = function(name, value)
+        {
+            if ('URLSearchParams' in window)
+            {
+                const url = new URL(window.location)
+                url.searchParams.set(name, value)
+                history.pushState(null, '', url);
+            }
+        }
+        window.getQueryParameter = function(name)
+        {
+            if ('URLSearchParams' in window)
+            {
+                const url = new URL(window.location)
+                return url.searchParams.get(name);
+            }
+            else
+            {
+                return null;
+            }
         }
     </script>
 
