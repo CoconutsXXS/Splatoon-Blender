@@ -1,0 +1,94 @@
+body
+{
+    background-image: url(./background.png);
+
+    background-size: cover;
+    background-position: 50% 0%;
+
+    min-height: 100vh;
+}
+
+.band
+{
+    background-color: transparent;
+    background-image: linear-gradient(0deg, transparent, #000);
+    background-size: cover;
+    background-repeat: no-repeat;
+    animation: band-intro 1s;
+    animation-duration: 1s;
+    z-index: 1;
+    transition: all 2s;
+}
+@keyframes band-intro
+{
+    0%{background-color: #000;}
+    100%{background-color: #00000000;}
+}
+
+a
+{
+    color: #265787;
+    font-weight: 500;
+    user-select:text;
+    pointer-events: all;
+}
+
+
+#tuto-screen
+{
+    position: fixed; width: 100%; height: 100%; top: 0; left: 0;
+    z-index: -2;
+}
+#tuto-screen > *
+{
+    position: relative; top: 50%; left: 50%; translate: -50% -50%;
+    user-select: none;
+}
+
+.step{animation: linear-fade 1s;}
+@keyframes linear-fade{0%{opacity: 0;} 100%{opacity: 1;}}
+
+div.step > *
+{
+    position: relative; top: 50%; left: 50%; translate: -50% -50%;
+}
+div.step
+{
+    width: 100%; height: 100%;
+}
+
+div.step > .subtitle
+{
+    position: fixed;
+    text-align: center;
+    width: inherit;
+    max-width: 70%;
+    min-width: 300px;
+    left: 15%;
+    top: 100%;
+    translate: 0 calc(-100% - 50px);
+    user-select: all;
+}
+
+.orange{color: #e87d0dCC;}
+.twinkle{animation: twinkle 1.5s infinite ease-in-out;}
+@keyframes twinkle
+{
+    0%{filter: brightness(2.5) drop-shadow(#e87d0d 0px 0px 10px);}
+    50%{filter: brightness(1) drop-shadow(#e87d0d00 0px 0px 0px);}
+    100%{filter: brightness(2.5) drop-shadow(#e87d0d 0px 0px 10px);}
+}
+.twinkle-alpha{animation: twinkle-alpha 1.5s infinite ease-in-out;}
+@keyframes twinkle-alpha
+{
+    0%{filter: opacity(0);}
+    50%{filter: opacity(1);}
+    100%{filter: opacity(0);}
+}
+.twinkle-alpha-delay{animation: twinkle-alpha-delay 1.5s infinite ease-in-out;}
+@keyframes twinkle-alpha-delay
+{
+    0%{filter: opacity(1);}
+    50%{filter: opacity(0);}
+    100%{filter: opacity(1);}
+}

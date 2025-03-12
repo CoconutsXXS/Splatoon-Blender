@@ -54,10 +54,23 @@ h3
     font-family: Barlow;
     color: #ffffff50;
 }
+h6
+{
+    font-weight:normal;
+    font-family: Barlow;
+    font-size: medium;
+    color: #ffffff50;
+}
 span
 {
     font-family: Barlow;
     color: #ffffff50;
+}
+p
+{
+    font-family: Barlow;
+    color: #ffffff70;
+    font-size: large;
 }
 
 button
