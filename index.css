@@ -179,6 +179,31 @@ button.right:hover
     transform: none;
 }
 
+button.doc-button
+{
+    background: linear-gradient(180deg, #e87d0d, #265787);
+    background-size: 1000% 1000%;
+    background-position: 50% 70%;
+
+    position: relative; left: 50%; translate: -50% 0;
+
+    box-shadow: #e87e0d10 -5px 0px 40px, #26578740 20px 0px 30px;
+    height: 30px;
+    font-size: medium;
+    padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+button.doc-button:hover
+{
+    background: linear-gradient(180deg, #e87d0d, #265787);
+    background-size: 300% 300%;
+    background-position: 50% 70%;
+
+    box-shadow: #26578750 0px -2px 30px, #e87e0d20 0px 6px 40px;
+    transform: none;
+}
+
 
 .zoomable
 {

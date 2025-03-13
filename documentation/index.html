@@ -24,10 +24,20 @@
 <body>
     <div class="band">
         <h1 id="huge-title" style="margin-bottom: 5px; margin-top: 100px;">Splatoon Blender</h1>
-        <span style="margin-bottom: 134px; font-size: medium; animation-name: fade; animation-duration: 1s;">Character Creator Add-On Documentation & Tutorial - <a target="_blank" href="https://drive.usercontent.google.com/download?id=1ESO53aROGguwqeiQoGGhdSTxz1fytKQ9">Download</a></span>
+        <span style="margin-bottom: 134px; font-size: medium; animation-name: fade; animation-duration: 1s;">Splatoon Blender Add-On Documentation & Tutorial - <a target="_blank" href="../index.html">Download</a></span>
     </div>
 
-    <div id="tuto-screen">
+    <div id="tutorial-selection">
+        <div class="tutorial-button" tutorial-id="character-creator">
+            <img width="180" height="180" src="./character-creation-icon.png">
+            <div>
+                <h3>Character Creation & Posing</h3>
+                <p>How to create a character (inkling, octoling, squid or octopus) quickly and how to create poses for renders/animations.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="tutorial" id="character-creator">
         <div class="step"><h6 style="text-align: center;user-select: none;">Click to start the quickstart tutorial</h6></div>
         <div class="step">
             <img src="./add-menue.png">
@@ -74,7 +84,7 @@
             <p class="subtitle">If you accidently close the customization menue without finishing just delete entirely the character and create it again: <b class="orange">all your customization settings will reappear</b>. That also allows you to create squid/octopus form for your character quickly.</p>
         </div>
         <div class="step">
-            <img src="./pose-exemple.png" style="height: 50%;">
+            <img src="./pose-exemple-a.png" style="height: 50%;">
             <p class="subtitle">Let's explore the armature to make poses and animations. This armature is game-accurate and easy to use.</p>
         </div>
         <div class="step">
@@ -111,29 +121,96 @@
             <img src="./hair-bone-b.png" class="twinkle-alpha-delay" style="height: 50%; position: absolute;">
             <p class="subtitle">Another special bone is the hair sizer, next to the head. It's usefull for the human-to-squid transformation.</p>
         </div>
+        <div class="step">
+            <img src="./armature-layer.png" style="position: fixed; left: 100%; top: 100%; translate: calc(-100% - 10px) calc(-100% - 10px);">
+            <p class="subtitle">If your 3D layout feel too messy you can hide/show bones layers.</p>
+        </div>
+        <div class="step">
+            <img src="./face.png" style="height: 50%;">
+            <p class="subtitle">Now let's explore facial bones.</p>
+        </div>
+        <div class="step">
+            <img src="./face-bones.png" style="height: 75%;">
+            <p class="subtitle">Most of face's bones are meant to be <b class="orange">moved</b> and <b class="orange">rotated</b>.</p>
+        </div>
+        <div class="step">
+            <img src="./mouth-bones.png" style="height: 50%;">
+            <p class="subtitle">When the mouth is open you can adjust teeth position to make smiles for exemple.</p>
+        </div>
+        <div class="step">
+            <img src="./ears_bad.png" style="height: 50%;">
+            <img src="./ears_good.png" class="twinkle-alpha" style="height: 50%; position: absolute;">
+            <p class="subtitle">Ears are never moving in the game's animations but can be rotated to fit headgears like headphones.</p>
+        </div>
+        <div class="step">
+            <img src="./pose-exemple-b.png" style="height: 50%;">
+            <p class="subtitle">Now you have all the keys to make poses.</p>
+        </div>
+        <div class="step">
+            <img src="./modified-shader.png" style="height: 50%;">
+            <img src="./modified-shader-menue.png" style="position: fixed; left: 100%; top: 100%; translate: calc(-100% - 10px) calc(-100% - 10px);">
+            <p class="subtitle">If you want to have more control on your inkling customization you can edit shader properties.<br>Or even modify the shader graph: go to the shader panel, select the group node and press <b class="orange">tab</b>.</p>
+        </div>
     </div>
 
     <script>
-        let screen = document.getElementById("tuto-screen");
-        let steps = document.getElementsByClassName("step");
-        let step = 0;
+        for(var s of document.getElementsByClassName("step")) { s.style.display = 'none'; }
+        for(var t of document.getElementsByClassName("tutorial")) { t.style.display = 'none'; }
 
-        const textTags = ["P", "SPAN", "H1", "H2", "H3", "H4", "H5", "H6", "A"];
-        screen.addEventListener("mousedown", (e) =>
-        {
-            console.log(e.target.tagName)
-            if(textTags.includes(e.target.tagName)){return}
-            document.getElementsByClassName("band")[0].style.translate = '0 calc(-100% + 55px)';
-            steps[step].style.display = 'none';
-            step++;
-            steps[step].style.display = 'block';
-        })
+        document.onmousedown = (e) => { document.getElementsByClassName("band")[0].style.translate = '0 calc(-100% + 55px)'; }
+        
+        for(let b of document.getElementsByClassName("tutorial-button")) { b.onclick = () => openTutorial(b.getAttribute("tutorial-id")); }
 
-        for(var s of steps)
+        function openTutorial(name)
         {
-            s.style.display = 'none';
+            let screen = document.getElementById(name);
+            let steps =  screen.getElementsByClassName("step");
+            let step = 0;
+
+            document.getElementById('tutorial-selection').style.display = 'none';
+            screen.style.display = 'block';
+
+            const textTags = ["P", "SPAN", "H1", "H2", "H3", "H4", "H5", "H6", "A"];
+            screen.onmousedown = (e) =>
+            {
+                if(textTags.includes(e.target.tagName)){return}
+                document.getElementsByClassName("band")[0].style.translate = '0 calc(-100% + 55px)';
+                steps[step].style.opacity = '0';
+                const currentStep = step;
+                setTimeout(() =>
+                {
+                    steps[currentStep].style.display = 'none';
+                    if(steps.length == currentStep+1)
+                    {
+                        screen.style.display = 'none';
+                        return;
+                    }
+                }, 500);
+
+                step++;
+
+                if(steps.length == step)
+                {
+                    screen.style.opacity = '0';
+                    document.getElementById('tutorial-selection').style.display = 'block';
+                    return;
+                }
+
+                steps[step].style.opacity = '0';
+                steps[currentStep+1].style.display = 'block';
+                setTimeout(() =>
+                {
+                    steps[currentStep+1].style.opacity = '1';
+                }, 10);
+            }
+
+            for(var s of steps)
+            {
+                s.style.display = 'none';
+            }
+            steps[0].style.display = 'block';
+            steps[0].style.opacity = '1';
         }
-        steps[0].style.display = 'block';
     </script>
 </body>
 </html>
