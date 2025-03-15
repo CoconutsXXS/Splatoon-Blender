@@ -1,5 +1,5 @@
 // Importer Three.js
-import * as THREE from 'https://unpkg.com/three/build/three.module.js';
+import * as THREE from 'https://unpkg.com/three@0.174.0/build/three.module.js';
 const randInt = function(a, b)
 {
     return Math.floor((Math.random()*(b-a+1))+a)
