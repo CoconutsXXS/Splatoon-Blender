@@ -1,4 +1,4 @@
-import * as THREE from 'https://unpkg.com/three/build/three.module.js';
+import * as THREE from 'https://unpkg.com/three@0.174.0/build/three.module.js';
 import { ColladaLoader } from '../ColladaLoader.js';
 
 var startPath = 'https://coconutsxxs.github.io/Splatoon-Blender'
@@ -223,6 +223,8 @@ function asyncCollada(modelPath)
 }
 async function loadModel(name, scene, camera, adjustFactor = 1)
 {
+    resetPreviewRotation();
+    
     var path = startPath+'/resources/'+window.directory+name+'/';
     const center = new THREE.Object3D();
     scene.add(center)
@@ -455,6 +457,8 @@ async function loadScene(canvas)
     const center = new THREE.Object3D();
     scene.add(center)
     center.rotation.set(0.3, 0.3, 0)
+
+    window.resetPreviewRotation = () => {center.rotation.set(0.3, 0.3, 0)}
 
 
     // Render

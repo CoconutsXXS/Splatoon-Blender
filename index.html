@@ -390,25 +390,28 @@
             </div>
         </div>
 
-        <div style="width: fit-content; min-height: 300px; background-color: #111; margin-top: 30px; margin-left: 30px; display: flex; border-radius: 30px;">
-            <div style="width: 100%; margin-left: 0; margin-right: 10px; text-align: center; width: 600px; padding: 50px;">
-                <h2 id="extrude-title-G" style="text-align: center; font-weight: 900; font-size: 100px; color: #dadada; margin-top: 0px; margin-bottom: 20px;">Splatoon Resources</h2>
+        <div style="width: calc(100% - 800px); min-height: 300px; background-color: #111; margin-top: 30px; margin-left: 30px; display: flex; border-radius: 30px;">
+            <div style="width: 100%; margin-left: 0; margin-right: 10px; text-align: center; padding: 50px;">
+                <h2 id="extrude-title-green" style="text-align: center; font-weight: 900; font-size: 100px; color: #dadada; margin-top: 0px; margin-bottom: 20px;">Splatoon Resources</h2>
                 <span style="line-height: 25px; font-size: large;">Find, Download & Preview! Explore the resources pages to find your Splatoon 3 locker, gear, cloth, shoes, weapon and NPC model. All of these models can be auto set up with the Splatoon Model Importer add-on.</span>
 
                 <img id="resource-pub" src="./resource-screenshots/clotha.png" style="border-radius: 10px; width: 100%; margin-top: 30px; cursor: pointer; z-index: 5;">
                 <script>
                     const screenshotList = ['cloth.png','clotha.png','geara.png','head.png','lockera.png','lockerb.png','lockerc.png','npca.png','npcb.png','shoes.png','shoesa.png','weapon.png']
                     var screenIndex = 0
-                    document.getElementById('resource-pub').addEventListener('mouseenter', () =>
+                    document.getElementById('resource-pub').addEventListener('mouseenter', switchPub)
+                    document.getElementById('resource-pub').addEventListener('click', switchPub)
+                    
+                    function switchPub()
                     {
                         screenIndex+=1;
                         if(screenIndex > screenshotList.length-1){screenIndex = 0}
 
                         document.getElementById('resource-pub').src = './resource-screenshots/'+screenshotList[screenIndex];
-                    })
+                    }
                 </script>
 
-                <button onclick="window.open('./resources', '_blank')" style="background: #265787; box-shadow: none; margin-top: 50px;">Go to Resources</button>
+                <button onclick="window.open('./resources', '_blank')" id="resources-button">Go to Resources</button>
             </div>
         </div>
     </div>

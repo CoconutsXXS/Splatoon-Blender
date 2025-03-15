@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Splatoon Blender - Ink Colors</title>
+        <link rel="stylesheet" href="index.css">
+        <link rel="shortcut icon" href="Logo Low.png">
+    
+    
+        <meta content="Splatoon Blender - Ink Colors" property="og:title" />
+        <meta content="Every official ink colors used in Splatoon." property="og:description" />
+        <meta content="https://coconutsxxs.github.io/Splatoon-Blender/" property="og:url" />
+        <meta content="https://i.ibb.co/CV5mJ4V/Logo.png" property="og:image" />
+        <meta name="og:image" itemprop="image" content="https://i.ibb.co/CV5mJ4V/Logo.png">
+        <meta content="#e87e0d" data-react-helmet="true" name="theme-color" />
+    
+        <!-- Font -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <canvas id="preview-a"></canvas>
+        <script>
+            function lerp(a, b, f)
+            {
+                return a+(b-a)*f;
+            }
+            async function loadImage(src)
+            {
+                return new Promise((resolve) =>
+                {
+                    const image = document.createElement("img");
+                    image.addEventListener("load", (e) =>
+                    {
+                        resolve(image);
+                    });
+                    image.loading = "eager";
+                    image.src = src;
+                })
+            }
+            function mix(img, fac, ctx)
+            {
+                let canvas = document.createElement('canvas'); canvas.width = ctx.canvas.width; canvas.height = ctx.canvas.height;
+                let ctx2 = canvas.getContext("2d");
+                ctx2.drawImage(img, 0, 0, canvas.width, canvas.height)
+                const imgData = ctx2.getImageData(0, 0, canvas.width, canvas.height);
+
+                const opacityCanvas = document.createElement('canvas'); opacityCanvas.width = canvas.width; opacityCanvas.height = canvas.height;
+                const opacityCtx = opacityCanvas.getContext('2d');
+                opacityCtx.drawImage(fac, 0, 0, canvas.width, canvas.height)
+
+                const opacityData = opacityCtx.getImageData(0, 0, opacityCanvas.width, opacityCanvas.height);
+
+                for (let i = 0; i < imgData.data.length; i += 4)
+                {
+                    imgData.data[i+3] = opacityData.data[i];
+                }
+
+                ctx2.putImageData(imgData, 0, 0);
+
+                ctx.globalCompositeOperation = "source-over";
+                ctx.drawImage(canvas, 0, 0, ctx.canvas.width, ctx.canvas.height)
+            }
+            function add(imgA, imgB, ctx)
+            {
+                let canvas = document.createElement('canvas'); canvas.width = ctx.canvas.width; canvas.height = ctx.canvas.height;
+                let ctx2 = canvas.getContext("2d");
+                ctx2.drawImage(imgA, 0, 0, canvas.width, canvas.height)
+                ctx2.globalCompositeOperation = 'additive';
+                ctx2.drawImage(imgB, 0, 0, canvas.width, canvas.height)
+
+                return canvas;
+            }
+            function mix2color(colorA, colorB, fac, ctx)
+            {
+                // Color A
+                let canvas2 = document.createElement('canvas'); canvas2.width = ctx.canvas.width; canvas2.height = ctx.canvas.height;
+                let ctx2 = canvas2.getContext("2d");
+                ctx2.fillStyle = colorA;
+                ctx2.fillRect(0, 0, canvas2.width, canvas2.height)
+                const color2Data = ctx2.getImageData(0, 0, canvas2.width, canvas2.height);
+
+
+                // Color B
+                let canvas3 = document.createElement('canvas'); canvas3.width = ctx.canvas.width; canvas3.height = ctx.canvas.height;
+                let ctx3 = canvas3.getContext("2d");
+                ctx3.fillStyle = colorB;
+                ctx3.fillRect(0, 0, canvas3.width, canvas3.height)
+                const color3Data = ctx3.getImageData(0, 0, canvas3.width, canvas3.height);
+
+                // Fac
+                const opacityCanvas = document.createElement('canvas'); opacityCanvas.width = ctx.canvas.width; opacityCanvas.height = ctx.canvas.height;
+                const opacityCtx = opacityCanvas.getContext('2d');
+                opacityCtx.drawImage(fac, 0, 0, opacityCanvas.width, opacityCanvas.height)
+
+                const opacityData = opacityCtx.getImageData(0, 0, opacityCanvas.width, opacityCanvas.height);
+
+                for (let i = 0; i < opacityData.data.length; i += 4)
+                {
+                    color2Data.data[i] = lerp(color2Data.data[i], color3Data.data[i], opacityData.data[i]/255)
+                    color2Data.data[i+1] = lerp(color2Data.data[i+1], color3Data.data[i+1], opacityData.data[i]/255)
+                    color2Data.data[i+2] = lerp(color2Data.data[i+2], color3Data.data[i+2], opacityData.data[i]/255)
+                }
+
+                ctx2.putImageData(color2Data, 0, 0);
+
+                return canvas2;
+            }
+            function allPixel(img, color, alpha, ctx)
+            {
+                const canvas = document.createElement('canvas'); canvas.width = ctx.canvas.width; canvas.height = ctx.canvas.height;
+                const ctx2 = canvas.getContext('2d');
+                ctx2.drawImage(img, 0, 0, canvas.width, canvas.height)
+
+                const data = ctx2.getImageData(0, 0, canvas.width, canvas.height);
+
+                for (let i = 0; i < opacityData.data.length; i += 4)
+                {
+                    data.data[i+0] = color(data.data[i+0])
+                    data.data[i+1] = color(data.data[i+1])
+                    data.data[i+2] = color(data.data[i+2])
+                    data.data[i+3] = alpha(data.data[i+3])
+                }
+            }
+
+            setup()
+            async function setup()
+            {
+                let colorA = '#FF0000'
+                let colorB = '#00FF00'
+                let colorC = '#0000FF'
+
+                let tcl = await loadImage("./ssc layer/tcl/Image0001.png")
+                let trm = await loadImage("./ssc layer/trm/Image0001.png")
+                let alb = await loadImage("./ssc layer/alb/Image0001.png")
+                let thc = await loadImage("./ssc layer/thc/Image0001.png")
+                let enm = await loadImage("./ssc layer/enm/Image0001.png")
+
+                preview()
+                async function preview()
+                {
+                    let canvas = document.getElementById('preview-a');
+                    canvas.width = '1920'; canvas.height = '1280';
+                    ctx = canvas.getContext('2d');
+
+                    // trm
+                    ctx.drawImage(trm, 0, 0, ctx.canvas.width, ctx.canvas.height)
+                    ctx.globalCompositeOperation = "multiply";
+                    ctx.fillStyle = colorC
+                    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+
+                    // thc
+                    mix(alb, thc, ctx)
+
+                    // ink split
+                    mix(mix2color(colorA, colorB, enm, ctx), add(enm, tcl, ctx), ctx)
+
+                    // 
+                }
+            }
+        </script>
+    </body>
+</html>

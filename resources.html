@@ -9,7 +9,7 @@
 
 
     <meta content="Splatoon Blender - Resources" property="og:title" />
-    <meta content="Blender add-ons for Splatoon models, character, gears & dynamic inking! Download all the official Splatoon models ready to be imported in one click with the add-on!" property="og:description" />
+    <meta content="Every clothes, locker items and characters previewable and downloadable ready to be imported in 2 clicks!" property="og:description" />
     <meta content="https://coconutsxxs.github.io/Splatoon-Blender/Resources" property="og:url" />
     <meta content="https://i.ibb.co/CV5mJ4V/Logo.png" property="og:image" />
     <meta name="og:image" itemprop="image" content="https://i.ibb.co/CV5mJ4V/Logo.png">
@@ -42,9 +42,20 @@
                     <h3 id="raw-name" style="text-align: center;">Fig_AcousticGuitar00_ShareTex_01</h3>
                     <img id="big-icon" style="width: 50%; text-align: center; margin-left: 25%;">
                     <button class="resource-button" id="big-download-button" style="width: calc(100% - 50px); margin-top: 20px;">Download</button>
-                    <span style="margin: 20px;">Model previewer doesn't support team color texture modification, result can be black/white.</span>
+                    <p style="margin: 20px;">Model previewer doesn't support team color texture modification, result can be black/white. It's a quick automatic shader recreation, result is usually better when imported in Blender.</p>
                 </div>
             </div>
+
+            <button id="back-full-selection" style="position: absolute; margin-top: -25px; translate: 0 -100%; left: 0; height: 60px; width: 60px; padding: 0; rotate: 90deg;">
+                <svg fill="#ffffff65" width="60px" height="60px" viewBox="0 0 40 40">
+                    <g><path d="M20,0C8.973,0,0,8.973,0,20c0,11.027,8.973,20,20,20c11.027,0,20-8.973,20-20C40,8.973,31.027,0,20,0z M27.756,23.465l-6.279,5.332C21.051,29.158,20.525,29.34,20,29.34c-0.526,0-1.052-0.182-1.478-0.543l-6.279-5.332c-0.959-0.816-1.077-2.256-0.262-3.217c0.815-0.959,2.255-1.078,3.216-0.262l2.521,2.141v-9.186c0-1.26,1.021-2.281,2.282-2.281c1.26,0,2.281,1.021,2.281,2.281v9.186l2.521-2.141c0.962-0.814,2.401-0.697,3.218,0.262C28.834,21.209,28.716,22.648,27.756,23.465z"/></g>
+                </svg>
+            </button>
+            <button id="next-full-selection" style="position: absolute; margin-top: -25px; translate: -200% -100%; left: calc(100vw - 0px); height: 60px; width: 60px; padding: 0; rotate: -90deg;">
+                <svg fill="#ffffff65" width="60px" height="60px" viewBox="0 0 40 40">
+                    <g><path d="M20,0C8.973,0,0,8.973,0,20c0,11.027,8.973,20,20,20c11.027,0,20-8.973,20-20C40,8.973,31.027,0,20,0z M27.756,23.465l-6.279,5.332C21.051,29.158,20.525,29.34,20,29.34c-0.526,0-1.052-0.182-1.478-0.543l-6.279-5.332c-0.959-0.816-1.077-2.256-0.262-3.217c0.815-0.959,2.255-1.078,3.216-0.262l2.521,2.141v-9.186c0-1.26,1.021-2.281,2.282-2.281c1.26,0,2.281,1.021,2.281,2.281v9.186l2.521-2.141c0.962-0.814,2.401-0.697,3.218,0.262C28.834,21.209,28.716,22.648,27.756,23.465z"/></g>
+                </svg>
+            </button>
         </div>
     </div>
 
@@ -52,17 +63,23 @@
         <h1 id="resource-name" style="z-index: 0; position: absolute; margin: 0; color: #ffffff50; -moz-user-select: none; -webkit-user-select: none; -ms-user-select: none; user-select: none; font-family: Splat-Bold; line-height: 170px;">Locker Models</h1>
 
         <div style="display: flex;">
-            <button class="wall-button" style="position: relative; margin-top: 20vh; margin-left: 30px; height: 60px; width: 60px; padding: 0; rotate: 90deg;">
+            <button class="wall-button" style="position: relative; margin-top: 10%; margin-left: 30px; height: 60px; width: 60px; padding: 0; rotate: 90deg;">
                 <svg fill="#ffffff65" width="60px" height="60px" viewBox="0 0 40 40">
                     <g><path d="M20,0C8.973,0,0,8.973,0,20c0,11.027,8.973,20,20,20c11.027,0,20-8.973,20-20C40,8.973,31.027,0,20,0z M27.756,23.465l-6.279,5.332C21.051,29.158,20.525,29.34,20,29.34c-0.526,0-1.052-0.182-1.478-0.543l-6.279-5.332c-0.959-0.816-1.077-2.256-0.262-3.217c0.815-0.959,2.255-1.078,3.216-0.262l2.521,2.141v-9.186c0-1.26,1.021-2.281,2.282-2.281c1.26,0,2.281,1.021,2.281,2.281v9.186l2.521-2.141c0.962-0.814,2.401-0.697,3.218,0.262C28.834,21.209,28.716,22.648,27.756,23.465z"/></g>
                 </svg>
             </button>
             <div style="width: calc(100% - 250px);"></div>
-            <button class="wall-button" style="position: relative; margin-top: 20vh; margin-left: 30px; height: 60px; width: 60px; padding: 0; rotate: -90deg;">
+            <button class="wall-button" style="position: relative; margin-top: 10%; margin-left: 30px; height: 60px; width: 60px; padding: 0; rotate: -90deg;">
                 <svg fill="#ffffff65" width="60px" height="60px" viewBox="0 0 40 40">
                     <g><path d="M20,0C8.973,0,0,8.973,0,20c0,11.027,8.973,20,20,20c11.027,0,20-8.973,20-20C40,8.973,31.027,0,20,0z M27.756,23.465l-6.279,5.332C21.051,29.158,20.525,29.34,20,29.34c-0.526,0-1.052-0.182-1.478-0.543l-6.279-5.332c-0.959-0.816-1.077-2.256-0.262-3.217c0.815-0.959,2.255-1.078,3.216-0.262l2.521,2.141v-9.186c0-1.26,1.021-2.281,2.282-2.281c1.26,0,2.281,1.021,2.281,2.281v9.186l2.521-2.141c0.962-0.814,2.401-0.697,3.218,0.262C28.834,21.209,28.716,22.648,27.756,23.465z"/></g>
                 </svg>
             </button>
+        </div>
+
+        <div style="position: absolute; top: 340px; height: 40px; width: 500px; margin-left: 20px; display: flex;">
+            <button onclick="window.open('./', '_self')" style="width: 300px; margin: 0; height: 40px; padding: 0; font-size: 25px; margin-right: 10px; background: linear-gradient(70deg, #ff6f22, #db4d00);" class="button-shadow">Add-On</button>
+            <button onclick="window.open('./documentation', '_self')" style="width: 300px; margin: 0; height: 40px; padding: 0; font-size: 25px; margin-right: 10px; background: linear-gradient(70deg, #2ecc23, #129709);" class="button-shadow">Doc & Tuto</button>
+            <button onclick="window.open('./', '_self')" style="width: 300px; margin: 0; height: 40px; padding: 0; font-size: 25px; margin-right: 10px; background: linear-gradient(70deg, #ad0355, #e03085);" class="button-shadow">Ink Colors</button>
         </div>
 
         <script>
@@ -541,6 +558,8 @@
 
         window.selectFull = async function(element, name)
         {
+            console.log(element, name)
+
             scene.scene.children = []
             const materials = await window.loadModel(name, scene.scene, scene.camera, 1)
 
@@ -556,6 +575,17 @@
 
             window.setQueryParameter('item', element.childNodes[5].childNodes[5].innerText)
             window.setQueryParameter('list', window.currentSection.toString())
+
+            document.getElementById('back-full-selection').onclick = () =>
+            {
+                var i = Array.prototype.indexOf.call(element.parentNode.children, element);
+                window.selectFull(element.parentNode.childNodes[i-1], element.parentNode.childNodes[i-1].childNodes[1].getAttribute('mode-name'))
+            }
+            document.getElementById('next-full-selection').onclick = () =>
+            {
+                var i = Array.prototype.indexOf.call(element.parentNode.children, element);
+                window.selectFull(element.parentNode.childNodes[i+1], element.parentNode.childNodes[i+1].childNodes[1].getAttribute('mode-name'))
+            }
         }
 
         window.deleteQueryParameter = function(name)
