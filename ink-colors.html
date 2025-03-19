@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Splatoon Blender - Ink Colors</title>
         <link rel="stylesheet" href="index.css">
+        <link rel="stylesheet" href="ink-color.css">
         <link rel="shortcut icon" href="Logo Low.png">
     
     
@@ -21,58 +22,662 @@
         <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     </head>
     <body>
-        <canvas id="preview-a"></canvas>
+        <div id="gradient"></div>
+        
+        <div id="preview-color">
+            <img id="preview-color-a">
+            <img id="preview-color-b">
+            <img id="preview-color-c">
+
+            <div style="position: fixed; margin: 10px; left: 95px; z-index: -5;">
+                <h1 id="title" style="margin:0; font-weight: bolder; font-size: 100px; font-family: Barlow; color: #ffffff50;">Splatoon Ink Colors</h1>
+                <h4 style="font-weight: normal; font-size: 20px; font-family: Barlow; color: #ffffff30;">Preview official Splatoon ink colors. Click to copy a color</h4>
+            </div>
+
+            <button id="previous-game" style="position: absolute; margin-top: -25px; top: 100px; translate: 0 -50%; left: 0; height: 60px; width: 60px; padding: 0; rotate: 90deg;">
+                <svg fill="#ffffff65" width="60px" height="60px" viewBox="0 0 40 40">
+                    <g><path d="M20,0C8.973,0,0,8.973,0,20c0,11.027,8.973,20,20,20c11.027,0,20-8.973,20-20C40,8.973,31.027,0,20,0z M27.756,23.465l-6.279,5.332C21.051,29.158,20.525,29.34,20,29.34c-0.526,0-1.052-0.182-1.478-0.543l-6.279-5.332c-0.959-0.816-1.077-2.256-0.262-3.217c0.815-0.959,2.255-1.078,3.216-0.262l2.521,2.141v-9.186c0-1.26,1.021-2.281,2.282-2.281c1.26,0,2.281,1.021,2.281,2.281v9.186l2.521-2.141c0.962-0.814,2.401-0.697,3.218,0.262C28.834,21.209,28.716,22.648,27.756,23.465z"/></g>
+                </svg>
+            </button>
+            <button id="next-game" style="position: absolute; margin-top: -25px; top: 100px; translate: -200% -50%; left: calc(100vw - 0px); height: 60px; width: 60px; padding: 0; rotate: -90deg;">
+                <svg fill="#ffffff65" width="60px" height="60px" viewBox="0 0 40 40">
+                    <g><path d="M20,0C8.973,0,0,8.973,0,20c0,11.027,8.973,20,20,20c11.027,0,20-8.973,20-20C40,8.973,31.027,0,20,0z M27.756,23.465l-6.279,5.332C21.051,29.158,20.525,29.34,20,29.34c-0.526,0-1.052-0.182-1.478-0.543l-6.279-5.332c-0.959-0.816-1.077-2.256-0.262-3.217c0.815-0.959,2.255-1.078,3.216-0.262l2.521,2.141v-9.186c0-1.26,1.021-2.281,2.282-2.281c1.26,0,2.281,1.021,2.281,2.281v9.186l2.521-2.141c0.962-0.814,2.401-0.697,3.218,0.262C28.834,21.209,28.716,22.648,27.756,23.465z"/></g>
+                </svg>
+            </button>
+
+            <div style="position: absolute; top: 500px; left: 20px; display: flex;">
+                <input id="switch-color" type="checkbox">
+                <h3 style="margin: 0; margin-left: 5px; margin-top: 6px;">Switch</h3>
+            </div>
+        </div>
+        <input id="colorA" type="color" value="#caba20" style="display: none;">
+        <input id="colorB" type="color" value="#502eba" style="display: none;">
+        <input id="colorC" type="color" value="#b62aa7" style="display: none;">
+
+        <div id="ink-list">
+            <div>
+                <h2>Name</h2>
+                <div>
+                    <button id="a"></button>
+                    <button id="b"></button>
+                </div>
+                <button id="c"></button>
+            </div>
+        </div>
+
         <script>
-            function lerp(a, b, f)
+            let colorList = `TeamColor_Cop_Blue
+teamColorA: #231395
+teamColorB: #01410f
+teamColorN: #e1ef18
+
+TeamColor_Cop_Option_Blue
+teamColorA: #231395
+teamColorB: #01410f
+teamColorN: #8318c4
+
+TeamColor_Cop_Orange
+teamColorA: #aa410f
+teamColorB: #01410f
+teamColorN: #e1ef18
+
+TeamColor_Cop_Pink
+teamColorA: #a81a87
+teamColorB: #01410f
+teamColorN: #e1ef18
+
+TeamColor_Msn_Blue
+teamColorA: #4921c3
+teamColorB: #b80097
+teamColorN: #e2bc18
+
+TeamColor_Msn_Green
+teamColorA: #0abf0e
+teamColorB: #b800a7
+teamColorN: #ffc800
+
+TeamColor_Msn_Lavender
+teamColorA: #ac8ef6
+teamColorB: #b800a7
+teamColorN: #d1aa07
+
+TeamColor_Msn_LumiGreen
+teamColorA: #afdd05
+teamColorB: #b800a7
+teamColorN: #5408eb
+
+TeamColor_Msn_Marigold
+teamColorA: #ed9705
+teamColorB: #b700a5
+teamColorN: #03a05e
+
+TeamColor_Msn_NightLumiGreen
+teamColorA: #19991e
+teamColorB: #7f0072
+teamColorN: #4400c8
+
+TeamColor_Msn_NightMarigold
+teamColorA: #956901
+teamColorB: #79036d
+teamColorN: #008950
+
+TeamColor_Msn_Option_Yellow
+teamColorA: #e1c805
+teamColorB: #b700a5
+teamColorN: #07d144
+
+TeamColor_Msn_Pink
+teamColorA: #f64479
+teamColorB: #9305a1
+teamColorN: #d1aa07
+
+TeamColor_Msn_Purple
+teamColorA: #8e38fb
+teamColorB: #b30089
+teamColorN: #d1aa07
+
+TeamColor_Msn_Soda
+teamColorA: #75daa7
+teamColorB: #b800a7
+teamColorN: #cfd811
+
+TeamColor_Msn_Turquoise
+teamColorA: #08bd79
+teamColorB: #b800a5
+teamColorN: #d1aa08
+
+TeamColor_Msn_Yellow
+teamColorA: #e9d10a
+teamColorB: #b800a5
+teamColorN: #08d144
+
+TeamColor_Vss_Fest_Option_PurpleGreen
+teamColorA: #4d0fbb
+teamColorB: #7db814
+teamColorN: #a11672
+
+TeamColor_Vss_Fest_SameTeam_PinkBlue
+teamColorA: #b72e6e
+teamColorB: #37249c
+teamColorN: #4a9a2e
+
+TeamColor_Vss_Fest_SameTeam_PurpleGreen
+teamColorA: #4d0fbb
+teamColorB: #7db814
+teamColorN: #a11672
+
+TeamColor_Vss_Fest_SameTeam_PurpleTurquoise
+teamColorA: #57199a
+teamColorB: #10814e
+teamColorN: #ba3464
+
+TeamColor_Vss_Gachi_BlueGreen
+teamColorA: #2821b5
+teamColorB: #5db603
+teamColorN: #ca21a5
+
+TeamColor_Vss_Gachi_GreenMazenta
+teamColorA: #03b362
+teamColorB: #b1008c
+teamColorN: #a8b600
+
+TeamColor_Vss_Gachi_GreenPurple
+teamColorA: #24b100
+teamColorB: #561cb1
+teamColorN: #cd2d7e
+
+TeamColor_Vss_Gachi_PurpleLumigreen
+teamColorA: #7b0393
+teamColorB: #42ba05
+teamColorN: #db7721
+
+TeamColor_Vss_Gachi_TurquoiseOrange
+teamColorA: #0cae6e
+teamColorB: #f65900
+teamColorN: #691dc1
+
+TeamColor_Vss_Gachi_YellowLightblue
+teamColorA: #d8c100
+teamColorB: #0079c8
+teamColorN: #ed570a
+
+TeamColor_Vss_Gachi_YellowPurple
+teamColorA: #cd8003
+teamColorB: #9108b1
+teamColorN: #1ab369
+
+TeamColor_Vss_Option_YellowBlue
+teamColorA: #dda801
+teamColorB: #4616a8
+teamColorN: #cc2885
+
+TeamColor_Vss_Regular_LemonPurple
+teamColorA: #bac805
+teamColorB: #830a9c
+teamColorN: #15aa62
+
+TeamColor_Vss_Regular_LightBlueYellow
+teamColorA: #007edc
+teamColorB: #e1a307
+teamColorN: #d01c78
+
+TeamColor_Vss_Regular_PinkBlue
+teamColorA: #d60e6e
+teamColorB: #311aa8
+teamColorN: #3fa51c
+
+TeamColor_Vss_Regular_PinkGreen
+teamColorA: #cf0366
+teamColorB: #16a80c
+teamColorN: #aab800
+
+TeamColor_Vss_Regular_PinkLightblue
+teamColorA: #ca0856
+teamColorB: #0199b8
+teamColorN: #c6cc07
+
+TeamColor_Vss_Regular_PinkYellow
+teamColorA: #dd0a64
+teamColorB: #bfcf01
+teamColorN: #15ac52
+
+TeamColor_Vss_Regular_PurpleOrange
+teamColorA: #4913aa
+teamColorB: #fb5b03
+teamColorN: #a3cd05
+
+TeamColor_Vss_Regular_PurpleTurquoise
+teamColorA: #5e0fb3
+teamColorB: #08b672
+teamColorN: #d43b72
+
+TeamColor_Vss_Regular_YellowBlue
+teamColorA: #dda801
+teamColorB: #4616a8
+teamColorN: #cc2885 `
+
+            // createList(colorList)
+            function removeAllListeners(e)
             {
-                return a+(b-a)*f;
+                var eventlistener = getEventListeners(e)["DOMContentLoaded"][0];
+                e.removeEventListener("DOMContentLoaded", eventlistener.listener, eventlistener.useCapture);
             }
-            async function loadImage(src)
+            function createList(list)
             {
-                return new Promise((resolve) =>
+                let fstring = "[\n    {";
+                var i = 0;
+                for(var p of list.split("\n"))
                 {
-                    const image = document.createElement("img");
-                    image.addEventListener("load", (e) =>
+                    i++;
+                    if(p=="") { i=0; fstring += "\n    {"}
+
+                    switch(i)
                     {
-                        resolve(image);
-                    });
-                    image.loading = "eager";
-                    image.src = src;
-                })
+                        case 1:
+                        {
+                            var n = p;
+                            if(n.includes('TeamColor_Vss_Regular'))
+                            {
+                                n = 'Versus Regular ' + p.replaceAll('TeamColor_Vss_Regular', '').replaceAll("_",' ').replaceAll(/([A-Z])/g, ' $1').trim().replaceAll(" ", '-').replaceAll("_", ' ');
+                            }
+                            else if(n.includes('TeamColor_Msn'))
+                            {
+                                n = 'Solo ' + p.replaceAll('TeamColor_Msn', '').replaceAll("_",' ').replaceAll(/([A-Z])/g, ' $1').trim().replaceAll(" ", '-').replaceAll("_", ' ')
+                            }
+                            else if(n.includes('TeamColor_Cop'))
+                            {
+                                n = 'Salmon Run ' + p.replaceAll('TeamColor_Cop', '').replaceAll("_",' ').replaceAll(/([A-Z])/g, ' $1').trim().replaceAll(" ", '-').replaceAll("_", ' ')
+                            }
+                            else if(n.includes('TeamColor_Vss_Gachi'))
+                            {
+                                n = 'SplatFest ' + p.replaceAll('TeamColor_Vss_Gachi', '').replaceAll("_",' ').replaceAll(/([A-Z])/g, ' $1').trim().replaceAll(" ", '-').replaceAll("_", ' ')
+                            }
+                            else if(n.includes('TeamColor_Vss_Option'))
+                            {
+                                n = 'SplatFest Option ' + p.replaceAll('TeamColor_Vss_Option', '').replaceAll("_",' ').replaceAll(/([A-Z])/g, ' $1').trim().replaceAll(" ", '-').replaceAll("_", ' ')
+                            }
+                            else if(n.includes('TeamColor_Vss_Fest_Option'))
+                            {
+                                n = 'SplatFest Option ' + p.replaceAll('TeamColor_Vss_Fest_Option', '').replaceAll("_",' ').replaceAll(/([A-Z])/g, ' $1').trim().replaceAll(" ", '-').replaceAll("_", ' ')
+                            }
+                            else if(n.includes('TeamColor_Vss_Fest_SameTeam'))
+                            {
+                                n = 'Same SplatFest Team ' + p.replaceAll('TeamColor_Vss_Fest_SameTeam', '').replaceAll("_",' ').replaceAll(/([A-Z])/g, ' $1').trim().replaceAll(" ", '-').replaceAll("_", ' ')
+                            }
+
+                            fstring+="name: '"+n+"', ";
+                            break;
+                        }
+                        case 2: { fstring+="a: '"+ p.replace("teamColorA: #",'') +"', "; break; }
+                        case 3: { fstring+="b: '"+ p.replace("teamColorB: #",'') +"', "; break; }
+                        case 4: { fstring+="n: '"+ p.replace("teamColorN: #",'') +"'},"; break; }
+                    }
+                }
+                fstring += "\n]";
+
+                console.log(fstring)
             }
-            function mix(img, fac, ctx)
+
+            let currentList = 2;
+            const colors1 =
+            [
+                {name: 'Pink', a: 'fe447d', b: 'fe447d', n: 'e1ef18'},
+                {name: 'Orange', a: 'f78f2e', b: 'f78f2e', n: '8318c4'},
+                {name: 'Yellow Orange', a: 'fedc0c', b: 'fedc0c', n: '8318c4'},
+                {name: 'Lime Green', a: 'fedc0c', b: 'fedc0c', n: '8318c4'},
+                {name: 'Emerald Green', a: '5cd05b', b: '5cd05b', n: '8318c4'},
+                {name: 'Teal', a: '03c1cd', b: '03c1cd', n: '8318c4'},
+                {name: 'Blue', a: '0e10e6', b: '0e10e6', n: '8318c4'},
+                {name: 'Violet', a: '9208e7', b: '9208e7', n: '8318c4'},
+                {name: 'Red Orange', a: 'ff4900', b: 'ff4900', n: '8318c4'},
+                {name: 'Yellow', a: 'f3f354', b: 'f3f354', n: '8318c4'},
+                {name: 'Mint', a: 'bff1e5', b: 'bff1e5', n: '8318c4'},
+                {name: 'Green', a: '3bc335', b: '3bc335', n: '8318c4'},
+                {name: 'Sea Green', a: '00d18a', b: '00d18a', n: '8318c4'},
+                {name: 'Ligth Blue', a: '6565f9', b: '6565f9', n: '8318c4'},
+                {name: 'Dark Blue', a: '101ab3', b: '101ab3', n: '8318c4'},
+                {name: 'Fuchsia', a: 'd645c8', b: 'd645c8', n: '8318c4'},
+                {name: 'Neon Green', a: '9ae528', b: '9ae528', n: '8318c4'},
+                {name: 'Cyan', a: '0acdfe', b: '0acdfe', n: '8318c4'},
+                {name: 'Neon Orange', a: 'ff9600', b: 'ff9600', n: '8318c4'},
+                {name: 'Dark Fuchsia', a: 'b21ca1', b: 'b21ca1', n: '8318c4'},
+                {name: 'Tan', a: 'e1d6b6', b: 'e1d6b6', n: '8318c4'},
+                {name: 'Dark Orange', a: 'e59d0d', b: 'e59d0d', n: '8318c4'},
+                {name: 'Magenta', a: 'ec0b68', b: 'ec0b68', n: '8318c4'},
+                {name: 'Dark Violet', a: '461362', b: '461362', n: '8318c4'},
+                {name: 'Ika Musume Blue', a: '00aae4', b: '00aae4', n: '8318c4'},
+                {name: 'Forest Green', a: '0eaa57', b: '0eaa57', n: '8318c4'}
+            ]
+            const colors2 =
+            [
+                {name: 'Salmon Run Blue', a: '231395', b: '01410f', n: 'e1ef18'},
+                {name: 'Salmon Run Option--Blue', a: '231395', b: '01410f', n: '8318c4'},
+                {name: 'Salmon Run Orange', a: 'aa410f', b: '01410f', n: 'e1ef18'},
+                {name: 'Salmon Run Pink', a: 'a81a87', b: '01410f', n: 'e1ef18'},
+                {name: 'Hero Blue', a: '4921c3', b: 'b80097', n: 'e2bc18'},
+                {name: 'Hero Green', a: '0abf0e', b: 'b800a7', n: 'ffc800'},
+                {name: 'Hero Lavender', a: 'ac8ef6', b: 'b800a7', n: 'd1aa07'},
+                {name: 'Hero Lumi-Green', a: 'afdd05', b: 'b800a7', n: '5408eb'},
+                {name: 'Hero Marigold', a: 'ed9705', b: 'b700a5', n: '03a05e'},
+                {name: 'Hero Night-Lumi-Green', a: '19991e', b: '7f0072', n: '4400c8'},
+                {name: 'Hero Night-Marigold', a: '956901', b: '79036d', n: '008950'},
+                {name: 'Hero Option--Yellow', a: 'e1c805', b: 'b700a5', n: '07d144'},
+                {name: 'Hero Pink', a: 'f64479', b: '9305a1', n: 'd1aa07'},
+                {name: 'Hero Purple', a: '8e38fb', b: 'b30089', n: 'd1aa07'},
+                {name: 'Hero Soda', a: '75daa7', b: 'b800a7', n: 'cfd811'},
+                {name: 'Hero Turquoise', a: '08bd79', b: 'b800a5', n: 'd1aa08'},
+                {name: 'Hero Yellow', a: 'e9d10a', b: 'b800a5', n: '08d144'},
+                {name: 'SplatFest Option Purple-Green', a: '4d0fbb', b: '7db814', n: 'a11672'},
+                {name: 'Same SplatFest Team Pink-Blue', a: 'b72e6e', b: '37249c', n: '4a9a2e'},
+                {name: 'Same SplatFest Team Purple-Green', a: '4d0fbb', b: '7db814', n: 'a11672'},
+                {name: 'Same SplatFest Team Purple-Turquoise', a: '57199a', b: '10814e', n: 'ba3464'},
+                {name: 'SplatFest Blue-Green', a: '2821b5', b: '5db603', n: 'ca21a5'},
+                {name: 'SplatFest Green-Mazenta', a: '03b362', b: 'b1008c', n: 'a8b600'},
+                {name: 'SplatFest Green-Purple', a: '24b100', b: '561cb1', n: 'cd2d7e'},
+                {name: 'SplatFest Purple-Lumigreen', a: '7b0393', b: '42ba05', n: 'db7721'},
+                {name: 'SplatFest Turquoise-Orange', a: '0cae6e', b: 'f65900', n: '691dc1'},
+                {name: 'SplatFest Yellow-Lightblue', a: 'd8c100', b: '0079c8', n: 'ed570a'},
+                {name: 'SplatFest Yellow-Purple', a: 'cd8003', b: '9108b1', n: '1ab369'},
+                {name: 'SplatFest Option Yellow-Blue', a: 'dda801', b: '4616a8', n: 'cc2885'},
+                {name: 'Versus Regular Lemon-Purple', a: 'bac805', b: '830a9c', n: '15aa62'},
+                {name: 'Versus Regular Light-Blue-Yellow', a: '007edc', b: 'e1a307', n: 'd01c78'},
+                {name: 'Versus Regular Pink-Blue', a: 'd60e6e', b: '311aa8', n: '3fa51c'},
+                {name: 'Versus Regular Pink-Green', a: 'cf0366', b: '16a80c', n: 'aab800'},
+                {name: 'Versus Regular Pink-Lightblue', a: 'ca0856', b: '0199b8', n: 'c6cc07'},
+                {name: 'Versus Regular Pink-Yellow', a: 'dd0a64', b: 'bfcf01', n: '15ac52'},
+                {name: 'Versus Regular Purple-Orange', a: '4913aa', b: 'fb5b03', n: 'a3cd05'},
+                {name: 'Versus Regular Purple-Turquoise', a: '5e0fb3', b: '08b672', n: 'd43b72'},
+                {name: 'Versus Regular Yellow-Blue', a: 'dda801', b: '4616a8', n: 'cc2885'},
+            ]
+            const colors3 =
+            [
+                {name: 'Hero Boss Fuuka', a: 'bad421', b: '1021be', n: 'a714d4'},
+                {name: 'Hero Boss Manta', a: 'e1772b', b: '2dd9b6', n: '2e14d4'},
+                {name: 'Hero Boss Utsuho', a: '373dbb', b: 'cece28', n: 'c920b7'},
+                {name: 'Hero Blue', a: '1b18d7', b: 'dd0dd3', n: 'dd0dd3'},
+                {name: 'Hero Green', a: '51c71b', b: '2120cc', n: 'c920b7'},
+                {name: 'Hero Ligth Blue', a: '14bbe7', b: '285eea', n: 'c920b7'},
+                {name: 'Hero Orange', a: 'ee8711', b: '0943f0', n: '81de17'},
+                {name: 'Hero Soda', a: 'aef4f0', b: 'dd0dd3', n: 'c6d314'},
+                {name: 'Hero Yellow', a: 'dec109', b: '531bba', n: 'c920b7'},
+                {name: 'Hero Support', a: 'd6cd25', b: '531bba', n: 'c920b7'},
+
+                {name: 'Salmon Run Default', a: 'c95431', b: '03644b', n: 'dce317'},
+                {name: 'Salmon Run Orange', a: 'c64184', b: '098264', n: 'dce317'},
+                {name: 'Salmon Run Pink', a: 'c64184', b: '0d6e74', n: 'e3d704'},
+                {name: 'Salmon Run Purple', a: '9361ea', b: '0a7a5e', n: 'd3dd1e'},
+                {name: 'Salmon Run Sun Yellow', a: 'dda024', b: '098264', n: 'e114c3'},
+                {name: 'Salmon Run Yellow', a: 'b4d933', b: '098a71', n: 'd611e0'},
+                {name: 'Salmon Run Support', a: 'ddd112', b: '047b8b', n: 'ed12e4'},
+
+                {name: 'GrandFest', a: 'bb3660', b: '6b4bcc', c: 'ff86d136', n: 'ffb62c'},
+                {name: 'Same TriColor Team', a: '10b780', b: 'a316b0', c: 'b45a1e', n: 'c70864'},
+
+                {name: 'Versus Regular Green-Purple', a: 'a0c937', b: 'ba30b0', n: 'e1820d'},
+                {name: 'Versus Regular Lime-Purple', a: 'becd41', b: '6325cd', n: '31c4a9'},
+                {name: 'Versus Regular Orange-Blue', a: 'de6624', b: '343bc4', n: 'cdcd34'},
+                {name: 'Versus Regular Orange-Purple', a: 'cd510a', b: '6e04b6', n: '94c921'},
+                {name: 'Versus Regular Pink-Green', a: 'c12d74', b: '2cb721', n: '3a28c4'},
+                {name: 'Versus Regular Orange-Blue', a: 'd89115', b: '1654be', n: '96c722'},
+                {name: 'Versus Regular Orange-Blue (Night)', a: 'b97b12', b: '1750a5', n: '7da71e'},
+                {name: 'Versus Regular Yellow-Blue (Support)', a: 'caba20', b: '502eba', n: 'b62aa7'},
+                {name: 'Versus Regular Yellow-Blue (Support) (Night)', a: 'baab1d', b: '4428a3', n: 'b62aa7'},
+                {name: 'Versus Regular Turquoise-Pink', a: '1bbeab', b: 'c43a6e', n: '4e4edd'},
+                {name: 'Versus Regular Turquoise-Red', a: '1ec0ad', b: 'd74b31', n: '0d0ddc'},
+                {name: 'Versus Regular Yellow-Blue', a: 'd0be08', b: '3a0ccd', n: 'b62ea7'},
+                {name: 'Versus Regular Yellow-Purple', a: 'ceb121', b: '9025c6', n: '5dab21'},
+            ]
+            const colorLists = [colors1, colors2, colors3]
+
+            let settingUp = false;
+            document.getElementById('previous-game').onclick = async (e) =>
             {
-                let canvas = document.createElement('canvas'); canvas.width = ctx.canvas.width; canvas.height = ctx.canvas.height;
-                let ctx2 = canvas.getContext("2d");
-                ctx2.drawImage(img, 0, 0, canvas.width, canvas.height)
-                const imgData = ctx2.getImageData(0, 0, canvas.width, canvas.height);
+                if(settingUp){return}
+                currentList--; if(currentList < 0){currentList=colorLists.length-1;}
+                reset()
+                setup(document.getElementById('preview-color-a'), 'scc character A'+(currentList+1))
+                setup(document.getElementById('preview-color-b'), 'scc character B'+(currentList+1), true)
+                setup(document.getElementById('preview-color-c'), 'scc bunker'+(currentList+1), false, true)
+                loadColors()
+                document.getElementById('title').innerText = "Splatoon "+(currentList+1)+" Ink Colors"
+            }
+            document.getElementById('next-game').onclick = async (e) =>
+            {
+                if(settingUp){return}
+                currentList++; if(currentList >= colorLists.length){currentList=0;}
+                reset()
+                setup(document.getElementById('preview-color-a'), 'scc character A'+(currentList+1))
+                setup(document.getElementById('preview-color-b'), 'scc character B'+(currentList+1), true)
+                setup(document.getElementById('preview-color-c'), 'scc bunker'+(currentList+1), false, true)
+                loadColors()
+                document.getElementById('title').innerText = "Splatoon "+(currentList+1)+" Ink Colors"
+            }
+            document.getElementById('title').innerText = "Splatoon "+(currentList+1)+" Ink Colors"
 
-                const opacityCanvas = document.createElement('canvas'); opacityCanvas.width = canvas.width; opacityCanvas.height = canvas.height;
-                const opacityCtx = opacityCanvas.getContext('2d');
-                opacityCtx.drawImage(fac, 0, 0, canvas.width, canvas.height)
-
-                const opacityData = opacityCtx.getImageData(0, 0, opacityCanvas.width, opacityCanvas.height);
-
-                for (let i = 0; i < imgData.data.length; i += 4)
+            let gradient = document.getElementById('gradient');
+            let list = document.getElementById('ink-list');
+            
+            loadColors()
+            function loadColors()
+            {
+                list.childNodes[1].style.display = 'inline-block';
+                while(list.childNodes.length > 2){ list.childNodes[list.childNodes.length-1].remove() }
+                for(let c of colorLists[currentList])
                 {
-                    imgData.data[i+3] = opacityData.data[i];
+                    let e = list.childNodes[1].cloneNode(true);
+                    e.childNodes[1].innerText = c.name;
+
+                    e.childNodes[3].childNodes[1].style.setProperty("--color", '#'+c.a);
+                    e.childNodes[3].childNodes[1].style.setProperty("--color-outline", hexToHSL('#'+c.a, 0, 10, 10));
+                    e.childNodes[3].childNodes[1].onmouseenter = () => { gradient.style.setProperty("--a", '#'+c.a+'50'); colorAInput.value = '#'+c.a; triggerNative(colorAInput, 'change'); }
+                    e.childNodes[3].childNodes[1].onclick = () => { navigator.clipboard.writeText('#'+c.a); e.childNodes[1].innerText = "Copied"; setTimeout(() => {e.childNodes[1].innerText=c.name;}, 500); }
+
+                    e.childNodes[3].childNodes[3].style.setProperty("--color", '#'+c.b);
+                    e.childNodes[3].childNodes[3].style.setProperty("--color-outline", hexToHSL('#'+c.b, 0, 10, 10));
+                    e.childNodes[3].childNodes[3].onmouseenter = () => { gradient.style.setProperty("--b", '#'+c.b+'50'); colorBInput.value = '#'+c.b; triggerNative(colorBInput, 'change'); }
+                    e.childNodes[3].childNodes[3].onclick = () => { navigator.clipboard.writeText('#'+c.b); e.childNodes[1].innerText = "Copied"; setTimeout(() => {e.childNodes[1].innerText=c.name;}, 500); }
+
+                    e.childNodes[5].style.setProperty("--color", '#'+c.n);
+                    e.childNodes[5].style.setProperty("--color-outline", hexToHSL('#'+c.n, 0, -10, -10));
+                    e.childNodes[5].onmouseenter = () => { gradient.style.setProperty("--c", '#'+c.n+'50'); colorCInput.value = '#'+c.n; triggerNative(colorCInput, 'change'); }
+                    e.childNodes[5].onclick = () => { navigator.clipboard.writeText('#'+c.n); e.childNodes[1].innerText = "Copied"; setTimeout(() => {e.childNodes[1].innerText=c.name;}, 500); }
+
+                    list.appendChild(e);
+                }
+                list.childNodes[1].style.display = 'none';
+            }
+
+            const triggerNative = (el, eventName) =>
+            {
+                const event = document.createEvent('HTMLEvents');
+                event.initEvent(eventName, true, false);
+                el.dispatchEvent(event);
+            };
+            function hexToHSL(hex, aH = 0, aS = 0, aL = 0)
+            {
+                var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+
+                var r = parseInt(result[1], 16);
+                var g = parseInt(result[2], 16);
+                var b = parseInt(result[3], 16);
+
+                r /= 255, g /= 255, b /= 255;
+                var max = Math.max(r, g, b), min = Math.min(r, g, b);
+                var h, s, l = (max + min) / 2;
+
+                if(max == min){
+                    h = s = 0;
+                } else {
+                    var d = max - min;
+                    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                    switch(max) {
+                        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                        case g: h = (b - r) / d + 2; break;
+                        case b: h = (r - g) / d + 4; break;
+                    }
+                    h /= 6;
                 }
 
-                ctx2.putImageData(imgData, 0, 0);
+                s = s*100;
+                s = Math.round(s);
+                l = l*100;
+                l = Math.round(l);
+                h = Math.round(360*h);
 
-                ctx.globalCompositeOperation = "source-over";
-                ctx.drawImage(canvas, 0, 0, ctx.canvas.width, ctx.canvas.height)
+                return 'hsl(' + (h+aH) + ', ' + (s+aS) + '%, ' + (l+aL) + '%)';
             }
-            function add(imgA, imgB, ctx)
-            {
-                let canvas = document.createElement('canvas'); canvas.width = ctx.canvas.width; canvas.height = ctx.canvas.height;
-                let ctx2 = canvas.getContext("2d");
-                ctx2.drawImage(imgA, 0, 0, canvas.width, canvas.height)
-                ctx2.globalCompositeOperation = 'additive';
-                ctx2.drawImage(imgB, 0, 0, canvas.width, canvas.height)
+        </script>
+        <script>
+            // Not Optimized
+            // function lerp(a, b, f)
+            // {
+            //     return a+(b-a)*f;
+            // }
+            // async function loadImage(src)
+            // {
+            //     return new Promise((resolve) =>
+            //     {
+            //         const image = document.createElement("img");
+            //         image.addEventListener("load", (e) =>
+            //         {
+            //             resolve(image);
+            //         });
+            //         image.loading = "eager";
+            //         image.src = src;
+            //     })
+            // }
+            // function mix(img, fac, ctx, type = "source-over")
+            // {
+            //     let canvas = document.createElement('canvas'); canvas.width = ctx.canvas.width; canvas.height = ctx.canvas.height;
+            //     let ctx2 = canvas.getContext("2d");
+            //     ctx2.drawImage(img, 0, 0, canvas.width, canvas.height)
+            //     const imgData = ctx2.getImageData(0, 0, canvas.width, canvas.height);
 
-                return canvas;
-            }
+            //     const opacityCanvas = document.createElement('canvas'); opacityCanvas.width = canvas.width; opacityCanvas.height = canvas.height;
+            //     const opacityCtx = opacityCanvas.getContext('2d');
+            //     if(typeof(fac) == "number")
+            //     {
+            //         opacityCtx.fillStyle = '#ffffff';
+            //         opacityCtx.globalAlpha = fac;
+            //         opacityCtx.fillRect(0, 0, canvas.width, canvas.height)
+            //     }
+            //     else
+            //     {
+            //         opacityCtx.drawImage(fac, 0, 0, canvas.width, canvas.height)
+            //     }
+
+            //     const opacityData = opacityCtx.getImageData(0, 0, opacityCanvas.width, opacityCanvas.height);
+
+            //     for (let i = 0; i < imgData.data.length; i += 4)
+            //     {
+            //         imgData.data[i+3] = opacityData.data[i];
+            //     }
+
+            //     ctx2.putImageData(imgData, 0, 0);
+
+            //     ctx.globalCompositeOperation = type;
+            //     ctx.drawImage(canvas, 0, 0, ctx.canvas.width, ctx.canvas.height)
+            // }
+            // function mix2(img, img2, fac, ctx, type = "source-over", type2)
+            // {
+            //     let canvas = document.createElement('canvas'); canvas.width = ctx.canvas.width; canvas.height = ctx.canvas.height;
+            //     let ctx2 = canvas.getContext("2d");
+            //     ctx2.drawImage(img, 0, 0, canvas.width, canvas.height)
+            //     const imgData = ctx2.getImageData(0, 0, canvas.width, canvas.height);
+
+            //     const opacityCanvas = document.createElement('canvas'); opacityCanvas.width = canvas.width; opacityCanvas.height = canvas.height;
+            //     const opacityCtx = opacityCanvas.getContext('2d');
+            //     if(typeof(fac) == "number")
+            //     {
+            //         opacityCtx.fillStyle = '#ffffff';
+            //         opacityCtx.globalAlpha = fac;
+            //         opacityCtx.fillRect(0, 0, canvas.width, canvas.height)
+            //     }
+            //     else
+            //     {
+            //         opacityCtx.drawImage(fac, 0, 0, canvas.width, canvas.height)
+            //     }
+
+            //     const opacityData = opacityCtx.getImageData(0, 0, opacityCanvas.width, opacityCanvas.height);
+
+            //     for (let i = 0; i < imgData.data.length; i += 4)
+            //     {
+            //         imgData.data[i+3] = opacityData.data[i];
+            //     }
+
+            //     ctx2.putImageData(imgData, 0, 0);
+
+            //     let canvas3 = document.createElement('canvas'); canvas3.width = ctx.canvas.width; canvas3.height = ctx.canvas.height;
+            //     let ctx3 = canvas3.getContext("2d");
+            //     ctx3.drawImage(img2, 0, 0, canvas3.width, canvas3.height)
+
+            //     ctx3.globalCompositeOperation = type;
+            //     ctx3.drawImage(canvas, 0, 0, ctx.canvas.width, ctx.canvas.height)
+
+            //     return canvas3;
+            // }
+            // function add(imgA, imgB, ctx)
+            // {
+            //     // let canvas = document.createElement('canvas'); canvas.width = ctx.canvas.width; canvas.height = ctx.canvas.height;
+            //     // let ctx2 = canvas.getContext("2d");
+            //     // ctx2.drawImage(imgA, 0, 0, canvas.width, canvas.height)
+            //     // ctx2.globalCompositeOperation = 'additive';
+            //     // ctx2.drawImage(imgB, 0, 0, canvas.width, canvas.height)
+
+            //     // return canvas;
+
+            //     const canvas3 = document.createElement('canvas'); canvas3.width = ctx.canvas.width; canvas3.height = ctx.canvas.height;
+            //     const ctx3 = canvas3.getContext('2d');
+            //     ctx3.drawImage(imgB, 0, 0, canvas3.width, canvas3.height)
+
+            //     const data3 = ctx3.getImageData(0, 0, canvas3.width, canvas3.height);
+
+            //     const canvas2 = document.createElement('canvas'); canvas2.width = ctx.canvas.width; canvas2.height = ctx.canvas.height;
+            //     const ctx2 = canvas2.getContext('2d');
+            //     ctx2.drawImage(imgA, 0, 0, canvas2.width, canvas2.height)
+
+            //     const data = ctx2.getImageData(0, 0, canvas2.width, canvas2.height);
+
+            //     for (let i = 0; i < data.data.length; i += 4)
+            //     {
+            //         data.data[i+0] += data3.data[i+0]
+            //         data.data[i+1] += data3.data[i+1]
+            //         data.data[i+2] += data3.data[i+2]
+            //         data.data[i+3] += data3.data[i+3]
+            //     }
+            //     ctx2.putImageData(data, 0, 0);
+
+            //     return canvas2
+            // }
+            // function multiply(imgA, imgB, ctx)
+            // {
+            //     const canvas3 = document.createElement('canvas'); canvas3.width = ctx.canvas.width; canvas3.height = ctx.canvas.height;
+            //     const ctx3 = canvas3.getContext('2d');
+            //     ctx3.drawImage(imgB, 0, 0, canvas3.width, canvas3.height)
+            //     ctx3.globalCompositeOperation = "multiply";
+            //     ctx3.drawImage(imgA, 0, 0, canvas3.width, canvas3.height)
+
+            //     return canvas3
+
+            //     // const data3 = ctx3.getImageData(0, 0, canvas3.width, canvas3.height);
+
+            //     // const canvas2 = document.createElement('canvas'); canvas2.width = ctx.canvas.width; canvas2.height = ctx.canvas.height;
+            //     // const ctx2 = canvas2.getContext('2d');
+            //     // ctx2.drawImage(imgA, 0, 0, canvas2.width, canvas2.height)
+
+            //     // const data = ctx2.getImageData(0, 0, canvas2.width, canvas2.height);
+
+            //     // for (let i = 0; i < data.data.length; i += 4)
+            //     // {
+            //     //     data.data[i+0] *= data3.data[i+0]
+            //     //     data.data[i+1] *= data3.data[i+1]
+            //     //     data.data[i+2] *= data3.data[i+2]
+            //     //     data.data[i+3] *= data3.data[i+3]
+            //     // }
+            //     // ctx2.putImageData(data, 0, 0);
+
+            //     // return canvas2
+            // }
             function mix2color(colorA, colorB, fac, ctx)
             {
                 // Color A
@@ -108,7 +713,60 @@
 
                 return canvas2;
             }
-            function allPixel(img, color, alpha, ctx)
+
+            let loadingPixel = false;
+            async function allPixel(img, ctx, color, alpha = (p) => {return p;})
+            {
+                if(loadingPixel)
+                {
+                    await new Promise((resolve2) =>
+                    {
+                        let interval = setInterval(async () =>
+                        {
+                            if(!loadingPixel)
+                            {
+                                clearInterval(interval);
+                                resolve2()
+                            }
+                        }, 300);
+                    })
+                }
+                loadingPixel = true;
+
+                return new Promise(async (resolve) =>
+                {
+                    const canvas = document.createElement('canvas'); canvas.width = ctx.canvas.width; canvas.height = ctx.canvas.height;
+                    const ctx2 = canvas.getContext('2d');
+                    ctx2.drawImage(img, 0, 0, canvas.width, canvas.height)
+
+                    const data = ctx2.getImageData(0, 0, canvas.width, canvas.height);
+
+                    setTimeout(() =>
+                    {
+                        for (let i = 0; i < data.data.length; i += 4)
+                        {
+                            data.data[i+0] = color(data.data[i+0])
+                            data.data[i+1] = color(data.data[i+1])
+                            data.data[i+2] = color(data.data[i+2])
+                            data.data[i+3] = alpha(data.data[i+3])
+                        }
+                        ctx2.putImageData(data, 0, 0);
+                        resolve(canvas);
+                        loadingPixel = false;
+                    })
+                });
+            }
+
+            // function blur(img, intensity, ctx)
+            // {
+            //     let canvas = document.createElement('canvas'); canvas.width = ctx.canvas.width; canvas.height = ctx.canvas.height;
+            //     let ctx2 = canvas.getContext("2d");
+            //     ctx2.filter = "blur(" + intensity + "px)";
+
+            //     ctx2.drawImage(img, 0, 0, canvas.width, canvas.height)
+            //     return canvas;
+            // }
+            function colorDodge(img, img2, multiply, ctx)
             {
                 const canvas = document.createElement('canvas'); canvas.width = ctx.canvas.width; canvas.height = ctx.canvas.height;
                 const ctx2 = canvas.getContext('2d');
@@ -116,49 +774,337 @@
 
                 const data = ctx2.getImageData(0, 0, canvas.width, canvas.height);
 
-                for (let i = 0; i < opacityData.data.length; i += 4)
+                const canvas2 = document.createElement('canvas'); canvas2.width = ctx.canvas.width; canvas2.height = ctx.canvas.height;
+                const ctx3 = canvas2.getContext('2d');
+                ctx3.drawImage(img2, 0, 0, canvas2.width, canvas2.height)
+
+                const data2 = ctx3.getImageData(0, 0, canvas2.width, canvas2.height);
+
+                const canvas3 = document.createElement('canvas'); canvas3.width = ctx.canvas.width; canvas3.height = ctx.canvas.height;
+                const ctx4 = canvas3.getContext('2d');
+                ctx4.drawImage(multiply, 0, 0, canvas3.width, canvas3.height)
+
+                const data3 = ctx4.getImageData(0, 0, canvas3.width, canvas3.height);
+
+                for (let i = 0; i < data.data.length; i += 4)
                 {
-                    data.data[i+0] = color(data.data[i+0])
-                    data.data[i+1] = color(data.data[i+1])
-                    data.data[i+2] = color(data.data[i+2])
-                    data.data[i+3] = alpha(data.data[i+3])
+                    data.data[i+0] = ((data.data[i+0]/255)/(1-(data2.data[i+0]/255)))*255*(data3.data[i+0]/255)
+                    data.data[i+1] = ((data.data[i+1]/255)/(1-(data2.data[i+1]/255)))*255*(data3.data[i+1]/255)
+                    data.data[i+2] = ((data.data[i+2]/255)/(1-(data2.data[i+2]/255)))*255*(data3.data[i+2]/255)
                 }
+                ctx2.putImageData(data, 0, 0);
+
+                return canvas
+            }
+            // function imageLerp(img, img2, fac, ctx)
+            // {
+            //     const canvas = document.createElement('canvas'); canvas.width = ctx.canvas.width; canvas.height = ctx.canvas.height;
+            //     const ctx2 = canvas.getContext('2d');
+            //     ctx2.drawImage(img, 0, 0, canvas.width, canvas.height)
+
+            //     const data = ctx2.getImageData(0, 0, canvas.width, canvas.height);
+
+            //     const canvas2 = document.createElement('canvas'); canvas2.width = ctx.canvas.width; canvas2.height = ctx.canvas.height;
+            //     const ctx3 = canvas2.getContext('2d');
+            //     ctx3.drawImage(img2, 0, 0, canvas2.width, canvas2.height)
+
+            //     const data2 = ctx3.getImageData(0, 0, canvas2.width, canvas2.height);
+
+
+            //     for (let i = 0; i < data.data.length; i += 4)
+            //     {
+            //         data.data[i+0] = lerp(data.data[i+0], data2.data[i+0], fac)
+            //         data.data[i+1] = lerp(data.data[i+1], data2.data[i+1], fac)
+            //         data.data[i+2] = lerp(data.data[i+2], data2.data[i+2], fac)
+            //     }
+            //     ctx2.putImageData(data, 0, 0);
+
+            //     return canvas
+            // }
+
+
+            // GPT Optimized
+            function lerp(a, b, f) {
+                return a + (b - a) * f;
+            }
+            async function loadImage(src) {
+                return new Promise((resolve) => {
+                    const image = new Image();
+                    image.onload = () => resolve(image);
+                    image.loading = "eager";
+                    image.src = src;
+                });
+            }
+            function createCanvas(width, height) {
+                const canvas = document.createElement("canvas");
+                canvas.width = width;
+                canvas.height = height;
+                return { canvas, ctx: canvas.getContext("2d") };
+            }
+            function mix(img, fac, ctx, type = "source-over") {
+                const { canvas, ctx: ctx2 } = createCanvas(ctx.canvas.width, ctx.canvas.height);
+                ctx2.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                const { canvas: opacityCanvas, ctx: opacityCtx } = createCanvas(canvas.width, canvas.height);
+                if (typeof fac === "number") {
+                    opacityCtx.fillStyle = "#ffffff";
+                    opacityCtx.globalAlpha = fac;
+                    opacityCtx.fillRect(0, 0, canvas.width, canvas.height);
+                } else {
+                    opacityCtx.drawImage(fac, 0, 0, canvas.width, canvas.height);
+                }
+
+                const imgData = ctx2.getImageData(0, 0, canvas.width, canvas.height);
+                const opacityData = opacityCtx.getImageData(0, 0, canvas.width, canvas.height);
+
+                for (let i = 3; i < imgData.data.length; i += 4) {
+                    imgData.data[i] = opacityData.data[i - 3];
+                }
+
+                ctx2.putImageData(imgData, 0, 0);
+                ctx.globalCompositeOperation = type;
+                ctx.drawImage(canvas, 0, 0);
+            }
+            function mix2(img, img2, fac, ctx, type = "source-over") {
+                const result = createCanvas(ctx.canvas.width, ctx.canvas.height);
+                mix(img, fac, result.ctx);
+                result.ctx.globalCompositeOperation = type;
+                result.ctx.drawImage(img2, 0, 0);
+                return result.canvas;
+            }
+            function add(imgA, imgB, ctx) {
+                const { canvas, ctx: ctx2 } = createCanvas(ctx.canvas.width, ctx.canvas.height);
+                ctx2.drawImage(imgA, 0, 0);
+                const imgDataA = ctx2.getImageData(0, 0, canvas.width, canvas.height);
+                
+                ctx2.drawImage(imgB, 0, 0);
+                const imgDataB = ctx2.getImageData(0, 0, canvas.width, canvas.height);
+                
+                for (let i = 0; i < imgDataA.data.length; i++) {
+                    imgDataA.data[i] = Math.min(255, imgDataA.data[i] + imgDataB.data[i]);
+                }
+                
+                ctx2.putImageData(imgDataA, 0, 0);
+                return canvas;
+            }
+            function multiply(imgA, imgB, ctx) {
+                const { canvas, ctx: ctx2 } = createCanvas(ctx.canvas.width, ctx.canvas.height);
+                ctx2.globalCompositeOperation = "multiply";
+                ctx2.drawImage(imgA, 0, 0);
+                ctx2.drawImage(imgB, 0, 0);
+                return canvas;
+            }
+            function blur(img, intensity, ctx) {
+                const { canvas, ctx: ctx2 } = createCanvas(ctx.canvas.width, ctx.canvas.height);
+                ctx2.filter = `blur(${intensity}px)`;
+                ctx2.drawImage(img, 0, 0);
+                return canvas;
+            }
+            function imageLerp(img, img2, fac, ctx) {
+                const { canvas, ctx: ctx2 } = createCanvas(ctx.canvas.width, ctx.canvas.height);
+                ctx2.drawImage(img, 0, 0);
+                const data = ctx2.getImageData(0, 0, canvas.width, canvas.height);
+                
+                ctx2.drawImage(img2, 0, 0);
+                const data2 = ctx2.getImageData(0, 0, canvas.width, canvas.height);
+                
+                for (let i = 0; i < data.data.length; i += 4) {
+                    data.data[i] = lerp(data.data[i], data2.data[i], fac);
+                    data.data[i + 1] = lerp(data.data[i + 1], data2.data[i + 1], fac);
+                    data.data[i + 2] = lerp(data.data[i + 2], data2.data[i + 2], fac);
+                }
+                
+                ctx2.putImageData(data, 0, 0);
+                return canvas;
             }
 
-            setup()
-            async function setup()
+            function previewC(c)
             {
-                let colorA = '#FF0000'
-                let colorB = '#00FF00'
-                let colorC = '#0000FF'
+                var newCanvas = document.createElement('canvas');
+                var context = newCanvas.getContext('2d');
+                newCanvas.width = c.width; newCanvas.height = c.height;
+                context.drawImage(c, 0, 0);
+                document.body.appendChild(newCanvas)
+            }
 
-                let tcl = await loadImage("./ssc layer/tcl/Image0001.png")
-                let trm = await loadImage("./ssc layer/trm/Image0001.png")
-                let alb = await loadImage("./ssc layer/alb/Image0001.png")
-                let thc = await loadImage("./ssc layer/thc/Image0001.png")
-                let enm = await loadImage("./ssc layer/enm/Image0001.png")
+            
+            const colorAInput = document.getElementById('colorA');
+            const colorBInput = document.getElementById('colorB');
+            const colorCInput = document.getElementById('colorC');
 
-                preview()
-                async function preview()
+            gradient.style.setProperty("--a", colorAInput.value+'50');
+            gradient.style.setProperty("--b", colorBInput.value+'50');
+
+            const switcher = document.getElementById('switch-color');
+
+            setup(document.getElementById('preview-color-a'), 'scc character A'+(currentList+1))
+            setup(document.getElementById('preview-color-b'), 'scc character B'+(currentList+1), true)
+            setup(document.getElementById('preview-color-c'), 'scc bunker'+(currentList+1), false, true)
+
+            let listenersA = []; let listenersB = []; let listenersC = []; let listenersS = [];
+            function reset()
+            {
+                for(var l of listenersA){colorAInput.removeEventListener('change', l)}
+                for(var l of listenersB){colorBInput.removeEventListener('change', l)}
+                for(var l of listenersC){colorCInput.removeEventListener('change', l)}
+                for(var l of listenersS){switcher.removeEventListener('input', l)}
+            }
+
+            let loading = false;
+            async function setup(image, name, invert = false, third = false)
+            {
+                settingUp=true;
+                image.src = '';
+                let loaded = true;
+
+                let tcl = await loadImage("./"+name+"/tcl/Image0001.png")
+                let trm = await loadImage("./"+name+"/trm/Image0001.png")
+                let alb = await loadImage("./"+name+"/alb/Image0001.png")
+                let thc = await loadImage("./"+name+"/thc/Image0001.png")
+                let enm = await loadImage("./"+name+"/enm/Image0001.png")
+                let a = await loadImage("./"+name+"/a/Image0001.png")
+                let emit = await loadImage("./"+name+"/emit/Image0001.png")
+                let diffColor = await loadImage("./"+name+"/diffColor/Image0001.png")
+
+                let diffCol = await loadImage("./"+name+"/DiffCol/Image0001.png")
+                let diffDir = await loadImage("./"+name+"/DiffDir/Image0001.png")
+                let diffInd = await loadImage("./"+name+"/DiffInd/Image0001.png")
+                let glossCol = await loadImage("./"+name+"/GlossCol/Image0001.png")
+                let glossDir = await loadImage("./"+name+"/GlossDir/Image0001.png")
+                let glossInd = await loadImage("./"+name+"/GlossInd/Image0001.png")
+                let alpha = await loadImage("./"+name+"/alpha/Image0001.png")
+
+                async function preview(colorA, colorB, colorC)
                 {
-                    let canvas = document.getElementById('preview-a');
+                    image.style.filter = 'brightness(0)';
+                    if(loading)
+                    {
+                        await new Promise((resolve) =>
+                        {
+                            let interval = setInterval(async () =>
+                            {
+                                if(!loading)
+                                {
+                                    clearInterval(interval);
+                                    resolve()
+                                }
+                            }, 300);
+                        })
+                    }
+
+                    loaded = false;
+                    loading=true;
+                    
+                    let canvas = document.createElement('canvas');
                     canvas.width = '1920'; canvas.height = '1280';
                     ctx = canvas.getContext('2d');
 
                     // trm
                     ctx.drawImage(trm, 0, 0, ctx.canvas.width, ctx.canvas.height)
                     ctx.globalCompositeOperation = "multiply";
-                    ctx.fillStyle = colorC
+                    ctx.fillStyle = colorC()
                     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
 
                     // thc
                     mix(alb, thc, ctx)
 
                     // ink split
-                    mix(mix2color(colorA, colorB, enm, ctx), add(enm, tcl, ctx), ctx)
+                    let mixedColors = mix2color(colorA(), colorB(), await allPixel(enm, ctx, (p) => {return Math.ceil(p/255)*255}), ctx);
+                    mix(mixedColors, add(enm, tcl, ctx), ctx)
 
-                    // 
+                    // diffuse
+                    let invertedA = await allPixel(a, ctx, (p) => {return (-p*2+255)});
+                    mix(diffCol, invertedA, ctx)
+
+                    let diffuseFac = multiply(blur(tcl, 50, ctx), invertedA, ctx);
+
+                    // DIRECT
+                    let directDiffuse = diffDir
+
+                    // INDIRECT
+                    let indirectDiffuse = multiply(diffInd, diffDir, ctx)
+                    let coloredIndirectDiffuse = mix2(mixedColors, indirectDiffuse, diffuseFac, ctx);
+
+                    let diffused = colorDodge(canvas, coloredIndirectDiffuse, directDiffuse, ctx);
+
+                    // glossy
+                    let glossy = add(multiply(glossCol, glossInd, ctx), multiply(glossCol, glossDir, ctx), ctx);
+
+                    ctx.drawImage(mix2(mixedColors, imageLerp(mix2(diffused, glossy, 1, ctx, "screen"), await allPixel(mix2(diffused, glossy, 1, ctx, "soft-light"),ctx,p=>{return p*2}), 0.3, ctx), multiply(emit, tcl, ctx), ctx), 0, 0, ctx.canvas.width, ctx.canvas.height)
+
+                    // alpha
+                    let ctxData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+                    let alphaCanvas = document.createElement('canvas'); alphaCanvas.width = canvas.width; alphaCanvas.height = canvas.height;
+                    let alphaCtx = canvas.getContext("2d");
+                    alphaCtx.drawImage(alpha, 0, 0, canvas.width, canvas.height)
+                    const alphaData = alphaCtx.getImageData(0, 0, canvas.width, canvas.height);
+
+                    for (let i = 0; i < ctxData.data.length; i += 4)
+                    {
+                        ctxData.data[i+3] = alphaData.data[i];
+                    }
+                    ctx.putImageData(ctxData, 0, 0);
+
+                    // Save & Clear
+                    image.src = canvas.toDataURL("data/image");
+                    image.style.filter = 'brightness(1)';
+                    loading=false;
+                    loaded = true;
+
+                    setTimeout(() =>
+                    {
+                        if(!loading)
+                        {
+                            for(var c of document.getElementsByClassName('canvas')){c.remove()}
+                        }
+                    }, 200);
                 }
+
+                let lastVA = ''; let lastVB = ''; let lastVC = ''; let lastInvert = switcher.checked;
+                async function updateColorInput()
+                {
+                    if(!loaded){return}
+
+                    let isInvert = invert;
+                    if(switcher.checked){isInvert=!invert;}
+                    
+                    if(!third)
+                    {
+                        if(lastVA == colorAInput.value && lastVB == colorBInput.value && lastInvert == switcher.checked){return;}
+                        lastVA = colorAInput.value; lastVB = colorBInput.value; 
+                        lastInvert = switcher.checked;
+
+                        if(isInvert) { await preview(() => {return colorBInput.value}, () => {return colorAInput.value}, () => {return colorAInput.value}); return; }
+                        await preview(() => {return colorAInput.value}, () => {return colorBInput.value}, () => {return colorBInput.value});
+                    }
+                    else
+                    {
+                        if(lastVC == colorCInput.value){return;}
+                        lastVC = colorCInput.value;
+
+                        await preview(() => {return colorCInput.value}, () => {return '#000000'}, () => {return '#000000'});
+                    }
+                }
+
+                if(!third)
+                {
+                    colorAInput.addEventListener('change', updateColorInput);
+                    listenersA.push(updateColorInput)
+                    colorBInput.addEventListener('change', updateColorInput);
+                    listenersB.push(updateColorInput)
+                }
+                else
+                {
+                    colorCInput.addEventListener('change', updateColorInput);
+                    listenersC.push(updateColorInput)
+                }
+                switcher.addEventListener('input', updateColorInput);
+                listenersS.push(updateColorInput)
+                
+                
+                updateColorInput();
+                settingUp=false;
             }
         </script>
     </body>

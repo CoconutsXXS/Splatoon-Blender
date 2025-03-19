@@ -1,0 +1,112 @@
+#gradient
+{
+    position: fixed;
+    --a: transparent; --b: transparent;
+    width: 100vw; height: 100vh;
+    margin: 0; background: linear-gradient(90deg, var(--a), transparent, var(--b));
+    background-size: cover;
+    z-index: -5; pointer-events: none;
+}
+
+#preview-color
+{
+    display: flex;
+    min-height: 550px;
+}
+#preview-color > img
+{
+    height: 600px;
+    position: absolute;
+    left: 50%;
+    translate: -50% 0;
+    z-index: -2;
+    transition: all 200ms;
+}
+
+#ink-list
+{
+    width: 100%;
+    min-height: 200px;
+}
+#ink-list > div
+{
+    display: inline-block;
+    width: 205px; height: 115px;
+    border-radius: 10px;
+    background-color: #3f3F3F;
+    padding: 8px;
+    margin-top: 20px; margin-left: 20px;
+}
+#ink-list > div > h2
+{
+    position: absolute; margin: 0; margin-left: 5px; max-width: 190px; font-size: larger; font-weight: 500; pointer-events: none;
+}
+#ink-list > div > div { display: flex; }
+#ink-list > div > div > button
+{
+    width: 50%;
+    background: var(--color);
+    margin: 0;
+    border-radius: 8px;
+    height: 80px;
+    box-shadow: none;
+    transition: all 100ms;
+    outline: var(--color-outline) 0px solid;
+}
+#ink-list > div > div > button:hover
+{
+    outline: var(--color-outline) 5px solid;
+    outline-offset: -5px;
+}
+#ink-list > div > div > button#a { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+#ink-list > div > div > button#b { border-top-left-radius: 0; border-bottom-left-radius: 0; }
+#ink-list > div > button#c
+{
+    filter: opacity(0.3);
+    width: 100%;
+    background: var(--color);
+    margin: 0;
+    margin-top: 5px;
+    border-radius: 8px;
+    height: 30px;
+    box-shadow: none;
+    transition: all 100ms linear;
+    outline: var(--color-outline) 0px solid;
+}
+#ink-list > div > button#c:hover
+{
+    filter: opacity(1);
+    outline: var(--color-outline) 5px solid;
+    outline-offset: -5px;
+}
+
+
+input[type="checkbox"]
+{
+    appearance: none;
+    background-color: #3f3F3F;
+    margin: 0;
+    font: inherit;
+    width: 35px;
+    height: 35px;
+    border: #00000000;
+    border-radius: 10px;
+    transition: all 100ms;
+
+    display: grid;
+    place-content: center;
+    cursor: pointer;
+}
+input[type="checkbox"]::before
+{
+    content: "";
+    width: 29px;
+    height: 29px;
+    transform: scale(0);
+    transition: all 100ms;
+    box-shadow: inset 35px 35px #e87d0d;
+    border-radius: 10px;
+}
+input[type="checkbox"]:checked::before {
+    transform: scale(1);
+}
