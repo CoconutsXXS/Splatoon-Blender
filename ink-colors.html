@@ -49,6 +49,12 @@
                 <input id="switch-color" type="checkbox">
                 <h3 style="margin: 0; margin-left: 5px; margin-top: 6px;">Switch</h3>
             </div>
+
+            <div style="position: absolute; top: 550px; height: 40px; width: 500px; margin-left: 20px; display: flex; opacity: 0.8;">
+                <button onclick="window.open('./', '_self')" style="width: 300px; margin: 0; height: 40px; padding: 0; font-size: 25px; margin-right: 10px; background: linear-gradient(70deg, #ff6f22, #db4d00);" class="button-shadow">Add-On</button>
+                <button onclick="window.open('./documentation', '_self')" style="width: 300px; margin: 0; height: 40px; padding: 0; font-size: 25px; margin-right: 10px; background: linear-gradient(70deg, #2ecc23, #129709);" class="button-shadow">Doc & Tuto</button>
+                <button onclick="window.open('./resources', '_self')" style="width: 300px; margin: 0; height: 40px; padding: 0; font-size: 25px; margin-right: 10px; background: linear-gradient(70deg, #078e98, #03c1cd);" class="button-shadow">Resources</button>
+            </div>    
         </div>
         <input id="colorA" type="color" value="#caba20" style="display: none;">
         <input id="colorB" type="color" value="#502eba" style="display: none;">
@@ -66,202 +72,13 @@
         </div>
 
         <script>
-            let colorList = `TeamColor_Cop_Blue
-teamColorA: #231395
-teamColorB: #01410f
-teamColorN: #e1ef18
-
-TeamColor_Cop_Option_Blue
-teamColorA: #231395
-teamColorB: #01410f
-teamColorN: #8318c4
-
-TeamColor_Cop_Orange
-teamColorA: #aa410f
-teamColorB: #01410f
-teamColorN: #e1ef18
-
-TeamColor_Cop_Pink
-teamColorA: #a81a87
-teamColorB: #01410f
-teamColorN: #e1ef18
-
-TeamColor_Msn_Blue
-teamColorA: #4921c3
-teamColorB: #b80097
-teamColorN: #e2bc18
-
-TeamColor_Msn_Green
-teamColorA: #0abf0e
-teamColorB: #b800a7
-teamColorN: #ffc800
-
-TeamColor_Msn_Lavender
-teamColorA: #ac8ef6
-teamColorB: #b800a7
-teamColorN: #d1aa07
-
-TeamColor_Msn_LumiGreen
-teamColorA: #afdd05
-teamColorB: #b800a7
-teamColorN: #5408eb
-
-TeamColor_Msn_Marigold
-teamColorA: #ed9705
-teamColorB: #b700a5
-teamColorN: #03a05e
-
-TeamColor_Msn_NightLumiGreen
-teamColorA: #19991e
-teamColorB: #7f0072
-teamColorN: #4400c8
-
-TeamColor_Msn_NightMarigold
-teamColorA: #956901
-teamColorB: #79036d
-teamColorN: #008950
-
-TeamColor_Msn_Option_Yellow
-teamColorA: #e1c805
-teamColorB: #b700a5
-teamColorN: #07d144
-
-TeamColor_Msn_Pink
-teamColorA: #f64479
-teamColorB: #9305a1
-teamColorN: #d1aa07
-
-TeamColor_Msn_Purple
-teamColorA: #8e38fb
-teamColorB: #b30089
-teamColorN: #d1aa07
-
-TeamColor_Msn_Soda
-teamColorA: #75daa7
-teamColorB: #b800a7
-teamColorN: #cfd811
-
-TeamColor_Msn_Turquoise
-teamColorA: #08bd79
-teamColorB: #b800a5
-teamColorN: #d1aa08
-
-TeamColor_Msn_Yellow
-teamColorA: #e9d10a
-teamColorB: #b800a5
-teamColorN: #08d144
-
-TeamColor_Vss_Fest_Option_PurpleGreen
-teamColorA: #4d0fbb
-teamColorB: #7db814
-teamColorN: #a11672
-
-TeamColor_Vss_Fest_SameTeam_PinkBlue
-teamColorA: #b72e6e
-teamColorB: #37249c
-teamColorN: #4a9a2e
-
-TeamColor_Vss_Fest_SameTeam_PurpleGreen
-teamColorA: #4d0fbb
-teamColorB: #7db814
-teamColorN: #a11672
-
-TeamColor_Vss_Fest_SameTeam_PurpleTurquoise
-teamColorA: #57199a
-teamColorB: #10814e
-teamColorN: #ba3464
-
-TeamColor_Vss_Gachi_BlueGreen
-teamColorA: #2821b5
-teamColorB: #5db603
-teamColorN: #ca21a5
-
-TeamColor_Vss_Gachi_GreenMazenta
-teamColorA: #03b362
-teamColorB: #b1008c
-teamColorN: #a8b600
-
-TeamColor_Vss_Gachi_GreenPurple
-teamColorA: #24b100
-teamColorB: #561cb1
-teamColorN: #cd2d7e
-
-TeamColor_Vss_Gachi_PurpleLumigreen
-teamColorA: #7b0393
-teamColorB: #42ba05
-teamColorN: #db7721
-
-TeamColor_Vss_Gachi_TurquoiseOrange
-teamColorA: #0cae6e
-teamColorB: #f65900
-teamColorN: #691dc1
-
-TeamColor_Vss_Gachi_YellowLightblue
-teamColorA: #d8c100
-teamColorB: #0079c8
-teamColorN: #ed570a
-
-TeamColor_Vss_Gachi_YellowPurple
-teamColorA: #cd8003
-teamColorB: #9108b1
-teamColorN: #1ab369
-
-TeamColor_Vss_Option_YellowBlue
-teamColorA: #dda801
-teamColorB: #4616a8
-teamColorN: #cc2885
-
-TeamColor_Vss_Regular_LemonPurple
-teamColorA: #bac805
-teamColorB: #830a9c
-teamColorN: #15aa62
-
-TeamColor_Vss_Regular_LightBlueYellow
-teamColorA: #007edc
-teamColorB: #e1a307
-teamColorN: #d01c78
-
-TeamColor_Vss_Regular_PinkBlue
-teamColorA: #d60e6e
-teamColorB: #311aa8
-teamColorN: #3fa51c
-
-TeamColor_Vss_Regular_PinkGreen
-teamColorA: #cf0366
-teamColorB: #16a80c
-teamColorN: #aab800
-
-TeamColor_Vss_Regular_PinkLightblue
-teamColorA: #ca0856
-teamColorB: #0199b8
-teamColorN: #c6cc07
-
-TeamColor_Vss_Regular_PinkYellow
-teamColorA: #dd0a64
-teamColorB: #bfcf01
-teamColorN: #15ac52
-
-TeamColor_Vss_Regular_PurpleOrange
-teamColorA: #4913aa
-teamColorB: #fb5b03
-teamColorN: #a3cd05
-
-TeamColor_Vss_Regular_PurpleTurquoise
-teamColorA: #5e0fb3
-teamColorB: #08b672
-teamColorN: #d43b72
-
-TeamColor_Vss_Regular_YellowBlue
-teamColorA: #dda801
-teamColorB: #4616a8
-teamColorN: #cc2885 `
-
-            // createList(colorList)
             function removeAllListeners(e)
             {
                 var eventlistener = getEventListeners(e)["DOMContentLoaded"][0];
                 e.removeEventListener("DOMContentLoaded", eventlistener.listener, eventlistener.useCapture);
             }
+
+            // Unused in final result
             function createList(list)
             {
                 let fstring = "[\n    {";

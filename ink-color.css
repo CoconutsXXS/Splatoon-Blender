@@ -11,7 +11,7 @@
 #preview-color
 {
     display: flex;
-    min-height: 550px;
+    min-height: 585px;
 }
 #preview-color > img
 {
@@ -84,7 +84,7 @@
 input[type="checkbox"]
 {
     appearance: none;
-    background-color: #3f3F3F;
+    background-color: #101010;
     margin: 0;
     font: inherit;
     width: 35px;

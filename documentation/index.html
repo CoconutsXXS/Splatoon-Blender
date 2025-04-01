@@ -25,6 +25,11 @@
     <div class="band">
         <h1 id="huge-title" style="margin-bottom: 5px; margin-top: 100px;">Splatoon Blender</h1>
         <span style="margin-bottom: 134px; font-size: medium; animation-name: fade; animation-duration: 1s;">Splatoon Blender Add-On Documentation & Tutorial - <a target="_blank" href="../index.html">Download</a></span>
+        <div style="position: absolute; top: 360px; height: 40px; width: 500px; margin-left: 100vw; translate: calc(-100% - 40px); display: flex; opacity: 0.7;">
+            <button onclick="window.open('../', '_self')" style="width: 300px; margin: 0; height: 40px; padding: 0; font-size: 25px; margin-right: 10px; background: linear-gradient(70deg, #ff6f22, #db4d00);" class="button-shadow">Add-On</button>
+            <button onclick="window.open('../resources', '_self')" style="width: 300px; margin: 0; height: 40px; padding: 0; font-size: 25px; margin-right: 10px; background: linear-gradient(70deg, #078e98, #03c1cd);" class="button-shadow">Resources</button>
+            <button onclick="window.open('../ink-colors', '_self')" style="width: 300px; margin: 0; height: 40px; padding: 0; font-size: 25px; margin-right: 10px; background: linear-gradient(70deg, #ad0355, #e03085);" class="button-shadow">Ink Colors</button>
+        </div>    
     </div>
 
     <div id="tutorial-selection">
@@ -167,6 +172,8 @@
             let steps =  screen.getElementsByClassName("step");
             let step = 0;
 
+            document.getElementsByClassName("band")[0].style.opacity = '0';
+
             document.getElementById('tutorial-selection').style.display = 'none';
             screen.style.display = 'block';
 
@@ -193,6 +200,7 @@
                 {
                     screen.style.opacity = '0';
                     document.getElementById('tutorial-selection').style.display = 'block';
+                    document.getElementsByClassName("band")[0].style.opacity = '1';
                     return;
                 }
 

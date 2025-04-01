@@ -33,21 +33,24 @@
         <div style="z-index: 100; pointer-events: none; position: absolute; height: 999999px; width: 100vw; animation-name: invert-fade; animation-duration: 3s;"></div>
     </div> -->
 
-    <div style="display: flex; text-align: center; align-items: center; justify-content: center; padding-top: 30px; padding-bottom: 30px;">
-        <form method="get" action="./add-ons/cloth.zip">
+    <div style="display: flex; text-align: center; align-items: center; justify-content: center; padding-top: 30px; padding-bottom: 30px; min-height: 70px;">
+        <form style="position: absolute; left: 0%; translate: 20px;" method="get" action="./add-ons/cloth.zip">
             <button type="submit" class="left" id="cloth-download">Cloth Importer</button>
         </form>
-        <button id="character-download" class="left" onclick='window.open("https://drive.usercontent.google.com/download?id=1ESO53aROGguwqeiQoGGhdSTxz1fytKQ9", "_blank")'>Character Creator</button>
-        <button style="font-size: 60px; font-weight: 600; padding: 10px; padding-left: 50px; padding-right: 50px;" onclick="document.getElementById('model-download').click();document.getElementById('cloth-download').click();document.getElementById('ink-download').click();document.getElementById('character-download').click()">Complete Kit</button>
-        <form method="get" action="./add-ons/ink.zip">
+        <button style="position: absolute; left: 20%; translate: calc(-20% + 10px);" id="character-download" class="left" onclick='window.open("https://drive.usercontent.google.com/download?id=1ESO53aROGguwqeiQoGGhdSTxz1fytKQ9", "_blank")'>Character Creator</button>
+        <button style="font-size: 60px; font-weight: 600; padding: 10px; padding-left: 50px; padding-right: 50px; position: absolute;" onclick="document.getElementById('model-download').click();document.getElementById('cloth-download').click();document.getElementById('ink-download').click();document.getElementById('character-download').click()">Complete Kit</button>
+        <form style="position: absolute; left: 70%; translate: calc(-20% - 10px);" method="get" action="./add-ons/ink.zip">
             <button id="ink-download" class="right">Dynamic Ink</button>
         </form>
-        <form method="get" action="./add-ons/model.zip">
+        <form style="position: absolute; right: 0%; translate: -20px;" method="get" action="./add-ons/model.zip">
             <button id="model-download" class="right">Model Importer</button>
         </form>
     </div>
-    <div style="width: 100vw; margin-top: -10px;">
-        <button class="doc-button" onclick="window.open('./documentation', '_blank')">Documentation & Tutorials</button>
+    <div style="width: 100vw; position: relative; left: 50%; translate: -50%; text-align: center;">
+        <!-- <button class="doc-button" onclick="window.open('./documentation', '_blank')">Documentation & Tutorials</button> -->
+        <button onclick="window.open('./documentation', '_self')" style="width: 200px; margin: 0; height: 40px; padding: 0; font-size: 25px; margin-right: 10px; background: linear-gradient(70deg, #2ecc2380, #12970980);" class="button-shadow">Doc & Tuto</button>
+        <button onclick="window.open('../resources', '_self')" style="width: 200px; margin: 0; height: 40px; padding: 0; font-size: 25px; margin-right: 10px; background: linear-gradient(70deg, #078e9880, #03c1cd80);" class="button-shadow">Resources</button>
+        <button onclick="window.open('../ink-colors', '_self')" style="width: 200px; margin: 0; height: 40px; padding: 0; font-size: 25px; margin-right: 10px; background: linear-gradient(70deg, #ad035580, #e0308580);" class="button-shadow">Ink Colors</button>
     </div>
 
     <div style="display: flex;">
