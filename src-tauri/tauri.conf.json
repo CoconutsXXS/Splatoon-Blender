@@ -1,8 +1,8 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "Splatoon Blender",
-  "version": "1.0.0",
-  "identifier": "com.coconutsxxs.splatoonblender",
+  "version": "1.1.2",
+  "identifier": "ink.space4.splatoon3blender",
   "build": {
     "frontendDist": "splatoon://localhost/index.html",
     "devUrl": "http://127.0.0.1:5173",
@@ -45,21 +45,7 @@
     "longDescription": "Browse and download bundled Splatoon Blender add-ons and model resources without an internet connection.",
     "resources": {
       "../dist/": "web/",
-      "../resources/": "web/resources/",
-      "../add-ons/": "web/add-ons/",
-      "../custom_tee/": "web/custom_tee/",
-      "../ink_texture/": "web/ink_texture/",
-      "../resource-screenshots/": "web/resource-screenshots/",
-      "../Character Compressed.glb": "web/Character Compressed.glb",
-      "../scc bunker1/": "web/scc bunker1/",
-      "../scc bunker2/": "web/scc bunker2/",
-      "../scc bunker3/": "web/scc bunker3/",
-      "../scc character A1/": "web/scc character A1/",
-      "../scc character A2/": "web/scc character A2/",
-      "../scc character A3/": "web/scc character A3/",
-      "../scc character B1/": "web/scc character B1/",
-      "../scc character B2/": "web/scc character B2/",
-      "../scc character B3/": "web/scc character B3/"
+      "../add-ons/": "web/add-ons/"
     },
     "icon": [
       "icons/32x32.png",

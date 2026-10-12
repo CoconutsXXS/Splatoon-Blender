@@ -1,6 +1,6 @@
 {
   "name": "splatoon-blender",
-  "version": "1.0.0",
+  "version": "1.1.2",
   "description": "",
   "main": "3D.js",
   "scripts": {
@@ -12,7 +12,9 @@
     "desktop:build": "node scripts/run-tauri.mjs build",
     "desktop:build:macos": "node scripts/run-tauri.mjs build --target universal-apple-darwin",
     "deploy": "gh-pages -d dist",
-    "desktop:build:windows": "node scripts/build-windows.mjs"
+    "desktop:build:windows": "node scripts/build-windows.mjs",
+    "desktop:pack:resources": "python3 scripts/pack-resources.py",
+    "desktop:release:collect": "node scripts/collect-offline-release.mjs"
   },
   "repository": {
     "type": "git",

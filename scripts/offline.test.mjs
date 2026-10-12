@@ -184,3 +184,31 @@ test('ink navigation becomes visible only with the saved language applied', () =
         assert.equal(ready, true);
     }
 });
+
+test('returning home reveals the restored position without waiting for 3D or DOMContentLoaded', () => {
+    const listeners = new Map();
+    const storage = new Map([['splatoon-home-scroll', '850']]);
+    const calls = [];
+    let hidden = true;
+    const window = {
+        scrollY: 850, location: {hash: ''},
+        addEventListener: (name, listener) => listeners.set(name, listener),
+        scrollTo: options => calls.push(options.top),
+    };
+    const document = { readyState: 'loading', documentElement: { classList: {remove: () => {hidden = false;}} },
+        addEventListener: () => assert.fail('restoration must not wait for module loading'),
+    };
+    new Script(readFileSync('home-scroll.js', 'utf8')).runInNewContext({
+        window, document, history: {},
+        sessionStorage: {getItem: key => storage.get(key), setItem: (key, value) => storage.set(key, value)},
+    });
+    assert.deepEqual(calls, [850]);
+    assert.equal(hidden, false);
+    window.scrollY = 1250;
+    listeners.get('pagehide')();
+    listeners.get('pageshow')({persisted: true});
+    assert.deepEqual(calls, [850, 1250], 'cached pages restore their most recently saved position');
+    const html = readFileSync('dist/index.html', 'utf8');
+    assert.match(html, /<script src="\.\/home-scroll.js"><\/script>/);
+    assert.equal(readFileSync('dist/home-scroll.js', 'utf8'), readFileSync('home-scroll.js', 'utf8'));
+});

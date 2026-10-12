@@ -1,0 +1,19 @@
+{
+  "format": 1,
+  "roots": [
+    "resources",
+    "custom_tee",
+    "ink_texture",
+    "resource-screenshots",
+    "Character Compressed.glb",
+    "scc bunker1",
+    "scc bunker2",
+    "scc bunker3",
+    "scc character A1",
+    "scc character A2",
+    "scc character A3",
+    "scc character B1",
+    "scc character B2",
+    "scc character B3"
+  ]
+}

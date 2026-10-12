@@ -587,6 +587,7 @@
             <br>To make a render press <b style="color:#e87d0d">F12</b> or go to Render at the top and click on "Render Image". When your image is rendered press <b style="color:#e87d0d">Alt + S</b> to save it.
         </span>
     </div>
-    <script type="module" src="./home-scroll.js"></script>
+    <!-- Restore before deferred 3D modules or their model requests can delay paint. -->
+    <script src="./home-scroll.js"></script>
 </body>
 </html>

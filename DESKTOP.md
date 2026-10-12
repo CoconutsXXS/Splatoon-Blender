@@ -1,38 +1,41 @@
 # 离线桌面版
 
-本项目使用同一套页面和资源构建网站版、macOS 桌面版、Windows 桌面版。桌面版不需要启动开发服务器。模型库、预览贴图、教程、插件及英中日名称数据随安装包提供，网络请求被离线页面策略限制。
+离线发行由两个文件组成：对应系统的 **1.1.2 程序安装包**，以及 Windows、macOS 共用的 **v1 资源 ZIP**。首次打开程序会提示导入资源 ZIP，导入完成后点击“返回首页”即可使用，不需要启动服务器或联网。
+
+## 资源复用与更新
+
+程序版本和资源格式版本独立。1.1.x 程序支持所有格式 v1 的资源包，升级程序不会删除资源，也不会要求重新导入。今后更改资源格式时，应保留 v1 读取兼容，或明确说明迁移要求。
+
+资源 ZIP 使用文件内容生成标识；内容不变时重复构建复用同一个文件。图片、模型、贴图和资源名称数据放在资源包；页面、脚本、字体及插件代码随程序更新。
+
+资源有更新时，下载或复制新的 ZIP，然后从应用菜单 **Resources / 资源 → Offline resources / 离线资源** 导入。当前版本采用完整资源包更新，不自动联网，也不提供增量下载。导入会显示进度，并逐文件检查大小与 SHA-256；完整校验成功后才切换，取消或资源损坏会保留当前选择。旧资源目录保留，导入旧 ZIP 可以切回旧版本。保留多份资源会占用磁盘空间。
+
+资源保存在 Tauri 的应用本地数据目录中，子目录为 `resource-packs`，不在应用安装目录中。macOS 通常为 `~/Library/Application Support/ink.space4.splatoon3blender/resource-packs`；Windows 通常为 `%LOCALAPPDATA%\ink.space4.splatoon3blender\resource-packs`。导入需要临时解压空间，首次安装建议预留至少 5 GB；更新时还需要容纳新旧两份资源。
+
+应用标识从 1.1.2 起改为 `ink.space4.splatoon3blender`。如果新目录没有可用资源，程序自动复用旧标识 `com.coconutsxxs.splatoonblender` 目录中的已导入资源，无需复制或重新导入；以后导入新版会写入新目录。
+
+ZIP 的校验用于检测损坏，不是发行者签名，请使用可信来源的资源包。旧的 1.0.0 完整安装包没有独立资源存储，需要在升级到 1.1.0 后首次导入一次。
 
 ## 构建
 
-安装 Node.js 22+、Rust stable 和平台开发工具，然后执行 `npm ci`。
+安装 Node.js 22+、Python 3.11+、Rust stable 和平台开发工具，然后执行 `npm ci`。
 
-- macOS 通用版：安装 Xcode，执行 `rustup target add aarch64-apple-darwin x86_64-apple-darwin`，再执行 `npm run desktop:build:macos -- --ci`。
-- Windows x64：安装 Visual Studio C++ Build Tools 和 Rust MSVC 工具链，执行 `npm run desktop:build:windows -- --ci`。
-- 在 Apple Silicon Mac 上交叉构建 Windows：安装 rustup、LLVM、LLD、NSIS，执行 `rustup target add x86_64-pc-windows-msvc` 和 `cargo install --locked cargo-xwin --root .build-tools`，再执行同一个 Windows 构建命令。脚本自动选择 cargo-xwin。首次构建会下载 Microsoft SDK 和 WebView2 离线安装器。
+1. `npm run desktop:pack:resources`：生成唯一的共用资源 ZIP、清单和 SHA-256 校验文件，输出到 `offline-release/`。两个平台只需生成一次。
+2. macOS 通用程序包：安装 Xcode，添加 `aarch64-apple-darwin`、`x86_64-apple-darwin` Rust 目标，执行 `npm run desktop:build:macos -- --bundles app,dmg --ci`。
+3. Windows x64 程序包：安装 Visual Studio C++ Build Tools 和 Rust MSVC 工具链，执行 `npm run desktop:build:windows -- --ci`。
 
-下载依赖的构建过程需要联网；安装好的应用离线运行。Windows 安装包使用 NSIS，内置完整 WebView2 离线安装器，安装时无需下载组件。
+Apple Silicon Mac 上交叉构建 Windows：安装 rustup、LLVM、LLD、NSIS，添加 `x86_64-pc-windows-msvc` 目标并安装 `cargo-xwin` 到 `.build-tools`，再执行相同 Windows 命令。脚本自动选择交叉构建工具。
 
-Windows 使用与 Tauri CLI 2.11.5 对应的官方安装器模板，仅把资源压缩改为逐文件模式，避免包含 WebView2 后超过 2GiB 的原始数据在 macOS 上触发整块压缩崩溃。更新 Tauri CLI 时应同步检查该模板。
+下载构建依赖需要联网。Windows NSIS 安装包内置完整 WebView2 离线安装器，因此程序包仍包含该运行环境的体积；安装和使用无需联网。安装器采用逐文件压缩。
 
-## 输出
+macOS 输出位于 `src-tauri/target/universal-apple-darwin/release/bundle/dmg/`；Windows 输出位于 `src-tauri/target/x86_64-pc-windows-msvc/release/bundle/nsis/`。资源配置来源为根目录 `offline-resources.json`，格式 v1 包含 `manifest.json` 与 `web/` 下的资源。
 
-- macOS：`src-tauri/target/universal-apple-darwin/release/bundle/dmg/` 中的 DMG，和 `bundle/macos/` 中的应用。
-- Windows：`src-tauri/target/x86_64-pc-windows-msvc/release/bundle/nsis/` 中的 setup.exe。
+构建两个平台后执行 `npm run desktop:release:collect`，可将安装包、共用资源包、校验文件和使用说明集中到 `offline-release/`。
 
-macOS 版本包含 arm64 和 x86_64 两种架构。Windows 首版为 x64，目标 Windows 10/11。两者都包含约 2GB 的离线资源，安装时请预留足够空间。
+只发布程序更新时无需重新上传资源 ZIP；发布资源更新时复用原程序安装包。首次用户需要程序安装包和资源 ZIP 两者。本次拆分不修改 GitHub workflow，仓库中已单独禁用的 Pages workflow 保持禁用，上游及其他 fork 不受影响。
 
-下载插件、模型 ZIP 或自定义 T 恤贴图时，会弹出系统保存窗口，允许选择文件名和保存位置。取消后不写入文件；保存到已有文件时由系统确认是否替换。
+## 验证与限制
 
-## 验证
+执行 `npm run build:desktop`、`npm test`、`python3 scripts/pack-resources.test.py` 和 `cargo test --manifest-path src-tauri/Cargo.toml --lib`。测试覆盖离线页面、原生下载、语言切换、资源复用、损坏包、非法路径和资源更新失败时保留原选择。发行前还应在目标系统检查首次导入、重启复用、三维预览、语言切换、模型下载及墨水工具。
 
-执行 `npm test` 检查离线页面、资源映射、语言数据、Windows 离线安装配置和 ZIP 保存路径。执行 `cargo test --manifest-path src-tauri/Cargo.toml --lib` 检查资源路径、视频范围请求及下载文件处理。最终还需在目标系统检查界面、三维预览、语言切换、模型下载和墨水颜色工具。
-
-## 已知限制
-
-Character Creator 的原下载地址已失效，仓库中没有 `add-ons/character.zip`。离线版会禁用该下载按钮；加入有效 ZIP 后重新构建即可启用。Discord 和外部文档入口在离线版本中不可用。
-
-当前构建没有发行者证书签名或 Apple 公证。正式对外发行时应补充签名。
-
-## 本地恢复记录
-
-桌面源码和离线配置根据聊天 `01a0eb07-f528-7610-a985-31e603025b2c` 的修改记录恢复到本地，并补充 Windows 配置、T 恤贴图路径修正和原生 ZIP 保存。未复制远端构建缓存或旧安装包。
+下载插件、模型 ZIP 或自定义贴图时使用系统保存窗口。Character Creator 的原下载地址已失效，仓库缺少 `add-ons/character.zip`，该下载暂不可用。Discord 和外部文档入口在离线版不可用。当前程序未签名或 Apple 公证。

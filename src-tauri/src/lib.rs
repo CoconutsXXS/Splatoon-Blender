@@ -1,3 +1,4 @@
+mod resource_pack;
 use std::path::{Component, Path, PathBuf};
 
 use tauri::http::{header, Request, Response, StatusCode};
@@ -122,18 +123,28 @@ fn serve_resource(
     } else {
         resource_root.join("web")
     };
-    let Ok(canonical_root) = root.canonicalize() else {
-        return error_response(
-            StatusCode::INTERNAL_SERVER_ERROR,
-            "Resource directory unavailable",
-        );
-    };
-    let Ok(path) = canonical_root.join(relative).canonicalize() else {
-        return error_response(StatusCode::NOT_FOUND, "Resource not found");
-    };
-    if !path.starts_with(&canonical_root) || !path.is_file() {
-        return error_response(StatusCode::NOT_FOUND, "Resource not found");
+    let active = app
+        .state::<resource_pack::Packs>()
+        .active
+        .read()
+        .unwrap()
+        .clone();
+    if relative == Path::new("offline-resources.html")
+        || (!cfg!(debug_assertions) && active.is_none() && relative == Path::new("index.html"))
+    {
+        return Response::builder()
+            .header(header::CONTENT_TYPE, "text/html; charset=utf-8")
+            .body(include_bytes!("resource-setup.html").to_vec())
+            .unwrap();
     }
+    let path = std::iter::once(root).chain(active).find_map(|root| {
+        let root = root.canonicalize().ok()?;
+        let path = root.join(&relative).canonicalize().ok()?;
+        (path.starts_with(&root) && path.is_file()).then_some(path)
+    });
+    let Some(path) = path else {
+        return error_response(StatusCode::NOT_FOUND, "Resource not found");
+    };
 
     let Ok(bytes) = std::fs::read(&path) else {
         return error_response(StatusCode::NOT_FOUND, "Resource not found");
@@ -272,6 +283,28 @@ async fn save_addon(filename: String, app: tauri::AppHandle) -> Result<Option<St
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_dialog::init())
+        .manage(resource_pack::state(Path::new(
+            "/nonexistent-resource-pack",
+        )))
+        .setup(|app| {
+            let data_dir = app.path().app_local_data_dir()?;
+            *app.state::<resource_pack::Packs>().active.write().unwrap() =
+                resource_pack::load_compatible(&data_dir);
+            let menu = tauri::menu::Menu::default(app.handle())?;
+            let resources = tauri::menu::SubmenuBuilder::new(app, "Resources / 资源")
+                .text("offline-resources", "Offline resources / 离线资源")
+                .build()?;
+            menu.append(&resources)?;
+            app.set_menu(menu)?;
+            Ok(())
+        })
+        .on_menu_event(|app, event| {
+            if event.id().as_ref() == "offline-resources" {
+                if let Some(window) = app.get_webview_window("main") {
+                    let _ = window.eval("location.href = '/offline-resources.html'");
+                }
+            }
+        })
         .register_asynchronous_uri_scheme_protocol(
             "splatoon",
             |context, request: Request<Vec<u8>>, responder: UriSchemeResponder| {
@@ -291,7 +324,12 @@ pub fn run() {
                 });
             },
         )
-        .invoke_handler(tauri::generate_handler![save_addon, save_archive])
+        .invoke_handler(tauri::generate_handler![
+            save_addon,
+            save_archive,
+            resource_pack::import_resources,
+            resource_pack::resource_pack_status
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

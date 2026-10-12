@@ -12,7 +12,8 @@ history.scrollRestoration = 'manual';
 
 window.addEventListener('pagehide', () => {
     try {
-        sessionStorage.setItem(storageKey, String(window.scrollY));
+        savedPosition = window.scrollY;
+        sessionStorage.setItem(storageKey, String(savedPosition));
     } catch {}
 });
 
@@ -28,8 +29,9 @@ function restorePosition() {
     }
 }
 
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', restorePosition, { once: true });
-} else {
-    restorePosition();
-}
+// This classic script sits at the end of body: the full layout already exists.
+// DOMContentLoaded can wait for module dependencies and top-level model awaits.
+restorePosition();
+window.addEventListener('pageshow', event => {
+    if (event.persisted) restorePosition();
+});
