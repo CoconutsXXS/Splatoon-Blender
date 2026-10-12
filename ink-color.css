@@ -8,78 +8,184 @@
     z-index: -5; pointer-events: none;
 }
 
-#preview-color
-{
+/* Keep the preview visible while browsing the independently scrolling palette. */
+.ink-colors-page {
+    height: 100dvh;
+    overflow: hidden;
     display: flex;
-    min-height: 585px;
+    flex-direction: column;
 }
-#preview-color > img
-{
-    height: 600px;
+.ink-heading {
+    flex: none;
+    padding: 20px 180px 16px;
+    text-align: center;
+    font-family: Barlow, sans-serif;
+}
+.ink-heading h1 {
+    margin: 0;
+    font-size: clamp(28px, 3.5vw, 52px);
+    line-height: 1.1;
+    font-weight: 700;
+    color: #ffffffb3;
+}
+.ink-heading h4 {
+    margin: 10px 0 0;
+    font-size: 17px;
+    font-weight: 400;
+    color: #ffffff80;
+}
+.ink-workspace {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 55fr) minmax(0, 45fr);
+    gap: 12px;
+    padding: 0 20px 20px;
+}
+#preview-color {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    isolation: isolate;
+}
+#preview-color > img {
     position: absolute;
+    top: 0;
     left: 50%;
     translate: -50% 0;
-    z-index: -2;
-    transition: all 200ms;
+    width: calc(100% - 96px);
+    height: calc(100% - 110px);
+    object-fit: contain;
+    z-index: 0;
+    transition: filter 200ms;
 }
-
-#ink-list
-{
-    width: 100%;
-    min-height: 200px;
+#preview-color > img:not([src]) { visibility: hidden; }
+#ink-preview-status {
+    position: absolute;
+    bottom: 112px;
+    left: 50%;
+    translate: -50% 0;
+    padding: 6px 12px;
+    border-radius: 16px;
+    background: #1f1f1fcc;
+    color: #ffffffb3;
+    font-size: 14px;
+    z-index: 1;
 }
-#ink-list > div
-{
-    display: inline-block;
-    width: 205px; height: 115px;
+#previous-game, #next-game {
+    position: absolute;
+    top: calc((100% - 110px) / 2);
+    translate: 0 -50%;
+    margin: 0;
+    height: 48px;
+    width: 48px;
+    padding: 0;
+    z-index: 1;
+}
+#previous-game svg, #next-game svg { width: 48px; height: 48px; }
+#previous-game { left: 0; rotate: 90deg; }
+#next-game { right: 0; rotate: -90deg; }
+.ink-switch-control {
+    position: absolute;
+    bottom: 64px;
+    left: 12px;
+    display: flex;
+    z-index: 1;
+}
+.ink-page-links {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
+    display: flex;
+    gap: 10px;
+    opacity: 0.8;
+    z-index: 1;
+}
+.ink-page-links button {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    height: 38px;
+    padding: 0;
+    font-size: clamp(16px, 1.7vw, 23px);
+}
+.ink-colors-page .back-home {
+    background: color-mix(in srgb, var(--ink-color-a, #caba20) 35%, #1f1f1f);
+    color: #ffffffe0;
+}
+#ink-list {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+    align-content: start;
+    gap: 12px;
+    padding: 8px 12px 16px;
+    scrollbar-gutter: stable;
+}
+#ink-list > div {
+    box-sizing: border-box;
+    min-width: 0;
     border-radius: 10px;
-    background-color: #3f3F3F;
+    background-color: #ffffff12;
     padding: 8px;
-    margin-top: 20px; margin-left: 20px;
 }
-#ink-list > div > h2
-{
-    position: absolute; margin: 0; margin-left: 5px; max-width: 190px; font-size: larger; font-weight: 500; pointer-events: none;
+#ink-list > div > h2 {
+    margin: 0 0 6px;
+    min-height: 34px;
+    font-family: Barlow, sans-serif;
+    font-size: 14px;
+    line-height: 17px;
+    font-weight: 500;
+    color: #ffffffb3;
+    overflow-wrap: anywhere;
+    pointer-events: none;
 }
 #ink-list > div > div { display: flex; }
-#ink-list > div > div > button
-{
-    width: 50%;
+#ink-list button {
     background: var(--color);
     margin: 0;
-    border-radius: 8px;
-    height: 80px;
+    padding: 0;
+    border-radius: 6px;
     box-shadow: none;
     transition: all 100ms;
     outline: var(--color-outline) 0px solid;
 }
-#ink-list > div > div > button:hover
-{
-    outline: var(--color-outline) 5px solid;
-    outline-offset: -5px;
+#ink-list > div > div > button { width: 50%; height: 48px; }
+#ink-list button:hover, #ink-list button:focus-visible {
+    outline: var(--color-outline) 4px solid;
+    outline-offset: -4px;
 }
-#ink-list > div > div > button#a { border-top-right-radius: 0; border-bottom-right-radius: 0; }
-#ink-list > div > div > button#b { border-top-left-radius: 0; border-bottom-left-radius: 0; }
-#ink-list > div > button#c
-{
+#ink-list button#a { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+#ink-list button#b { border-top-left-radius: 0; border-bottom-left-radius: 0; }
+#ink-list > div > button#c {
     filter: opacity(0.3);
     width: 100%;
-    background: var(--color);
-    margin: 0;
     margin-top: 5px;
-    border-radius: 8px;
-    height: 30px;
-    box-shadow: none;
-    transition: all 100ms linear;
-    outline: var(--color-outline) 0px solid;
+    height: 18px;
 }
-#ink-list > div > button#c:hover
-{
-    filter: opacity(1);
-    outline: var(--color-outline) 5px solid;
-    outline-offset: -5px;
+#ink-list > div > button#c:hover { filter: opacity(1); }
+@media (max-width: 800px) {
+    .ink-heading { padding: 72px 16px 12px; }
+    .ink-heading h4 { font-size: 14px; margin-top: 6px; }
+    .ink-workspace {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: minmax(180px, 40dvh) minmax(0, 1fr);
+        padding: 0 12px 12px;
+        gap: 4px;
+    }
+    #preview-color > img { height: calc(100% - 72px); }
+    #previous-game, #next-game { top: calc((100% - 72px) / 2); }
+    .ink-switch-control { bottom: 44px; }
+    .ink-colors-page .ink-switch-control input { width: 24px; height: 24px; border-radius: 7px; }
+    .ink-colors-page .ink-switch-control input::before { width: 20px; height: 20px; }
+    .ink-switch-control h3 { font-size: 14px; }
+    .ink-page-links { bottom: 4px; }
+    .ink-page-links button { height: 30px; }
+    #ink-list { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; }
 }
-
 
 input[type="checkbox"]
 {
@@ -109,4 +215,8 @@ input[type="checkbox"]::before
 }
 input[type="checkbox"]:checked::before {
     transform: scale(1);
+}
+
+.ink-colors-page .language-picker {
+    --language-color: var(--ink-color-b, #502eba);
 }

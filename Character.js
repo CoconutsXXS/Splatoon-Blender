@@ -1,4 +1,4 @@
-import * as THREE from 'https://unpkg.com/three@0.174.0/build/three.module.js';
+import * as THREE from 'three';
 import { GLTFLoader } from './GLTFLoader.js'
 
 
@@ -29,7 +29,7 @@ const scene = new THREE.Scene();
 
 // Create Camera
 const camera = new THREE.PerspectiveCamera(90, window.character_canvas.height / window.character_canvas.height);
-camera.position.set(0, 0, 4);
+camera.position.set(0, 0, 4.5);
 
 // Create Light
 const lightLeft = new THREE.DirectionalLight(0xFFFFFF, 3);
@@ -72,6 +72,7 @@ async function wait(time)
         setTimeout(resolve, time)
     });
 }
+async function initializeCharacter() {
 await wait(1000)
 const characterScene = await loadScene("./Character Compressed.glb");
 //center.add(characterScene)
@@ -143,3 +144,6 @@ document.body.addEventListener('mousemove', function(event)
 document.getElementById('canvas-box').onmousedown = () => {click = true;}
 document.body.onmouseup = () => {click = false;}
 document.body.onmouseleave = () => {click = false;}
+}
+
+initializeCharacter().catch(error => console.error('Failed to initialize character preview:', error));

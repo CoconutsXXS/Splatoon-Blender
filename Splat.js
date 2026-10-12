@@ -1,5 +1,5 @@
 // Importer Three.js
-import * as THREE from 'https://unpkg.com/three@0.174.0/build/three.module.js';
+import * as THREE from 'three';
 const randInt = function(a, b)
 {
     return Math.floor((Math.random()*(b-a+1))+a)
@@ -13,7 +13,7 @@ const camera = new THREE.PerspectiveCamera(75, discord_canvas.width / discord_ca
 camera.position.set(0, 0, 8.5);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, canvas: discord_canvas });
-renderer.setSize(discord_canvas.width, discord_canvas.height);
+renderer.setSize(discord_canvas.width, discord_canvas.height, false);
 document.body.appendChild(renderer.domElement);
 
 var group = new THREE.Group();

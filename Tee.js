@@ -1,4 +1,4 @@
-import * as THREE from 'https://unpkg.com/three@0.174.0/build/three.module.js';
+import * as THREE from 'three';
 import { GLTFLoader } from './GLTFLoader.js'
 
 
@@ -97,7 +97,7 @@ async function teamColoredTexture(tcl='#FF0000', image, team, teamImage)
     _c.width = _c.height = 512
 
     const _ctx = _c.getContext("2d");
-    var img = await loadImage(window.location+'custom_tee/Tee Team Color.png')
+    var img = await loadImage(new URL('./custom_tee/Tee Team Color.png', document.baseURI).href)
     _ctx.fillStyle = tcl
     _ctx.globalAlpha = 1
     _ctx.fillRect(0, 0, 512, 512)
@@ -109,17 +109,17 @@ async function teamColoredTexture(tcl='#FF0000', image, team, teamImage)
     var c = document.createElement('canvas');
     c.width = c.height = 512*4;
     const ctx = c.getContext("2d");
-    img = await loadImage(window.location+'custom_tee/Tee Blank.png')
+    img = await loadImage(new URL('./custom_tee/Tee Blank.png', document.baseURI).href)
 
     ctx.globalCompositeOperation = 'source-over';
-    ctx.drawImage(await loadImage(window.location+'custom_tee/Tee Semi Blank.png'), 0, 0, 512*4, 512*4)
+    ctx.drawImage(await loadImage(new URL('./custom_tee/Tee Semi Blank.png', document.baseURI).href), 0, 0, 512*4, 512*4)
 
     ctx.fillStyle = tcl
     ctx.globalCompositeOperation = 'screen';
     ctx.fillRect(0, 0, 512*4, 512*4)
 
     ctx.globalCompositeOperation = 'destination-out';
-    ctx.drawImage(await loadImage(window.location+'custom_tee/Tee Semi MAI.png'), 0, 0, 512*4, 512*4)
+    ctx.drawImage(await loadImage(new URL('./custom_tee/Tee Semi MAI.png', document.baseURI).href), 0, 0, 512*4, 512*4)
 
     ctx.globalCompositeOperation = 'destination-over';
     ctx.drawImage(img, 0, 0, 512*4, 512*4)
@@ -139,7 +139,7 @@ async function teamColoredTexture(tcl='#FF0000', image, team, teamImage)
     }
     else
     {
-        teamIcon = await loadImage(window.location+'custom_tee/'+team+'.png');
+        teamIcon = await loadImage(new URL('./custom_tee/'+team+'.png', document.baseURI).href);
     }
 
     ctx.drawImage(teamIcon, 512*4*0.577, 512*4*0.135, 512*4*0.11, 512*4*0.11)
@@ -225,7 +225,7 @@ window.updateTee(window.teeColor, file, window.teeSize, window.teeTeam, file2)
 
 // Render
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, canvas: tee_customizer });
-renderer.setSize( window.tee_customizer.width*2, window.tee_customizer.height*2 )
+renderer.setSize(window.tee_customizer.width * 2, window.tee_customizer.height * 2, false)
 renderer.render(scene, camera);
 
 
@@ -237,9 +237,103 @@ Math.lerp = function (start, end, amt)
 
 let targetLookX = 0;
 let targetLookY = 0;
-var oldX = null;
-var oldY = null;
-let click = true;
+let targetCameraDistance = camera.position.z;
+let dragPointerId = null;
+let lastPointerX = 0;
+let lastPointerY = 0;
+const dragSensitivity = 0.006;
+const minCameraDistance = 0.9;
+const maxCameraDistance = 3.2;
+const pinchZoomSensitivity = 0.005;
+const wheelZoomSensitivity = 0.001;
+const raycaster = new THREE.Raycaster();
+const pointerPosition = new THREE.Vector2();
+
+function isInteractiveTarget(target)
+{
+    return target instanceof Element && Boolean(target.closest('button, input, select, textarea, a, [contenteditable="true"]'));
+}
+
+function isPointerOverTee(event)
+{
+    const rect = window.tee_customizer.getBoundingClientRect();
+    if(rect.width === 0 || rect.height === 0 ||
+        event.clientX < rect.left || event.clientX > rect.right ||
+        event.clientY < rect.top || event.clientY > rect.bottom)
+    {
+        return false;
+    }
+
+    pointerPosition.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+    pointerPosition.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+    scene.updateMatrixWorld(true);
+    raycaster.setFromCamera(pointerPosition, camera);
+    return raycaster.intersectObjects(center.children, true).length > 0;
+}
+
+function stopTeeDrag()
+{
+    dragPointerId = null;
+    document.body.style.removeProperty('cursor');
+}
+
+document.addEventListener('pointerdown', function(event)
+{
+    if(dragPointerId !== null || (event.pointerType === 'mouse' && event.button !== 0) ||
+        isInteractiveTarget(event.target) || !isPointerOverTee(event))
+    {
+        return;
+    }
+
+    dragPointerId = event.pointerId;
+    lastPointerX = event.clientX;
+    lastPointerY = event.clientY;
+    document.body.style.cursor = 'grabbing';
+    if(event.cancelable) event.preventDefault();
+}, {capture: true, passive: false});
+
+document.addEventListener('pointermove', function(event)
+{
+    if(event.pointerId !== dragPointerId)
+    {
+        return;
+    }
+
+    const deltaX = event.clientX - lastPointerX;
+    const deltaY = event.clientY - lastPointerY;
+    targetLookX += deltaX * dragSensitivity;
+    targetLookY = THREE.MathUtils.clamp(targetLookY + deltaY * dragSensitivity, -0.85, 1.2);
+    lastPointerX = event.clientX;
+    lastPointerY = event.clientY;
+    if(event.cancelable) event.preventDefault();
+}, {capture: true, passive: false});
+
+document.addEventListener('pointerup', function(event)
+{
+    if(event.pointerId === dragPointerId) stopTeeDrag();
+}, true);
+document.addEventListener('pointercancel', function(event)
+{
+    if(event.pointerId === dragPointerId) stopTeeDrag();
+}, true);
+window.addEventListener('blur', stopTeeDrag);
+
+document.addEventListener('wheel', function(event)
+{
+    if(!isPointerOverTee(event))
+    {
+        return;
+    }
+
+    const delta = THREE.MathUtils.clamp(event.deltaY, -250, 250);
+    const sensitivity = event.ctrlKey ? pinchZoomSensitivity : wheelZoomSensitivity;
+    targetCameraDistance = THREE.MathUtils.clamp(
+        targetCameraDistance * Math.exp(delta * sensitivity),
+        minCameraDistance,
+        maxCameraDistance
+    );
+    if(event.cancelable) event.preventDefault();
+}, {capture: true, passive: false});
 
 loop();
 function loop()
@@ -248,29 +342,10 @@ function loop()
 
     center.rotation.y = Math.lerp(center.rotation.y, targetLookX, 0.1);
     center.rotation.x = Math.lerp(center.rotation.x, targetLookY, 0.1);
+    camera.position.z = Math.lerp(camera.position.z, targetCameraDistance, 0.12);
 
     if(center.rotation.x < -0.85) { center.rotation.x = -0.85 }
     if(center.rotation.x > 1.2) { center.rotation.x = 1.2 }
 
     requestAnimationFrame(loop);
 }
-
-Math.lerp = function (start, end, amt)
-{
-    return (1-amt)*start+amt*end
-}
-document.body.addEventListener('mousemove', function(event)
-{
-    if(click)
-    {
-        targetLookX = center.rotation.y+(event.clientX - oldX)/20;
-        targetLookY = center.rotation.x+(event.clientY - oldY)/40;    
-    }
-
-    oldX = event.clientX;
-    oldY = event.clientY;
-})
-
-//window.tee_customizer.onmousedown = () => {click = true;}
-//window.tee_customizer.onmouseup = document.onmouseup = () => {click = false;}
-//document.onmouseleave = () => {click = false;}

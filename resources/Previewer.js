@@ -1,8 +1,7 @@
-import * as THREE from 'https://unpkg.com/three@0.174.0/build/three.module.js';
+import * as THREE from 'three';
 import { ColladaLoader } from '../ColladaLoader.js';
 
-var startPath = 'https://coconutsxxs.github.io/Splatoon-Blender'
-startPath = ''
+const startPath = new URL("../", import.meta.url).pathname.replace(/\/$/, "")
 
 Array.prototype.max = function() {
     return Math.max.apply(null, this);
@@ -159,7 +158,6 @@ async function material(textures, path, material, name = '', color=0xe87d0d99, m
         }
         suffix = suffix.split('.')[0]
 
-        console.log(suffix)
         switch (suffix)
         {
             case 'Alb':
@@ -209,7 +207,6 @@ async function material(textures, path, material, name = '', color=0xe87d0d99, m
         material.roughness = 0.3
     }
 
-    console.log(material)
     return material
 }
 function asyncCollada(modelPath)
@@ -232,9 +229,6 @@ async function loadModel(name, scene, camera, adjustFactor = 1)
     const isVariation = name.includes('_ShareTex_')
     const isCustom = name.includes('_Cstm')
 
-    console.log('LOAD ' + name)
-    console.log('is a variation: '+isVariation)
-
     var colladaLoader = new ColladaLoader();
     var modelPath = path+name+".dae"
 
@@ -251,7 +245,6 @@ async function loadModel(name, scene, camera, adjustFactor = 1)
             modelPath = path+name.slice(0, -12)+"00.dae"
         }    
 
-        console.log('Base model base: '+modelPath)
     }
     else
     {
@@ -264,13 +257,11 @@ async function loadModel(name, scene, camera, adjustFactor = 1)
             modelPath = path+name+"_00"+".dae"
         }    
     }
-    console.log(modelPath)
-
     return new Promise(async (resolve) =>
     {    
         colladaLoader.load(modelPath, async (collada) =>
         {
-            if(collada == null || collada.scene == null){resolve([]); console.log("Missing .dae file")}
+            if(collada == null || collada.scene == null){resolve([]); return}
             const model = collada.scene;
     
     
@@ -317,12 +308,8 @@ async function loadModel(name, scene, camera, adjustFactor = 1)
 
                     if(usedMaterials.includes(materialName)){continue}
 
-                    console.log('Material: '+materialName)
-
                     // let isMaterialVariation = materialName.includes(variationIndex) && isVariation
 
-
-                    console.log('Textures: ', textures)
                     let objectTextures = []
                     for(var t of textures)
                     {
@@ -343,7 +330,6 @@ async function loadModel(name, scene, camera, adjustFactor = 1)
                         t = t.replace('_BGOBJ', '');
                         t = t.replace('_F', '')
                         if(t == materialName){ objectTextures.push(t); continue }
-                        console.log(t)
                         for(var w of t.split('_'))
                         {
                             if(w == materialName){ objectTextures.push(a); continue }
@@ -383,10 +369,6 @@ async function loadModel(name, scene, camera, adjustFactor = 1)
                         texPath = startPath+'/resources/'+window.directory+name.slice(0, -7)+'/'
                     }
 
-                    console.log(texPath)
-                    console.log(path)
-                    console.log(objectTextures)
-
                     child.material = await material(objectTextures, texPath, child.material, name, 0x000000, materialName, path)
                     usedMaterials.push(materialName)
                 }
@@ -399,7 +381,7 @@ async function loadModel(name, scene, camera, adjustFactor = 1)
             
             i=0
             var height = 0
-            for(var a of allHeight){ if(a == Infinity || a == -Infinity){continue}console.log(a); height+=a; i++ }
+            for(var a of allHeight){ if(a == Infinity || a == -Infinity){continue}height+=a; i++ }
             height/=i
 
             scene.add(center)
@@ -462,7 +444,7 @@ async function loadScene(canvas)
 
 
     // Render
-    const renderer = new THREE.WebGLRenderer({ precision: 'lowp', powerPreference: 'low-power', antialias: true, alpha: true, canvas: canvas, failIfMajorPerformanceCaveat: true });
+    let renderer = new THREE.WebGLRenderer({ precision: 'lowp', powerPreference: 'low-power', antialias: true, alpha: true, canvas: canvas, failIfMajorPerformanceCaveat: true });
 
     renderer.setSize( canvas.width, canvas.height )
     renderer.render(scene, camera);
@@ -516,7 +498,24 @@ async function loadScene(canvas)
 
     wait(300).then(() => click = true)
 
-    return {scene: center, camera: camera, loop: loop, destroy:destroy, renderer:renderer}
+    const raycaster = new THREE.Raycaster();
+    function hitsModel(clientX, clientY) {
+        const bounds = canvas.getBoundingClientRect();
+        const pointer = new THREE.Vector2(
+            ((clientX - bounds.left) / bounds.width) * 2 - 1,
+            -((clientY - bounds.top) / bounds.height) * 2 + 1,
+        );
+        center.updateWorldMatrix(true, true);
+        camera.updateMatrixWorld();
+        raycaster.setFromCamera(pointer, camera);
+        // Some imported skinned meshes do not provide reliable triangle hits.
+        // Protect their full bounds as well so clicking the object never dismisses it.
+        const bounds3D = new THREE.Box3().setFromObject(center);
+        return raycaster.intersectObject(center, true).some(hit => hit.object.isMesh)
+            || (!bounds3D.isEmpty() && raycaster.ray.intersectsBox(bounds3D));
+    }
+
+    return {scene: center, camera: camera, loop: loop, destroy:destroy, renderer:renderer, hitsModel}
 }
 window.loadScene = loadScene
 window.loadModel = loadModel

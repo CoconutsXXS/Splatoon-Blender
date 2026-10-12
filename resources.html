@@ -2,9 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script type="importmap">
+        {"imports":{"three":"./vendor/three/three.module.js"}}
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Splatoon Resources</title>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="index.css?v=20261010-homefont">
     <link rel="shortcut icon" href="Logo Low.png">
 
 
@@ -15,20 +18,301 @@
     <meta name="og:image" itemprop="image" content="https://i.ibb.co/CV5mJ4V/Logo.png">
     <meta content="#e87e0d" data-react-helmet="true" name="theme-color" />
 
+    <style>
+        @font-face {
+            font-family: "ResourceChinese";
+            src: url("./resources/fonts/DFP_GBZY7.ttf") format("truetype");
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: "Splatoon3UI";
+            src: url("./resources/fonts/BlitzMain.otf") format("opentype");
+            font-weight: 400;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: "Splatoon3UI";
+            src: url("./BlitzBold.otf") format("opentype");
+            font-weight: 700;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: "Splatoon3JapaneseFallback";
+            src: url("./resources/fonts/FOT-KurokaneStd-EB.otf") format("opentype");
+            font-weight: 400;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: "Splatoon3JapaneseFallback";
+            src: url("./resources/fonts/FOT-RowdyStd-EB.otf") format("opentype");
+            font-weight: 700;
+            font-display: swap;
+        }
+
+        #resource-language-control {
+            position: fixed;
+            top: 18px;
+            right: 18px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            color: #ffffffc0;
+            font: 500 16px Barlow, sans-serif;
+        }
+
+        #resource-language.page-nav-control {
+            appearance: none;
+            -webkit-appearance: none;
+            padding-right: 44px;
+            cursor: pointer;
+        }
+
+        #preview-sidebar {
+            box-sizing: border-box;
+            height: 100%;
+            overflow-y: auto;
+        }
+        body.resource-preview-open > .back-home { display: none; }
+        .preview-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 18px;
+        }
+        #close-resource-preview {
+            flex: none;
+            width: 50px;
+            height: 50px;
+            margin: 0;
+            padding: 0;
+            outline: none;
+        }
+        #clean-name {
+            min-width: 0;
+            margin: 0;
+            text-align: left;
+            overflow-wrap: anywhere;
+        }
+
+        #resource-section-controls {
+            position: absolute;
+            inset: 0;
+            display: block !important;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        #resource-section-controls .wall-button {
+            position: absolute !important;
+            top: 50%;
+            margin: 0 !important;
+            padding: 0;
+            transform: translateY(-50%);
+            pointer-events: auto;
+        }
+
+        #previous-section {
+            left: 20px;
+        }
+
+        #next-section {
+            right: 20px;
+        }
+
+        #resource-name {
+            top: 50%;
+            left: 100px;
+            width: calc(100% - 200px);
+            transform: translateY(-50%);
+            font-size: clamp(24px, 7vw, 160px);
+            line-height: 1.1;
+            text-align: center;
+        }
+
+        #resource-quick-links {
+            position: absolute;
+            top: 340px;
+            left: 50%;
+            display: flex;
+            gap: 12px;
+            width: min(calc(100% - 40px), 960px);
+            height: 40px;
+            margin: 0;
+            transform: translateX(-50%);
+        }
+
+        #resource-quick-links > button {
+            flex: 1 1 0;
+            min-width: 0;
+            height: 40px;
+            margin: 0;
+            padding: 0;
+            font-size: clamp(14px, 2vw, 20px);
+            line-height: 1;
+            white-space: nowrap;
+        }
+
+        #list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr));
+            gap: 12px 16px;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 8px 12px;
+        }
+
+        #list > div {
+            display: flex !important;
+            align-items: center;
+            gap: 12px;
+            width: auto !important;
+            max-width: none !important;
+            min-width: 0;
+            height: 112px;
+            min-height: 112px;
+            max-height: 112px;
+            box-sizing: border-box;
+            margin: 0 !important;
+            padding: 8px;
+            overflow: hidden;
+        }
+
+        #list > div > canvas,
+        #list > div > img {
+            flex: 0 0 85px;
+            width: 85px !important;
+            height: 85px !important;
+            object-fit: contain;
+        }
+
+        #list > div > div {
+            display: flex;
+            flex: 1 1 auto;
+            flex-direction: column;
+            justify-content: center;
+            gap: 4px;
+            width: auto !important;
+            min-width: 0;
+            margin: 0 !important;
+            line-break: normal !important;
+            overflow: hidden;
+        }
+
+        #list .resource-card-title {
+            display: -webkit-box;
+            overflow: hidden;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            line-height: 1.2;
+            overflow-wrap: anywhere;
+        }
+
+        #list .resource-card-id {
+            display: block;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        #list > div > div > br {
+            display: none;
+        }
+
+        #list > div > .download-model {
+            flex: 0 0 82px;
+            width: 82px;
+            height: 82px;
+            margin: 0 !important;
+        }
+
+        @media (max-width: 680px) {
+            #resource-quick-links {
+                top: auto;
+                bottom: 16px;
+                flex-direction: column;
+                width: calc(100% - 32px);
+                height: auto;
+                gap: 8px;
+            }
+
+            #resource-quick-links > button {
+                flex: 0 0 36px;
+                height: 36px;
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            #resource-name {
+                left: 58px;
+                width: calc(100% - 116px);
+            }
+
+            #resource-section-controls .wall-button,
+            #resource-section-controls .wall-button svg {
+                width: 44px !important;
+                height: 44px !important;
+            }
+
+            #previous-section {
+                left: 8px;
+            }
+
+            #next-section {
+                right: 8px;
+            }
+
+        }
+
+        html[lang^="zh"] body,
+        html[lang^="zh"] body :is(button, select, p, span, h2, h3) {
+            font-family: "ResourceChinese", Barlow, sans-serif;
+        }
+
+        html[lang^="zh"] #resource-name {
+            font-family: "PingFang SC", "Microsoft YaHei UI", "Microsoft YaHei", "ResourceChinese", sans-serif !important;
+            font-weight: 600;
+            font-synthesis: none;
+        }
+
+        html[lang^="en"] body,
+        html[lang^="en"] body :is(button, select, p, span, h2, h3) {
+            font-family: "Splatoon3UI", Barlow, sans-serif;
+        }
+
+        html[lang^="ja"] body,
+        html[lang^="ja"] body :is(button, select, p, span, h2, h3) {
+            font-family: "Splatoon3UI", "Splatoon3JapaneseFallback", sans-serif;
+        }
+
+        html[lang^="en"] #resource-name {
+            font-family: "Splatoon3UI", sans-serif !important;
+        }
+
+        html[lang^="ja"] #resource-name {
+            font-family: "Splatoon3UI", "Splatoon3JapaneseFallback", sans-serif !important;
+        }
+    </style>
+
     <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 </head>
-<body style="background-color: #1f1f1f; scrollbar-color: #1f1F1F #3f3F3F;">
+<body id="resource-page" style="background-color: #1f1f1f; scrollbar-color: #1f1F1F #3f3F3F;">
+    <a class="back-home" href="./index.html"><span aria-hidden="true">←</span> <span data-ui-text="backHome">Back to Home</span></a>
     <div style="position: absolute; height: 100%; z-index: 10;">
         <div style="top:0; position: sticky; display: none;" id="full-screen">
             <canvas id="big-preview" style="width: 100vw; height: 100vh; margin: 0;"></canvas>
     
             <div style="top:0; position: absolute; width: 100vw; height: 100vh; pointer-events: none; display: flex;">
-                <div style="background-color: #1f1f1fcf; width: 40vw; min-width: 350px; max-width: 500px; pointer-events:all;">
-                    <div style="display: flex;">
-                        <button class="resource-button" onclick="document.getElementById('full-screen').style.display = 'none'; window.deleteQueryParameter('item');" style="width: 50px; height: 50px; margin-top: 20px; padding: 0;">
+                <div id="preview-sidebar" style="background-color: #1f1f1fcf; width: 40vw; min-width: 350px; max-width: 500px; pointer-events:all;">
+                    <div class="preview-header">
+                        <button id="close-resource-preview" class="resource-button" aria-label="关闭模型预览">
                             <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 212.982 212.982" style="padding: 12.5px; width:25px; height: 25px" xml:space="preserve">
                             <g id="Close">
                                 <path style="fill-rule:evenodd;clip-rule:evenodd;" d="M131.804,106.491l75.936-75.936c6.99-6.99,6.99-18.323,0-25.312
@@ -37,12 +321,12 @@
                                     c6.989,6.99,18.322,6.99,25.312,0c6.99-6.99,6.99-18.322,0-25.312L131.804,106.491z"/>
                             </svg>
                         </button>
-                        <h2 id="clean-name" style="text-align: center; margin-top: 29px;">Fig_AcousticGuitar00_ShareTex_01</h2>
+                        <h2 id="clean-name">Fig_AcousticGuitar00_ShareTex_01</h2>
                     </div>
                     <h3 id="raw-name" style="text-align: center;">Fig_AcousticGuitar00_ShareTex_01</h3>
                     <img id="big-icon" style="width: 50%; text-align: center; margin-left: 25%;">
                     <button class="resource-button" id="big-download-button" style="width: calc(100% - 50px); margin-top: 20px;">Download</button>
-                    <p style="margin: 20px;">Model previewer doesn't support team color texture modification, result can be black/white. It's a quick automatic shader recreation, result is usually better when imported in Blender.</p>
+                    <p id="previewer-note" style="margin: 20px;">Model previewer doesn't support team color texture modification, result can be black/white. It's a quick automatic shader recreation, result is usually better when imported in Blender.</p>
                 </div>
             </div>
 
@@ -59,27 +343,33 @@
         </div>
     </div>
 
-    <div style="width: 100vw; margin: 0; margin-bottom: 40px; min-height: 400px;" id="resource-wall">
-        <h1 id="resource-name" style="z-index: 0; position: absolute; margin: 0; color: #ffffff50; -moz-user-select: none; -webkit-user-select: none; -ms-user-select: none; user-select: none; font-family: Splat-Bold; line-height: 170px;">Locker Models</h1>
+    <div style="position: relative; width: 100vw; margin: 0; margin-bottom: 40px; min-height: 400px;" id="resource-wall">
+        <div id="resource-language-control">
+            <select id="resource-language" class="page-nav-control" aria-label="Language">
+                <option value="USen">English</option>
+                <option value="CNzh">简体中文</option>
+                <option value="JPja">日本語</option>
+            </select>
+        </div>
+        <h1 id="resource-name" style="z-index: 0; position: absolute; margin: 0; color: #ffffff50; -moz-user-select: none; -webkit-user-select: none; -ms-user-select: none; user-select: none; font-family: Splat-Bold;">Locker Models</h1>
 
-        <div style="display: flex;">
-            <button class="wall-button" style="position: relative; margin-top: 10%; margin-left: 30px; height: 60px; width: 60px; padding: 0; rotate: 90deg;">
+        <div id="resource-section-controls">
+            <button id="previous-section" class="wall-button" style="width: 60px; height: 60px; rotate: 90deg;">
                 <svg fill="#ffffff65" width="60px" height="60px" viewBox="0 0 40 40">
                     <g><path d="M20,0C8.973,0,0,8.973,0,20c0,11.027,8.973,20,20,20c11.027,0,20-8.973,20-20C40,8.973,31.027,0,20,0z M27.756,23.465l-6.279,5.332C21.051,29.158,20.525,29.34,20,29.34c-0.526,0-1.052-0.182-1.478-0.543l-6.279-5.332c-0.959-0.816-1.077-2.256-0.262-3.217c0.815-0.959,2.255-1.078,3.216-0.262l2.521,2.141v-9.186c0-1.26,1.021-2.281,2.282-2.281c1.26,0,2.281,1.021,2.281,2.281v9.186l2.521-2.141c0.962-0.814,2.401-0.697,3.218,0.262C28.834,21.209,28.716,22.648,27.756,23.465z"/></g>
                 </svg>
             </button>
-            <div style="width: calc(100% - 250px);"></div>
-            <button class="wall-button" style="position: relative; margin-top: 10%; margin-left: 30px; height: 60px; width: 60px; padding: 0; rotate: -90deg;">
+            <button id="next-section" class="wall-button" style="width: 60px; height: 60px; rotate: -90deg;">
                 <svg fill="#ffffff65" width="60px" height="60px" viewBox="0 0 40 40">
                     <g><path d="M20,0C8.973,0,0,8.973,0,20c0,11.027,8.973,20,20,20c11.027,0,20-8.973,20-20C40,8.973,31.027,0,20,0z M27.756,23.465l-6.279,5.332C21.051,29.158,20.525,29.34,20,29.34c-0.526,0-1.052-0.182-1.478-0.543l-6.279-5.332c-0.959-0.816-1.077-2.256-0.262-3.217c0.815-0.959,2.255-1.078,3.216-0.262l2.521,2.141v-9.186c0-1.26,1.021-2.281,2.282-2.281c1.26,0,2.281,1.021,2.281,2.281v9.186l2.521-2.141c0.962-0.814,2.401-0.697,3.218,0.262C28.834,21.209,28.716,22.648,27.756,23.465z"/></g>
                 </svg>
             </button>
         </div>
 
-        <div style="position: absolute; top: 340px; height: 40px; width: 500px; margin-left: 20px; display: flex;">
-            <button onclick="window.open('./', '_self')" style="width: 300px; margin: 0; height: 40px; padding: 0; font-size: 25px; margin-right: 10px; background: linear-gradient(70deg, #ff6f22, #db4d00);" class="button-shadow">Add-On</button>
-            <button onclick="window.open('./documentation', '_self')" style="width: 300px; margin: 0; height: 40px; padding: 0; font-size: 25px; margin-right: 10px; background: linear-gradient(70deg, #2ecc23, #129709);" class="button-shadow">Doc & Tuto</button>
-            <button onclick="window.open('./ink-colors', '_self')" style="width: 300px; margin: 0; height: 40px; padding: 0; font-size: 25px; margin-right: 10px; background: linear-gradient(70deg, #ad0355, #e03085);" class="button-shadow">Ink Colors</button>
+        <div id="resource-quick-links">
+            <button id="addon-button" onclick="window.location.href='./index.html'" style="background: linear-gradient(70deg, #ff6f22, #db4d00);" class="button-shadow">Add-On</button>
+            <button id="documentation-button" onclick="window.location.href='./documentation/index.html'" style="background: linear-gradient(70deg, #2ecc23, #129709);" class="button-shadow">Doc &amp; Tuto</button>
+            <button id="ink-colors-button" onclick="window.location.href='./ink-colors.html'" style="background: linear-gradient(70deg, #ad0355, #e03085);" class="button-shadow">Ink Colors</button>
         </div>
 
         <script>
@@ -129,7 +419,7 @@
                     name: 'Weapon Models',
                     colorA: '24b100',
                     colorB: '0cae6e',
-                    list: ['Wmn_Blaster_Coop','Wmn_Blaster_Light','Wmn_Blaster_LightLong_Cstm11','Wmn_Blaster_LightShort','Wmn_Blaster_LightShort_Cstm01','Wmn_Blaster_Light_Cstm01','Wmn_Blaster_Long','Wmn_Blaster_Middle','Wmn_Blaster_Middle_Cstm01','Wmn_Blaster_NormalSdodr','Wmn_Blaster_Precision','Wmn_Blaster_Precision_Cstm01','Wmn_Blaster_Short','Wmn_Blaster_Short_Cstm01','Wmn_Brush_Heavy','Wmn_Brush_Heavy_Cstm01','Wmn_Brush_Mini','Wmn_Brush_Mini_Cstm01','Wmn_Brush_Normal','Wmn_Brush_NormalSdodr','Wmn_Brush_Normal_Cstm01','Wmn_Charger_Coop','Wmn_Charger_Keeper','Wmn_Charger_Keeper_Cstm01','Wmn_Charger_Light','Wmn_Charger_Long','Wmn_Charger_Long.','Wmn_Charger_LongScope_Cstm01','Wmn_Charger_NormalSdodr','Wmn_Charger_NormalT','Wmn_Charger_NormalTScope_Cstm01','Wmn_Charger_Pencil','Wmn_Charger_Pencil_Cstm01','Wmn_Charger_Quick','Wmn_Charger_Quick_Cstm01','Wmn_Maneuver_Coop','Wmn_Maneuver_Dual','Wmn_Maneuver_Dual_Cstm01','Wmn_Maneuver_Gallon','Wmn_Maneuver_Gallon_Cstm01','Wmn_Maneuver_Long','Wmn_Maneuver_NormalSdodr','Wmn_Maneuver_NormalT','Wmn_Maneuver_NormalT_Cstm01','Wmn_Maneuver_Short','Wmn_Maneuver_Short_Cstm01','Wmn_Maneuver_Stepper','Wmn_Maneuver_Stepper_Cstm01','Wmn_Roller_BrushNormal','Wmn_Roller_Compact','Wmn_Roller_Compact_Cstm01','Wmn_Roller_Heavy','Wmn_Roller_Heavy_Cstm01','Wmn_Roller_Hunter','Wmn_Roller_Hunter_Cstm01','Wmn_Roller_NormalSdodr','Wmn_Roller_NormalT','Wmn_Roller_NormalT_Cstm01','Wmn_Roller_Wide','Wmn_Roller_Wide_Cstm01','Wmn_Saber_Coop','Wmn_Saber_Light','Wmn_Saber_Light_Cstm01','Wmn_Saber_Normal','Wmn_Saber_NormalSdodr','Wmn_Saber_Normal_Cstm01','Wmn_Shelter_Compact','Wmn_Shelter_Compact_Cstm01','Wmn_Shelter_Coop','Wmn_Shelter_Focus','Wmn_Shelter_Normal','Wmn_Shelter_NormalSdodr','Wmn_Shelter_Normal_Cstm01','Wmn_Shelter_Wide','Wmn_Shelter_Wide_Cstm01','Wmn_Shooter_Blaze','Wmn_Shooter_Blaze_Cstm01','Wmn_Shooter_Expert','Wmn_Shooter_Expert_Cstm01','Wmn_Shooter_First','Wmn_Shooter_First_Cstm01','Wmn_Shooter_Flash','Wmn_Shooter_Flash_Cstm01','Wmn_Shooter_Gravity','Wmn_Shooter_Gravity_Cstm01','Wmn_Shooter_Heavy','Wmn_Shooter_Heavy_Cstm01','Wmn_Shooter_Long','Wmn_Shooter_Long_Cstm01','Wmn_Shooter_Msn0Lv0','Wmn_Shooter_Normal','Wmn_Shooter_NormalB','Wmn_Shooter_NormalSdodr','Wmn_Shooter_NormalT','Wmn_Shooter_NormalT_Cstm01','Wmn_Shooter_Precision','Wmn_Shooter_QuickLong','Wmn_Shooter_QuickLong_Cstm01','Wmn_Shooter_QuickMiddle','Wmn_Shooter_QuickMiddle_Cstm01','Wmn_Shooter_RvLv0','Wmn_Shooter_RvSdodr','Wmn_Shooter_Short_Cstm01','Wmn_Shooter_Short_Cstm11','Wmn_Shooter_TripleMiddle','Wmn_Shooter_TripleMiddle_Cstm01','Wmn_Shooter_TripleQuick','Wmn_Shooter_TripleQuick_Cstm01','Wmn_Slosher_Bathtub','Wmn_Slosher_Bathtub_Cstm01','Wmn_Slosher_Coop','Wmn_Slosher_Diffusion','Wmn_Slosher_Diffusion_Cstm01','Wmn_Slosher_Double','Wmn_Slosher_Double_Cstm01','Wmn_Slosher_Launcher','Wmn_Slosher_Launcher_Cstm01','Wmn_Slosher_NormalSdodr','Wmn_Slosher_StrongT','Wmn_Slosher_StrongT_Cstm01','Wmn_Slosher_Washtub','Wmn_Slosher_Washtub_Cstm01','Wmn_Spinner_Downpour','Wmn_Spinner_Downpour_Cstm01','Wmn_Spinner_HyperShort','Wmn_Spinner_HyperT','Wmn_Spinner_NormalSdodr','Wmn_Spinner_QuickT','Wmn_Spinner_QuickT_Cstm01','Wmn_Spinner_Serein','Wmn_Spinner_Serein_Cstm01','Wmn_Spinner_StandardT','Wmn_Spinner_StandardT_Cstm01','Wmn_Stringer_Coop','Wmn_Stringer_Normal','Wmn_Stringer_NormalSdodr','Wmn_Stringer_Normal_Cstm01','Wmn_Stringer_Short','Wmn_Stringer_Short_Cstm01'],
+                    list: ['Wmn_Blaster_Coop','Wmn_Blaster_Light','Wmn_Blaster_LightLong_Cstm11','Wmn_Blaster_LightShort','Wmn_Blaster_LightShort_Cstm01','Wmn_Blaster_Light_Cstm01','Wmn_Blaster_Long','Wmn_Blaster_Middle','Wmn_Blaster_Middle_Cstm01','Wmn_Blaster_NormalSdodr','Wmn_Blaster_Precision','Wmn_Blaster_Precision_Cstm01','Wmn_Blaster_Short','Wmn_Blaster_Short_Cstm01','Wmn_Brush_Heavy','Wmn_Brush_Heavy_Cstm01','Wmn_Brush_Mini','Wmn_Brush_Mini_Cstm01','Wmn_Brush_Normal','Wmn_Brush_NormalSdodr','Wmn_Brush_Normal_Cstm01','Wmn_Charger_Coop','Wmn_Charger_Keeper','Wmn_Charger_Keeper_Cstm01','Wmn_Charger_Light','Wmn_Charger_Long','Wmn_Charger_LongScope','Wmn_Charger_LongScope_Cstm01','Wmn_Charger_NormalSdodr','Wmn_Charger_NormalT','Wmn_Charger_NormalTScope_Cstm01','Wmn_Charger_Pencil','Wmn_Charger_Pencil_Cstm01','Wmn_Charger_Quick','Wmn_Charger_Quick_Cstm01','Wmn_Maneuver_Coop','Wmn_Maneuver_Dual','Wmn_Maneuver_Dual_Cstm01','Wmn_Maneuver_Gallon','Wmn_Maneuver_Gallon_Cstm01','Wmn_Maneuver_Long','Wmn_Maneuver_NormalSdodr','Wmn_Maneuver_NormalT','Wmn_Maneuver_NormalT_Cstm01','Wmn_Maneuver_Short','Wmn_Maneuver_Short_Cstm01','Wmn_Maneuver_Stepper','Wmn_Maneuver_Stepper_Cstm01','Wmn_Roller_BrushNormal','Wmn_Roller_Compact','Wmn_Roller_Compact_Cstm01','Wmn_Roller_Heavy','Wmn_Roller_Heavy_Cstm01','Wmn_Roller_Hunter','Wmn_Roller_Hunter_Cstm01','Wmn_Roller_NormalSdodr','Wmn_Roller_NormalT','Wmn_Roller_NormalT_Cstm01','Wmn_Roller_Wide','Wmn_Roller_Wide_Cstm01','Wmn_Saber_Coop','Wmn_Saber_Light','Wmn_Saber_Light_Cstm01','Wmn_Saber_Normal','Wmn_Saber_NormalSdodr','Wmn_Saber_Normal_Cstm01','Wmn_Shelter_Compact','Wmn_Shelter_Compact_Cstm01','Wmn_Shelter_Coop','Wmn_Shelter_Focus','Wmn_Shelter_Normal','Wmn_Shelter_NormalSdodr','Wmn_Shelter_Normal_Cstm01','Wmn_Shelter_Wide','Wmn_Shelter_Wide_Cstm01','Wmn_Shooter_Blaze','Wmn_Shooter_Blaze_Cstm01','Wmn_Shooter_Expert','Wmn_Shooter_Expert_Cstm01','Wmn_Shooter_First','Wmn_Shooter_First_Cstm01','Wmn_Shooter_Flash','Wmn_Shooter_Flash_Cstm01','Wmn_Shooter_Gravity','Wmn_Shooter_Gravity_Cstm01','Wmn_Shooter_Heavy','Wmn_Shooter_Heavy_Cstm01','Wmn_Shooter_Long','Wmn_Shooter_Long_Cstm01','Wmn_Shooter_Msn0Lv0','Wmn_Shooter_Normal','Wmn_Shooter_NormalB','Wmn_Shooter_NormalSdodr','Wmn_Shooter_NormalT','Wmn_Shooter_NormalT_Cstm01','Wmn_Shooter_Precision','Wmn_Shooter_QuickLong','Wmn_Shooter_QuickLong_Cstm01','Wmn_Shooter_QuickMiddle','Wmn_Shooter_QuickMiddle_Cstm01','Wmn_Shooter_RvLv0','Wmn_Shooter_RvSdodr','Wmn_Shooter_Short_Cstm01','Wmn_Shooter_Short_Cstm11','Wmn_Shooter_TripleMiddle','Wmn_Shooter_TripleMiddle_Cstm01','Wmn_Shooter_TripleQuick','Wmn_Shooter_TripleQuick_Cstm01','Wmn_Slosher_Bathtub','Wmn_Slosher_Bathtub_Cstm01','Wmn_Slosher_Coop','Wmn_Slosher_Diffusion','Wmn_Slosher_Diffusion_Cstm01','Wmn_Slosher_Double','Wmn_Slosher_Double_Cstm01','Wmn_Slosher_Launcher','Wmn_Slosher_Launcher_Cstm01','Wmn_Slosher_NormalSdodr','Wmn_Slosher_StrongT','Wmn_Slosher_StrongT_Cstm01','Wmn_Slosher_Washtub','Wmn_Slosher_Washtub_Cstm01','Wmn_Spinner_Downpour','Wmn_Spinner_Downpour_Cstm01','Wmn_Spinner_HyperShort','Wmn_Spinner_HyperT','Wmn_Spinner_NormalSdodr','Wmn_Spinner_QuickT','Wmn_Spinner_QuickT_Cstm01','Wmn_Spinner_Serein','Wmn_Spinner_Serein_Cstm01','Wmn_Spinner_StandardT','Wmn_Spinner_StandardT_Cstm01','Wmn_Stringer_Coop','Wmn_Stringer_Normal','Wmn_Stringer_NormalSdodr','Wmn_Stringer_Normal_Cstm01','Wmn_Stringer_Short','Wmn_Stringer_Short_Cstm01'],
                     directory: 'Weapons/',
                     isBig: false
                 },
@@ -145,12 +435,12 @@
             window.currentSection = 0
             document.getElementsByClassName('wall-button')[0].addEventListener('click', () =>
             {
-                window.currentSection--;
+                window.currentSection = (window.currentSection + sectionColor.length - 1) % sectionColor.length;
                 updateSection()
             })
             document.getElementsByClassName('wall-button')[1].addEventListener('click', () =>
             {
-                window.currentSection++;
+                window.currentSection = (window.currentSection + 1) % sectionColor.length;
                 updateSection()
             })
 
@@ -164,7 +454,10 @@
                 document.querySelector(':root').style.setProperty('--m-color-a-alpha', '#'+sectionColor[window.currentSection].colorA+'50')
                 document.querySelector(':root').style.setProperty('--m-color-b-alpha', '#'+sectionColor[window.currentSection].colorB+'50')
 
-                document.getElementById('resource-name').innerText = sectionColor[window.currentSection].name
+                const section = sectionColor[window.currentSection]
+                document.getElementById('resource-name').innerText = window.resourceI18n
+                    ? window.resourceI18n.getSectionName(section.directory, section.name)
+                    : section.name
 
                 window.directory = sectionColor[window.currentSection].directory
                 window.list = sectionColor[window.currentSection].list
@@ -173,6 +466,8 @@
                 window.updateAllModels()
                 window.setQueryParameter('list', window.currentSection.toString());
             }
+
+            window.updateResourceSection = updateSection
 
             window.addEventListener('load', () =>
             {
@@ -210,7 +505,7 @@
             {
                 document.getElementById('list-heavy').style.display = 'none'
             }
-            list.style.display = 'block'
+            list.style.display = window.isBig ? 'block' : 'grid'
 
             list.innerHTML = ''
 
@@ -229,16 +524,18 @@
                 element.id = ''
                 element.childNodes[1].setAttribute('mode-name', n)
                 element.childNodes[7].childNodes[1].setAttribute('fill', '#4F4F4F')
-                element.childNodes[5].childNodes[1].innerText = n.split('_')[Math.min(1, n.split('_').length-1)].replace(/([A-Z])/g, ' $1').trim().replace(/\B(?=(\d{2})+(?!\d))/g, " ")
+                let displayName = n.split('_')[Math.min(1, n.split('_').length-1)].replace(/([A-Z])/g, ' $1').trim().replace(/\B(?=(\d{2})+(?!\d))/g, " ")
                 element.childNodes[5].childNodes[5].innerText = n
                 if(window.directory == 'Weapons/')
                 {
-                    element.childNodes[5].childNodes[1].innerText = n.slice(4, n.length).replaceAll('_', ' ')
+                    displayName = n.slice(4, n.length).replaceAll('_', ' ')
                 }
                 if(window.directory == 'Head/' || window.directory == 'Cloth/' || window.directory == 'Shoes/')
                 {
-                    element.childNodes[5].childNodes[1].innerText = n.slice(n.split(' ')[0].length, n.length)
+                    displayName = n.slice(n.split(' ')[0].length, n.length)
                 }
+                const localizedName = window.resourceI18n?.getItemName(n, window.directory)
+                element.childNodes[5].childNodes[1].innerText = localizedName || displayName
                 
 
                 let rawN = n
@@ -309,7 +606,6 @@
                 {
                     if(element.childNodes[3].getAttribute('loaded') == 'true'){return;}
 
-                    console.log('a');
                     element.childNodes[3].setAttribute('loaded', 'true');
 
                     element.childNodes[3].src = startImagePath+n+'.png'
@@ -348,7 +644,6 @@
                         var resp2 = await fetch(startImagePath+rawN2+'.png');
                         if(!(await new Response(await resp2.arrayBuffer()).text()).startsWith('<!DOCTYPE html>'))
                         {
-                            console.log(startImagePath+rawN2+'.png')
                             element.childNodes[3].src = startImagePath+rawN2+'.png'
                             element.childNodes[3].style.display = 'block'
                             return
@@ -458,13 +753,11 @@
 
                 textures.forEach(m =>
                 {
-                    console.log({path: 'resources/'+window.directory+name+'/'+m+'.png', name:m+'.png'})
                     list.push({path: 'resources/'+window.directory+name+'/'+m+'.png', name:m+'.png'});
                 })
                 list.push({path: 'resources/'+window.directory+name+'/'+name+'.dae', name:name+'.dae'});
 
                 await z.fecth2zip(list, '');
-                console.log("end")
                 z.makeZip()
             })
 
@@ -500,9 +793,9 @@
             <canvas mode-name="Fig_PaintBrush00_Cstm04" width="85px" height="85px" style="cursor: move;"></canvas>
             <img loading="lazy" width="85px" height="85px" style="cursor: move;">
             <div style="margin-top: 10px;margin-left: 10px; line-break: anywhere; width: 110px;">
-                <span style="font-size: large; cursor: pointer;" class="clickable-text">Loading...</span>
+                <span style="font-size: large; cursor: pointer;" class="clickable-text resource-card-title">Loading...</span>
                 <br>
-                <span style="color: #a8a8a850; font-size: medium;"></span>
+                <span class="resource-card-id" style="color: #a8a8a850; font-size: medium;"></span>
             </div>
             <button class="download-model">
                 <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="65px" height="65px" viewBox="0 0 40 40" xml:space="preserve">
@@ -531,7 +824,22 @@
     </div>
 
     <script type="module">
+        async function initializeResourcePreview() {
         document.getElementById('full-screen').style.display = 'none'
+        let previewReturnFocus;
+        function closeResourcePreview() {
+            document.getElementById('full-screen').style.display = 'none';
+            document.body.classList.remove('resource-preview-open');
+            window.deleteQueryParameter?.('item');
+            if (previewReturnFocus?.isConnected) previewReturnFocus.focus();
+        }
+        document.getElementById('close-resource-preview').addEventListener('click', closeResourcePreview);
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && !event.defaultPrevented && document.body.classList.contains('resource-preview-open')) {
+                event.preventDefault();
+                closeResourcePreview();
+            }
+        });
 
         let bigCanvas = document.getElementById('big-preview')
 
@@ -539,6 +847,25 @@
         bigCanvas.height = window.innerHeight
 
         const scene = await window.loadScene(bigCanvas)
+        let previewPointerStart;
+        bigCanvas.addEventListener('pointerdown', event => {
+            previewPointerStart = event.button === 0 ? {
+                x: event.clientX,
+                y: event.clientY,
+                onModel: scene.hitsModel(event.clientX, event.clientY),
+            } : null;
+        });
+        bigCanvas.addEventListener('pointercancel', () => { previewPointerStart = null; });
+        bigCanvas.addEventListener('click', event => {
+            const start = previewPointerStart;
+            previewPointerStart = null;
+            if (!start || !document.body.classList.contains('resource-preview-open')) return;
+            const sidebarRight = document.getElementById('preview-sidebar').getBoundingClientRect().right;
+            if (start.x <= sidebarRight || event.clientX <= sidebarRight) return;
+            // A drag rotates the model; only a click on empty canvas dismisses it.
+            if (Math.hypot(event.clientX - start.x, event.clientY - start.y) > 6) return;
+            if (!start.onModel && !scene.hitsModel(event.clientX, event.clientY)) closeResourcePreview();
+        });
 
         window.addEventListener('resize', () =>
         {
@@ -558,8 +885,6 @@
 
         window.selectFull = async function(element, name)
         {
-            console.log(element, name)
-
             scene.scene.children = []
             const materials = await window.loadModel(name, scene.scene, scene.camera, 1)
 
@@ -568,6 +893,9 @@
             document.getElementById('big-icon').src = element.childNodes[3].src
 
             document.getElementById('full-screen').style.display = 'block'
+            if (!document.body.classList.contains('resource-preview-open')) previewReturnFocus = document.activeElement;
+            document.body.classList.add('resource-preview-open');
+            document.getElementById('close-resource-preview').focus({ preventScroll: true });
 
             document.getElementById('big-download-button').onclick = () => {element.childNodes[7].click()}
 
@@ -618,13 +946,18 @@
                 return null;
             }
         }
+        }
+
+        initializeResourcePreview().catch(error => console.error('Failed to initialize resource preview:', error));
     </script>
 
 
     <div style="background-color: #111111; width: 100vw; min-height: 100px; margin-top: 30px; padding: 50px; padding-top: 10px;">
-        <h2 style="color: #e87d0d; font-size: 50px;">Import any model in 10 seconds!</h2>
-        <span style="font-size: larger;">- Download the model with the arrow button<br>- Unzip (open) the downloaded file<br>- In Blender go to File > Import > Splatoon Model and choose your file</span>
-        <br><br><span>Downlaod the <a href="https://coconutsxxs.github.io/Splatoon-Blender/" style="color: #e87d0d;">Splatoon Model Importer</a> Blender add-on.</span>
+        <h2 id="import-instructions-title" style="color: #e87d0d; font-size: 50px;">Import any model in 10 seconds!</h2>
+        <span id="import-instructions-steps" style="font-size: larger;">- Download the model with the arrow button<br>- Unzip (open) the downloaded file<br>- In Blender go to File &gt; Import &gt; Splatoon Model and choose your file</span>
+        <br><br><span id="import-addon-text">Download the <a href="./" style="color: #e87d0d;">Splatoon Model Importer</a> Blender add-on.</span>
     </div>
+    <script type="module" src="./resources/i18n.js?v=20261010"></script>
+    <script type="module" src="./ui-i18n.js?v=20261010-font"></script>
 </body>
 </html>

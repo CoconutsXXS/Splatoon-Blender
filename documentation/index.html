@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Documentation - Character Creator</title>
 
-    <link rel="stylesheet" href="../index.css">
-    <link rel="stylesheet" href="../documentation/documentation-index.css">
+    <link rel="stylesheet" href="../index.css?v=20261010-font">
+    <link rel="stylesheet" href="../documentation/documentation-index.css?v=20261010-font">
     <link rel="shortcut icon" href="../Logo Low.png">
 
     <meta content="Splatoon Blender Character Creator - Documentation" property="og:title" />
@@ -22,13 +22,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
+    <a class="back-home" href="../index.html"><span aria-hidden="true">←</span> <span data-ui-text="backHome">Back to Home</span></a>
+        <select id="ui-language" class="ui-language" aria-label="Language / 语言">
+            <option value="USen">English</option>
+            <option value="CNzh">简体中文</option>
+        </select>
     <div class="band">
         <h1 id="huge-title" style="margin-bottom: 5px; margin-top: 100px;">Splatoon Blender</h1>
         <span style="margin-bottom: 134px; font-size: medium; animation-name: fade; animation-duration: 1s;">Splatoon Blender Add-On Documentation & Tutorial - <a target="_blank" href="../index.html">Download</a></span>
         <div style="position: absolute; top: 360px; height: 40px; width: 500px; margin-left: 100vw; translate: calc(-100% - 40px); display: flex; opacity: 0.7;">
-            <button onclick="window.open('../', '_self')" style="width: 300px; margin: 0; height: 40px; padding: 0; font-size: 25px; margin-right: 10px; background: linear-gradient(70deg, #ff6f22, #db4d00);" class="button-shadow">Add-On</button>
-            <button onclick="window.open('../resources', '_self')" style="width: 300px; margin: 0; height: 40px; padding: 0; font-size: 25px; margin-right: 10px; background: linear-gradient(70deg, #078e98, #03c1cd);" class="button-shadow">Resources</button>
-            <button onclick="window.open('../ink-colors', '_self')" style="width: 300px; margin: 0; height: 40px; padding: 0; font-size: 25px; margin-right: 10px; background: linear-gradient(70deg, #ad0355, #e03085);" class="button-shadow">Ink Colors</button>
+            <button onclick="window.location.href='../index.html'" style="width: 300px; margin: 0; height: 40px; padding: 0; font-size: 25px; margin-right: 10px; background: linear-gradient(70deg, #ff6f22, #db4d00);" class="button-shadow">Add-On</button>
+            <button onclick="window.location.href='../resources.html'" style="width: 300px; margin: 0; height: 40px; padding: 0; font-size: 25px; margin-right: 10px; background: linear-gradient(70deg, #078e98, #03c1cd);" class="button-shadow">Resources</button>
+            <button onclick="window.location.href='../ink-colors.html'" style="width: 300px; margin: 0; height: 40px; padding: 0; font-size: 25px; margin-right: 10px; background: linear-gradient(70deg, #ad0355, #e03085);" class="button-shadow">Ink Colors</button>
         </div>    
     </div>
 
@@ -220,5 +225,6 @@
             steps[0].style.opacity = '1';
         }
     </script>
+    <script type="module" src="../ui-i18n.js?v=20261010-font"></script>
 </body>
 </html>

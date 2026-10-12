@@ -2,8 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script type="importmap">
+        {"imports":{"three":"./vendor/three/three.module.js"}}
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Splatoon Blender</title>
+    <style>html.restoring-home body { visibility: hidden; }</style>
+    <script>
+        try {
+            if (!location.hash && Number(sessionStorage.getItem('splatoon-home-scroll')) > 0) {
+                document.documentElement.classList.add('restoring-home');
+            }
+        } catch {}
+    </script>
     <link rel="stylesheet" href="index.css">
     <link rel="shortcut icon" href="Logo Low.png">
 
@@ -33,139 +44,191 @@
         <div style="z-index: 100; pointer-events: none; position: absolute; height: 999999px; width: 100vw; animation-name: invert-fade; animation-duration: 3s;"></div>
     </div> -->
 
-    <div style="display: flex; text-align: center; align-items: center; justify-content: center; padding-top: 30px; padding-bottom: 30px; min-height: 70px;">
-        <form style="position: absolute; left: 0%; translate: 20px;" method="get" action="./add-ons/cloth.zip">
+    <div class="download-actions">
+        <form class="download-action-form" method="get" action="./add-ons/cloth.zip">
             <button type="submit" class="left" id="cloth-download">Cloth Importer</button>
         </form>
-        <button style="position: absolute; left: 20%; translate: calc(-20% + 10px);" id="character-download" class="left" onclick='window.open("https://drive.usercontent.google.com/download?id=1ESO53aROGguwqeiQoGGhdSTxz1fytKQ9", "_blank")'>Character Creator</button>
-        <button style="font-size: 60px; font-weight: 600; padding: 10px; padding-left: 50px; padding-right: 50px; position: absolute;" onclick="document.getElementById('model-download').click();document.getElementById('cloth-download').click();document.getElementById('ink-download').click();document.getElementById('character-download').click()">Complete Kit</button>
-        <form style="position: absolute; left: 70%; translate: calc(-20% - 10px);" method="get" action="./add-ons/ink.zip">
+        <button id="character-download" class="left">Character Creator</button>
+        <button class="complete-kit-button" onclick="document.getElementById('model-download').click();document.getElementById('cloth-download').click();document.getElementById('ink-download').click();document.getElementById('character-download').click()">Complete Kit</button>
+        <form class="download-action-form" method="get" action="./add-ons/ink.zip">
             <button id="ink-download" class="right">Dynamic Ink</button>
         </form>
-        <form style="position: absolute; right: 0%; translate: -20px;" method="get" action="./add-ons/model.zip">
+        <form class="download-action-form" method="get" action="./add-ons/model.zip">
             <button id="model-download" class="right">Model Importer</button>
         </form>
     </div>
-    <div style="width: 100vw; position: relative; left: 50%; translate: -50%; text-align: center;">
+    <script type="module">
+        const characterDownload = document.getElementById("character-download");
+        const discordJoin = document.getElementById("discord-join");
+
+        if (typeof __DESKTOP_OFFLINE__ !== "undefined" && __DESKTOP_OFFLINE__) {
+            const showDownloadNotice = (message, isError = false) => {
+                const notice = document.createElement("div");
+                notice.textContent = message;
+                Object.assign(notice.style, {
+                    position: "fixed",
+                    left: "50%",
+                    bottom: "24px",
+                    transform: "translateX(-50%)",
+                    zIndex: "10000",
+                    maxWidth: "calc(100vw - 32px)",
+                    padding: "12px 18px",
+                    borderRadius: "8px",
+                    color: "white",
+                    background: isError ? "#9b2727" : "#252525",
+                    boxShadow: "0 4px 18px #0005",
+                    fontSize: "14px",
+                });
+                document.body.append(notice);
+                window.setTimeout(() => notice.remove(), 4500);
+            };
+            const saveBundledAddon = async filename => {
+                try {
+                    const savedPath = await window.splatoonDesktop.saveAddon(filename);
+                    if (savedPath) showDownloadNotice(`已保存到 ${savedPath}`);
+                } catch (error) {
+                    showDownloadNotice(String(error), true);
+                }
+            };
+
+            document.querySelectorAll(".download-action-form").forEach(form => {
+                form.addEventListener("submit", event => {
+                    event.preventDefault();
+                    const filename = new URL(form.action, window.location.href).pathname.split("/").pop();
+                    saveBundledAddon(filename);
+                });
+            });
+
+            if (__CHARACTER_CREATOR_BUNDLED__) {
+                characterDownload.addEventListener("click", () => saveBundledAddon("character.zip"));
+            } else {
+                characterDownload.disabled = true;
+                characterDownload.title = "The Character Creator archive is not included in this offline build.";
+                document.querySelector(".complete-kit-button").textContent = "Available Add-Ons";
+            }
+
+            discordJoin.disabled = true;
+            discordJoin.title = "Discord requires an internet connection.";
+        } else {
+            characterDownload.addEventListener("click", () => {
+                window.open("https://drive.usercontent.google.com/download?id=1ESO53aROGguwqeiQoGGhdSTxz1fytKQ9", "_blank");
+            });
+            discordJoin.addEventListener("click", () => {
+                window.open("https://discord.gg/zPp7wvf37r", "_blank");
+            });
+        }
+    </script>
+    <div class="home-nav">
         <!-- <button class="doc-button" onclick="window.open('./documentation', '_blank')">Documentation & Tutorials</button> -->
-        <button onclick="window.open('./documentation', '_self')" style="width: 200px; margin: 0; height: 40px; padding: 0; font-size: 25px; margin-right: 10px; background: linear-gradient(70deg, #2ecc2380, #12970980);" class="button-shadow">Doc & Tuto</button>
-        <button onclick="window.open('../resources', '_self')" style="width: 200px; margin: 0; height: 40px; padding: 0; font-size: 25px; margin-right: 10px; background: linear-gradient(70deg, #078e9880, #03c1cd80);" class="button-shadow">Resources</button>
-        <button onclick="window.open('../ink-colors', '_self')" style="width: 200px; margin: 0; height: 40px; padding: 0; font-size: 25px; margin-right: 10px; background: linear-gradient(70deg, #ad035580, #e0308580);" class="button-shadow">Ink Colors</button>
+        <button onclick="window.location.href='./documentation/index.html'" class="button-shadow nav-doc-button">Doc & Tuto</button>
+        <button onclick="window.location.href='./resources.html'" class="button-shadow nav-resources-button">Resources</button>
+        <button onclick="window.location.href='./ink-colors.html'" class="button-shadow nav-ink-colors-button">Ink Colors</button>
     </div>
 
-    <div style="display: flex;">
-        <div style="display: flex; margin-top: 30px; width: 50vw; perspective: 1000px;">
-            <img class="zoomable left" src="./Character Creation.png" style="border-radius: 6px; min-width: 200px; width: 100%; height: fit-content; margin-left: 30px;">
-            <div style="margin-left: 30px; min-width: 50px; width: 35vw;">
+    <main class="home-feature-grid">
+        <article class="home-feature-card">
+            <img class="home-feature-media zoomable left" src="./Character Creation.png" alt="Splatoon character creator">
+            <div class="home-feature-copy">
                 <h2>Highly Customizable</h2>
                 <span>Customize all settings to create your perfect character.</span>
             </div>
-        </div>
+        </article>
 
-        <div style="display: flex; margin-top: 30px; width: 50vw; perspective: 1000px; pointer-events: none;">
-            <img class="zoomable right" src="./Character Pose Edit.png" style="border-radius: 6px;margin-left: 30px; max-height: 335px; pointer-events: all;">
-            <div style="margin-left: 30px; min-width: 50px; width: 35vw; perspective: 1000px;">
+        <article class="home-feature-card home-feature-card-pose">
+            <img class="home-feature-media zoomable right" src="./Character Pose Edit.png" alt="Editing a character pose">
+            <div class="home-feature-copy">
                 <h2>Easy Posing</h2>
                 <span>All rigs are simple and effective, not too complicated and easy to use.</span>
-                <img class="zoomable right" src="./Character Pose Render.png" style="border-radius: 6px; width: calc(100% - 30px); height: fit-content; margin-top: 10px; max-width: 363px; pointer-events: all;">
+                <img class="home-feature-media zoomable right home-feature-pose-render" src="./Character Pose Render.png" alt="Rendered character pose">
             </div>
-        </div>
-    </div>
+        </article>
 
-    <div style="display: flex; position: relative; max-height: 360px">
-        <div style="display: flex; max-width: 50vw; margin: 30px; margin-right: 0; z-index: -1;">
-            <div style="position: absolute; width: 300px; height: 300px; background-color: #333333; border-radius: 6px; z-index: -1;">
-                <div style="position: absolute; opacity: 0; animation-name: comparison-A; animation-duration: 3s; animation-iteration-count: infinite;">
-                    <img src="./Plush Clean.png" width="300px" height="300px" style="position: absolute;">
-                    <h3 style="margin: 10px; position: relative;">Add-On</h3>
-                </div>
-                <div style="position: absolute; opacity: 0; animation-name: comparison-B; animation-duration: 3s; animation-iteration-count: infinite;">
-                    <img src="./Plush Dae.png" width="300px" height="300px" style="position: absolute;">
-                    <h3 style="margin: 10px; position: relative;">Collada</h3>
-                </div>
-                <div style="position: absolute; opacity: 0; animation-name: comparison-C; animation-duration: 3s; animation-iteration-count: infinite;">
-                    <img src="./Plush Fbx.png" width="300px" height="300px" style="position: absolute;">
-                    <h3 style="margin: 10px; position: relative;">FBX</h3>
+        <article class="home-feature-card">
+            <div class="home-feature-media comparison-media">
+                <div class="comparison-media-frame">
+                    <div style="opacity: 0; animation-name: comparison-A; animation-duration: 3s; animation-iteration-count: infinite;">
+                        <img src="./Plush Clean.png" alt="Model imported with the add-on">
+                        <h3>Add-On</h3>
+                    </div>
+                    <div style="opacity: 0; animation-name: comparison-B; animation-duration: 3s; animation-iteration-count: infinite;">
+                        <img src="./Plush Dae.png" alt="Model imported from Collada">
+                        <h3>Collada</h3>
+                    </div>
+                    <div style="opacity: 0; animation-name: comparison-C; animation-duration: 3s; animation-iteration-count: infinite;">
+                        <img src="./Plush Fbx.png" alt="Model imported from FBX">
+                        <h3>FBX</h3>
+                    </div>
                 </div>
             </div>
-            <div style="min-width: 330px; min-height: 300px;"></div>
-            <div style="min-width: 200px; max-width: 400px; margin-right: 30px;">
-                <h2 style="margin-top: 0;">Model Importation Comparison</h2>
+            <div class="home-feature-copy">
+                <h2>Model Importation Comparison</h2>
                 <span>The Splatoon model importer add-on can recreate any Splatoon model into Blender from any .fbx or .dae file.</span>
             </div>
-        </div>
+        </article>
 
-        <div style="display: flex; perspective: 1000px; max-width: 50vw; margin-top: 30px; z-index: 1;">
-            <video class="zoomable right" autoplay loop muted style="border-radius: 6px; max-height: 300px; width: 100%; position: relative; height: fit-content;">
+        <article class="home-feature-card">
+            <video class="home-feature-media zoomable right" autoplay loop muted>
                 <source src="./Model Import Demo.mp4" type="video/mp4">
             </video>
-            <div style="margin-left: 30px; z-index: -1; position:relative; min-width: 200px; max-width: 400px;">
-                <h2 style="margin-top: 0;">Download, Import & Use</h2>
-                <span>No need to spend hours recreating shaders and armatures. Simply import your file and enjoy. Imported models are automatically optimized to speed up render times.</span>    
+            <div class="home-feature-copy">
+                <h2>Download, Import &amp; Use</h2>
+                <span>No need to spend hours recreating shaders and armatures. Simply import your file and enjoy. Imported models are automatically optimized to speed up render times.</span>
             </div>
-        </div>
-    </div>
+        </article>
 
-    <div style="display: flex; position: relative; max-height: 360px;">
-        <div style="display: flex; perspective: 1000px; max-width: 50vw; margin: 30px; margin-right: 0;">
-            <video class="zoomable left" autoplay loop muted style="border-radius: 6px; position: relative; height: fit-content; max-height: 100%; z-index: 2;">
+        <article class="home-feature-card home-feature-card-ink">
+            <video class="home-feature-media zoomable left" autoplay loop muted>
                 <source src="./Idle Inking Inking.webm" type="video/webm">
             </video>
-            <div style="min-width: 200px; max-width: 300px; margin-right: 30px; margin-left: 30px;">
-                <h2 style="margin-top: 0;">Ink Everything</h2>
+            <div class="home-feature-copy">
+                <h2>Ink Everything</h2>
                 <span>Move a simple bone to cover your character with ink. You can also control the squid/octopus transformation!</span>
             </div>
-            <video class="zoomable left" autoplay loop muted style="border-radius: 6px; position: relative; height: fit-content; max-height: 100%; z-index: 2;">
+            <video class="home-feature-media zoomable left" autoplay loop muted>
                 <source src="./Idle Transforming.webm" type="video/webm">
             </video>
-        </div>
+        </article>
 
-        <div style="display: flex; perspective: 1000px; max-width: 50vw; margin-top: 30px; z-index: 1;">
-            <video class="zoomable right" autoplay loop muted style="border-radius: 6px; width: 100%; position: relative; height: fit-content; max-height: 100%;">
+        <article class="home-feature-card">
+            <video class="home-feature-media zoomable right" autoplay loop muted>
                 <source src="./Cloth Import Demo.mp4" type="video/mp4">
             </video>
-            <div style="margin-left: 30px; z-index: -1; position:relative; min-width: 200px; max-width: 400px;">
-                <h2 style="margin-top: 0;">Ultra Easy Clothing</h2>
-                <span>To import any kinf of gear to a chacrater just select the character and import the gear. It's easy, fast and works with inking.</span>    
+            <div class="home-feature-copy">
+                <h2>Ultra Easy Clothing</h2>
+                <span>To import any kinf of gear to a chacrater just select the character and import the gear. It's easy, fast and works with inking.</span>
             </div>
-        </div>
-    </div>
-    
+        </article>
 
-
-    <div style="display: flex; position: relative; max-height: 360px;">
-        <div style="display: flex; perspective: 1000px; max-width: 50vw; margin: 30px; margin-right: 0;">
-            <div>
+        <article class="home-feature-card">
+            <div class="home-feature-preview">
                 <script type="module">
                     // Setup Canvas \\
                     window.character_canvas = document.getElementById("character_canvas");
                     window.character_canvas.width = 1000;
                     window.character_canvas.height = 1000;
                 </script>
-                <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script> -->
                 <script type="module" src="./Character.js"></script>
-                <div id="canvas-box" style="max-width: 300px; max-height: 300px; cursor: move; background-color: #333333; border-radius: 6px;">
-                    <canvas id="character_canvas" style="top: -305px; left: -360px; position: relative; pointer-events: none; max-height: 1000px; height: 100%;"></canvas>
+                <div id="canvas-box">
+                    <canvas id="character_canvas"></canvas>
                 </div>
             </div>
-
-            <div style="min-width: 200px; max-width: 300px; margin-right: 30px; margin-left: 30px;">
-                <h2 style="margin-top: 0;">Preview the Model</h2>
+            <div class="home-feature-copy">
+                <h2>Preview the Model</h2>
                 <span>Click and move the mouse to rotate and preview this little pose exemple.</span>
             </div>
-        </div>
+        </article>
 
-        <div style="display: flex; perspective: 1000px; max-width: 50vw; margin-top: 30px; z-index: 1;">
-            <img src="./Dyna Ink.png" class="zoomable right" autoplay loop muted style="border-radius: 6px; width: 100%; position: relative; height: fit-content; max-height: 100%;">
-            <div style="margin-left: 30px; z-index: -1; position:relative; min-width: 200px; max-width: 400px;">
-                <h2 style="margin-top: 0;">Dynamic Inking (in Progress)</h2>
-                <span>You want to ink more than your character? Ink everything with this add-on, set an object to ink surface and another to ink emitter and you are ready!</span>    
+        <article class="home-feature-card">
+            <img src="./Dyna Ink.png" class="home-feature-media zoomable right" alt="Dynamic inking preview">
+            <div class="home-feature-copy">
+                <h2>Dynamic Inking (in Progress)</h2>
+                <span>You want to ink more than your character? Ink everything with this add-on, set an object to ink surface and another to ink emitter and you are ready!</span>
             </div>
-        </div>
-    </div>
+        </article>
+    </main>
 
-    <div style="width: 100%; min-height: 300px; background-color: #111; margin-top: 30px; display: flex;">
-        <div id="discord_splash">
+    <section class="community-section" aria-labelledby="extrude-title">
+        <div id="discord_splash" class="community-splash">
             <script type="module">
                 // Setup Canvas \\
                 window.discord_canvas = document.getElementById("discord_canvas");
@@ -174,25 +237,28 @@
     
                 document.getElementById("discord_canvas_box").addEventListener('click', (event) =>
                 {
-                    window.addSplash(Math.floor(Math.random()*12)+1, ((event.layerX+75)/33)-7.5, ((-(event.layerY+75)+500)/33)-7.5)
+                    const rect = event.currentTarget.getBoundingClientRect();
+                    const designX = ((event.clientX - rect.left) / rect.width) * 350;
+                    const designY = ((event.clientY - rect.top) / rect.height) * 350;
+                    window.addSplash(Math.floor(Math.random()*12)+1, ((designX+75)/33)-7.5, ((-(designY+75)+500)/33)-7.5)
                 })
             </script>
             <script type="module" src="./Splat.js"></script>
-            <canvas id="discord_canvas" style="position: relative; margin-top: -350px; pointer-events: none;"></canvas>
-            <div id="discord_canvas_box" style="position: relative; left: 75px; top: 75px; height: 350px; width: 350px;"></div>    
+            <canvas id="discord_canvas"></canvas>
+            <div id="discord_canvas_box"></div>
         </div>
-        <div style="width: 100%; margin-left: -40px; margin-right: 10px; text-align: center;">
-            <h2 id="extrude-title" style="text-align: center; font-weight: 900; font-size: 100px; color: #dadada; margin-top: 10px; margin-left: -60px;">Join the Community</h2>
-            <span style="line-height: 25px; font-size: large;">Discover other Splatoon creators, share your art, learn new skills and have fun in the official Splatoon Blender Discord server. Need game models? Download game files uploaded by the community for your projects. Ask help, report a bug and make suggestions!</span><br>
-            <button onclick='window.open("https://discord.gg/zPp7wvf37r", "_blank")' class="discord" style="color: #dadada; background: linear-gradient(45deg, rgb(86,99,240), rgb(36,49,190)); margin-top: 50px; font-weight: 700; padding: 20px; padding-right: 40px; padding-left: 40px;">JOIN</button>
+        <div class="community-copy">
+            <h2 id="extrude-title">Join the Community</h2>
+            <p>Discover other Splatoon creators, share your art, learn new skills and have fun in the official Splatoon Blender Discord server. Need game models? Download game files uploaded by the community for your projects. Ask help, report a bug and make suggestions!</p>
+            <button id="discord-join" class="discord">JOIN</button>
         </div>
-        <div style="margin: 10px;">
-            <iframe src="https://discord.com/widget?id=1229019909401346128&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+        <div class="community-widget">
+            <iframe src="https://discord.com/widget?id=1229019909401346128&theme=dark" title="Splatoon Blender Discord community" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
         </div>
-    </div>
+    </section>
 
-    <div style="display: flex;">
-        <div style="width: fit-content; min-height: 300px; background-color: #111; margin-top: 30px; margin-left: 30px; display: flex; border-radius: 30px;">
+    <div class="showcase-grid">
+        <section class="showcase-card tee-maker-card">
             <div>
                 <script type="module">
                     // Setup Canvas \\
@@ -231,9 +297,24 @@
     
                     document.getElementById('tee-texture-download').addEventListener('click', async (e) =>
                     {
+                        const texture = (await TeeTexture()).source.data;
+                        if (window.splatoonDesktop?.saveFile) {
+                            try {
+                                const blob = await new Promise(resolve => texture.toBlob(resolve, 'image/png'));
+                                if (!blob) throw new Error('无法生成图片');
+                                const savedPath = await window.splatoonDesktop.saveFile(
+                                    'Custom_Splatfest_Tee_Alb.png',
+                                    Array.from(new Uint8Array(await blob.arrayBuffer())),
+                                );
+                                if (savedPath) alert(`已保存到 ${savedPath}`);
+                            } catch (error) {
+                                alert(`无法保存图片：${error}`);
+                            }
+                            return;
+                        }
                         var link = document.createElement('a');
                         link.download = 'Custom_Splatfest_Tee_Alb.png';
-                        link.href = (await TeeTexture()).source.data.toDataURL()
+                        link.href = texture.toDataURL()
                         link.click();
                     })
                     document.getElementById('tee-model-download').addEventListener('click', async (e) =>
@@ -338,12 +419,16 @@
                     })
                 </script>
             </div>
-            <div style="width: 100%; margin-left: 0; margin-right: 10px; text-align: center; width: 600px; padding: 50px;">
-                <h2 id="extrude-title-G" style="text-align: center; font-weight: 900; font-size: 100px; color: #dadada; margin-top: 0px; margin-bottom: 20px;">Splatfest Tee Maker</h2>
-                <span style="line-height: 25px; font-size: large;">Create your custom splatfest tee with your color and your logo.</span>
-                <canvas id="tee_customizer" style="position: relative; pointer-events: none; margin-top: -350px; margin-bottom: -350px; margin-left: -350px;"></canvas>
-                <div style="border-radius: 10px; background-color: #333333; padding: 20px; display: flex; width: fit-content; margin-top: 30px;">
-                    <div>
+            <div class="tee-maker-content">
+                <h2 id="extrude-title-G">Splatfest Tee Maker</h2>
+                <span class="showcase-description">Create your custom splatfest tee with your color and your logo.</span>
+                <canvas id="tee_customizer"></canvas>
+                <div class="tee-preview-instructions" aria-label="Tee preview controls">
+                    <span>Click and drag to rotate</span>
+                    <span>Scroll to zoom</span>
+                </div>
+                <div class="tee-control-panel">
+                    <div class="tee-options">
                         <div style="height: 30px; display: flex; width: fit-content;">
                             <span style="min-width: 125px; text-align: start;">Color</span>
                             <input value="#e87d0d" id="tee-color" style="display: none;" type="color">
@@ -381,24 +466,24 @@
                             <button onclick="document.getElementById('tee-image-team').click()" style="height: 30px; margin-left: 0; border-radius: 10px; border: #00000000; background:#265787; box-shadow: none; padding: 5px; font-size: medium; color: #141414;">Browse</button>
                         </div>
                     </div>
-                    <div>
+                    <div class="tee-logo-previews">
                         <img onclick="document.getElementById('tee-image').click()" id="tee-image-preview" style="border-radius: 10px; height: 100px; display: none; margin-left: 30px; cursor: pointer;">
                         <img onclick="document.getElementById('tee-image-team').click()" id="tee-image-team-preview" style="border-radius: 10px; height: 100px; display: none; margin-left: 30px; cursor: pointer;">    
                     </div>
-                    <div style="text-align: start; margin-left: 20px; width: fit-content;">
+                    <div class="tee-download-actions">
                         <button id="tee-texture-download" style="margin:0;margin-bottom: 20px; border-radius: 10px; font-size: medium; text-align: start;">Download Texture</button>
                         <button id="tee-model-download" style="margin:0;margin-bottom: 20px; border-radius: 10px; font-size: medium; text-align: start;">Download Model</button>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div style="width: calc(100% - 800px); min-height: 300px; background-color: #111; margin-top: 30px; margin-left: 30px; display: flex; border-radius: 30px;">
-            <div style="width: 100%; margin-left: 0; margin-right: 10px; text-align: center; padding: 50px;">
-                <h2 id="extrude-title-green" style="text-align: center; font-weight: 900; font-size: 100px; color: #dadada; margin-top: 0px; margin-bottom: 20px;">Splatoon Resources</h2>
-                <span style="line-height: 25px; font-size: large;">Find, Download & Preview! Explore the resources pages to find your Splatoon 3 locker, gear, cloth, shoes, weapon and NPC model. All of these models can be auto set up with the Splatoon Model Importer add-on.</span>
+        <section class="showcase-card resources-card">
+            <div class="resources-content">
+                <h2 id="extrude-title-green">Splatoon Resources</h2>
+                <span class="showcase-description">Find, Download & Preview! Explore the resources pages to find your Splatoon 3 locker, gear, cloth, shoes, weapon and NPC model. All of these models can be auto set up with the Splatoon Model Importer add-on.</span>
 
-                <img id="resource-pub" src="./resource-screenshots/clotha.png" style="border-radius: 10px; width: 100%; margin-top: 30px; cursor: pointer; z-index: 5;">
+                <img id="resource-pub" src="./resource-screenshots/clotha.png" alt="Splatoon resource preview" style="border-radius: 10px; width: 100%; margin-top: 30px; cursor: pointer; z-index: 5;">
                 <script>
                     const screenshotList = ['cloth.png','clotha.png','geara.png','head.png','lockera.png','lockerb.png','lockerc.png','npca.png','npcb.png','shoes.png','shoesa.png','weapon.png']
                     var screenIndex = 0
@@ -414,34 +499,29 @@
                     }
                 </script>
 
-                <button onclick="window.open('./resources', '_blank')" id="resources-button">Go to Resources</button>
+                <button onclick="window.location.href='./resources.html'" id="resources-button">Go to Resources</button>
             </div>
-        </div>
+        </section>
     </div>
 
-    <div style="margin-top: 50px; display: flex; width: 100%; min-height: 300px; background: linear-gradient(45deg, #e87d0d, #265787);">
-        <div style="width: 20vw; background: linear-gradient(90deg, #00000050, #0000);">
-            <div style="margin-left: 30px; margin-top: 200px;">
-                <h2 onclick="window.scrollTo({top: document.getElementsByClassName('tuto')[0].getBoundingClientRect().top-document.body.getBoundingClientRect().top, behavior: 'smooth'})" style="cursor: pointer; color: #265787; font-size: 30px; margin-bottom: 20px;">Handle the Interface</h2>
-                <h2 onclick="window.scrollTo({top: document.getElementsByClassName('tuto')[1].getBoundingClientRect().top-document.body.getBoundingClientRect().top, behavior: 'smooth'})" style="cursor: pointer; color: #265787; font-size: 30px; margin-bottom: 20px;">Install an Add-On</h2>
-                <h2 onclick="window.scrollTo({top: document.getElementsByClassName('tuto')[2].getBoundingClientRect().top-document.body.getBoundingClientRect().top, behavior: 'smooth'})" style="cursor: pointer; color: #265787; font-size: 30px; margin-bottom: 20px;">Create your First Character</h2>
-                <h2 onclick="window.scrollTo({top: document.getElementsByClassName('tuto')[3].getBoundingClientRect().top-document.body.getBoundingClientRect().top, behavior: 'smooth'})" style="cursor: pointer; color: #265787; font-size: 30px; margin-bottom: 20px;">Armature & Poses</h2>
-                <h2 onclick="window.scrollTo({top: document.getElementsByClassName('tuto')[4].getBoundingClientRect().top-document.body.getBoundingClientRect().top, behavior: 'smooth'})" style="cursor: pointer; color: #265787; font-size: 30px; margin-bottom: 20px;">Lighting</h2>
-                <h2 onclick="window.scrollTo({top: document.getElementsByClassName('tuto')[5].getBoundingClientRect().top-document.body.getBoundingClientRect().top, behavior: 'smooth'})" style="cursor: pointer; color: #265787; font-size: 30px; margin-bottom: 20px;">Render</h2>
-            </div>
+    <section class="tutorial-banner">
+        <nav class="tutorial-nav" aria-label="Tutorial sections">
+            <button class="tutorial-nav-link" onclick="document.querySelectorAll('.tuto')[0].scrollIntoView({behavior:'smooth'})">Handle the Interface</button>
+            <button class="tutorial-nav-link" onclick="document.querySelectorAll('.tuto')[1].scrollIntoView({behavior:'smooth'})">Install an Add-On</button>
+            <button class="tutorial-nav-link" onclick="document.querySelectorAll('.tuto')[2].scrollIntoView({behavior:'smooth'})">Create your First Character</button>
+            <button class="tutorial-nav-link" onclick="document.querySelectorAll('.tuto')[3].scrollIntoView({behavior:'smooth'})">Armature &amp; Poses</button>
+            <button class="tutorial-nav-link" onclick="document.querySelectorAll('.tuto')[4].scrollIntoView({behavior:'smooth'})">Lighting</button>
+            <button class="tutorial-nav-link" onclick="document.querySelectorAll('.tuto')[5].scrollIntoView({behavior:'smooth'})">Render</button>
+        </nav>
+        <div class="tutorial-banner-main">
+            <h2 id="huge-title-o" class="tutorial-banner-title">Tutorials</h2>
+            <img class="tutorial-banner-logo" src="./Logo.png" alt="Splatoon Blender logo">
         </div>
-        <div style="margin: 25px; margin-left: 10%;">
-            <div style="width: 667px;">
-                <h2 id="huge-title-o" style="text-align: center; margin-top: 10px; margin-bottom: 20px; font-weight: 900; font-size: 130px; color: #dadada; margin-left: -60px;">Tutorials</h2>
-            </div>
-            <img style="height: 500px;" src="./Logo.png">
-        </div>
-        <div style="width: 30vw;"></div>
-    </div>
+    </section>
 
-    <div style="width: 80vw; margin-top: 30px; padding-left: 10vw; padding-right: 10vw; margin-bottom: 50px;" class="tuto">
-        <h2 style="text-align: center; margin-top: 10px; margin-bottom: 20px; font-weight: 800; font-size: 70px; color: #dadada; margin-left: -60px;">Handle the Interface</h2>
-        <span style="line-height: 25px; font-size: large; color: #dadada75;">
+    <div class="tuto">
+        <h2>Handle the Interface</h2>
+        <span class="tutorial-copy">
             Blender has a classic 3D interface easy to manipulate. First of all, you will need to remove the default objects in the scene by pressing <b style="color:#e87d0d">A</b> to <b style="color: #e5953fba;">select all the objects</b>. Press <b style="color:#e87d0d">X</b> to <b style="color: #e5953fba;">delete the selected objects</b>, now you should have a empty scene.
 
             <br><br>Here is the essentials keys to manipulate the view in Blender:
@@ -461,31 +541,31 @@
         </span>
     </div>
 
-    <div style="width: 80vw; margin-top: 30px; padding-left: 10vw; padding-right: 10vw; margin-bottom: 50px;" class="tuto">
-        <h2 style="text-align: center; margin-top: 10px; margin-bottom: 20px; font-weight: 800; font-size: 70px; color: #dadada; margin-left: -60px;">Install Add-Ons</h2>
-        <span style="line-height: 25px; font-size: large; color: #dadada75;">
+    <div class="tuto">
+        <h2>Install Add-Ons</h2>
+        <span class="tutorial-copy">
             On Blender installing add-ons is really easy, press <b style="color:#e87d0d">Command + ,</b> to open prefenrences and go to the add-ons category. After that, click on install and choose your downloaded .zip file. When it is installed you can enable the add-on. 
         </span>
     </div>
 
-    <div style="width: 80vw; margin-top: 30px; padding-left: 10vw; padding-right: 10vw; margin-bottom: 50px;" class="tuto">
-        <h2 style="text-align: center; margin-top: 10px; margin-bottom: 20px; font-weight: 800; font-size: 70px; color: #dadada; margin-left: -60px;">Create a Character</h2>
-        <span style="line-height: 25px; font-size: large; color: #dadada75;">
+    <div class="tuto">
+        <h2>Create a Character</h2>
+        <span class="tutorial-copy">
             After installing the Splatoon Character Creator add-on, press <b style="color:#e87d0d">Shift + A</b>, go to Mesh and click on Splatoon Character. Toggle the menu at the bottom left to access to all the parameters. To have a better preview of your character go in the viewport render/shading by clicking on the last sphere icon at the top right.
         </span>
     </div>
 
-    <div style="width: 80vw; margin-top: 30px; padding-left: 10vw; padding-right: 10vw; margin-bottom: 50px;" class="tuto">
-        <h2 style="text-align: center; margin-top: 10px; margin-bottom: 20px; font-weight: 800; font-size: 70px; color: #dadada; margin-left: -60px;">Armature & Poses</h2>
-        <span style="line-height: 25px; font-size: large; color: #dadada75;">
+    <div class="tuto">
+        <h2>Armature &amp; Poses</h2>
+        <span class="tutorial-copy">
             For now your character is in rest position (or T-pose), to give a pose to your character you need to mode its armature. An armature is an object made of bones which can deform an mesh. To move the bones and deform your character go to the pose mode by selecting the armature, expending the top left menu and clicking on "Pose Mode".
             <br>Bones are movable like objects with G, R and S. But for most of bones you will just need to rotate them.
         </span>
     </div>
 
-    <div style="width: 80vw; margin-top: 30px; padding-left: 10vw; padding-right: 10vw; margin-bottom: 50px;" class="tuto">
-        <h2 style="text-align: center; margin-top: 10px; margin-bottom: 20px; font-weight: 800; font-size: 70px; color: #dadada; margin-left: -60px;">Lighting</h2>
-        <span style="line-height: 25px; font-size: large; color: #dadada75;">
+    <div class="tuto">
+        <h2>Lighting</h2>
+        <span class="tutorial-copy">
             After posing your character you need to add some lights to make the scene more alive. To do this press <b style="color:#e87d0d">Shift + A</b> and go to lights. There is 4 types of light: 
             <a style="color: #265787; font-weight: 500;" href="https://docs.blender.org/manual/en/latest/render/lights/light_object.html#point-light" target="_blank">the point</a>,
             <a style="color: #265787; font-weight: 500;" href="https://docs.blender.org/manual/en/latest/render/lights/light_object.html#spot-light" target="_blank">the spot</a>,
@@ -495,9 +575,9 @@
         </span>
     </div>
 
-    <div style="width: 80vw; margin-top: 30px; padding-left: 10vw; padding-right: 10vw; margin-bottom: 50px;" class="tuto">
-        <h2 style="text-align: center; margin-top: 10px; margin-bottom: 20px; font-weight: 800; font-size: 70px; color: #dadada; margin-left: -60px;">Render</h2>
-        <span style="line-height: 25px; font-size: large; color: #dadada75;">
+    <div class="tuto">
+        <h2>Render</h2>
+        <span class="tutorial-copy">
             To make an image of your scene you will need a camera. To create one press <b style="color:#e87d0d">Shift + A</b> and click on "Camera". To move easily your camera press <b style="color:#e87d0d">N</b>, go to view and click on "Lock Camera to View". After this press <b style="color:#e87d0d">Numpad 0</b> and move your view. When you are satisfied of your camera position, disable "Lock Camera to View".
             <br>In Blender there is 3 (and in 4.2 version there is 4) render engine: 
             <a style="color: #265787; font-weight: 500;" href="https://docs.blender.org/manual/en/latest/render/eevee/introduction.html" target="_blank">EEVEE</a>, 
@@ -507,5 +587,7 @@
             <br>To make a render press <b style="color:#e87d0d">F12</b> or go to Render at the top and click on "Render Image". When your image is rendered press <b style="color:#e87d0d">Alt + S</b> to save it.
         </span>
     </div>
+    <!-- Restore before deferred 3D modules or their model requests can delay paint. -->
+    <script src="./home-scroll.js"></script>
 </body>
 </html>

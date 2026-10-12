@@ -1,25 +1,28 @@
 {
   "name": "splatoon-blender",
-  "version": "1.0.0",
+  "version": "1.1.2",
   "description": "",
   "main": "3D.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node --test scripts/offline.test.mjs",
     "dev": "vite",
+    "build": "vite build && node scripts/copy-offline-assets.mjs",
     "deploy": "gh-pages -d dist"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CoconutsXXS/Splatoon-Blender.git"
+    "url": "git+https://github.com/space4yyy/Splatoon-Blender.git"
   },
   "author": "Coconuts XXS",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/CoconutsXXS/Splatoon-Blender/issues"
+    "url": "https://github.com/space4yyy/Splatoon-Blender/issues"
   },
-  "homepage": "https://github.com/CoconutsXXS/Splatoon-Blender#readme",
+  "homepage": "https://github.com/space4yyy/Splatoon-Blender#readme",
   "dependencies": {
-    "three": "^0.163.0",
     "vite": "^5.2.8"
+  },
+  "devDependencies": {
+    "three": "0.174.0"
   }
 }

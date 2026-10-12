@@ -37,7 +37,7 @@ import {
 	Vector3,
 	VectorKeyframeTrack,
 	SRGBColorSpace
-} from 'https://unpkg.com/three@0.174.0/build/three.module.js';
+} from 'three';
 import { TGALoader } from './TGALoader.js';
 
 class ColladaLoader extends Loader {
@@ -288,9 +288,6 @@ class ColladaLoader extends Loader {
 						parseAnimation( child );
 						hasChildren = true;
 						break;
-
-					default:
-						console.log( child );
 
 				}
 
@@ -2132,9 +2129,6 @@ class ColladaLoader extends Loader {
 						data.primitives.push( parseGeometryPrimitive( child ) );
 						break;
 
-					default:
-						console.log( child );
-
 				}
 
 			}
@@ -3183,10 +3177,6 @@ class ColladaLoader extends Loader {
 
 						}
 
-					} else {
-
-						console.log( 'THREE.ColladaLoader: ' + jointIndex + ' does not exist.' );
-
 					}
 
 				}
@@ -3357,9 +3347,6 @@ class ColladaLoader extends Loader {
 
 					case 'extra':
 						break;
-
-					default:
-						console.log( child );
 
 				}
 
@@ -4015,7 +4002,6 @@ class ColladaLoader extends Loader {
 		// metadata
 
 		const version = collada.getAttribute( 'version' );
-		console.debug( 'THREE.ColladaLoader: File version', version );
 
 		const asset = parseAsset( getElementsByTagName( collada, 'asset' )[ 0 ] );
 		const textureLoader = new TextureLoader( this.manager );
