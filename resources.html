@@ -824,6 +824,7 @@
     </div>
 
     <script type="module">
+        async function initializeResourcePreview() {
         document.getElementById('full-screen').style.display = 'none'
         let previewReturnFocus;
         function closeResourcePreview() {
@@ -945,6 +946,9 @@
                 return null;
             }
         }
+        }
+
+        initializeResourcePreview().catch(error => console.error('Failed to initialize resource preview:', error));
     </script>
 
 

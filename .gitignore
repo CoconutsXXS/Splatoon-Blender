@@ -6,8 +6,3 @@ resources/Map Image
 node_modules/
 .DS_Store
 dist/
-src-tauri/target/
-.build-tools/
-src-tauri/.xwin-cache/
-src-tauri/gen/
-offline-release/

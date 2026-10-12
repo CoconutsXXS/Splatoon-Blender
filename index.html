@@ -84,7 +84,7 @@
             };
             const saveBundledAddon = async filename => {
                 try {
-                    const savedPath = await window.__TAURI__.core.invoke("save_addon", { filename });
+                    const savedPath = await window.splatoonDesktop.saveAddon(filename);
                     if (savedPath) showDownloadNotice(`已保存到 ${savedPath}`);
                 } catch (error) {
                     showDownloadNotice(String(error), true);
@@ -298,14 +298,14 @@
                     document.getElementById('tee-texture-download').addEventListener('click', async (e) =>
                     {
                         const texture = (await TeeTexture()).source.data;
-                        if (window.__TAURI__?.core) {
+                        if (window.splatoonDesktop?.saveFile) {
                             try {
                                 const blob = await new Promise(resolve => texture.toBlob(resolve, 'image/png'));
                                 if (!blob) throw new Error('无法生成图片');
-                                const savedPath = await window.__TAURI__.core.invoke('save_archive', {
-                                    filename: 'Custom_Splatfest_Tee_Alb.png',
-                                    bytes: Array.from(new Uint8Array(await blob.arrayBuffer())),
-                                });
+                                const savedPath = await window.splatoonDesktop.saveFile(
+                                    'Custom_Splatfest_Tee_Alb.png',
+                                    Array.from(new Uint8Array(await blob.arrayBuffer())),
+                                );
                                 if (savedPath) alert(`已保存到 ${savedPath}`);
                             } catch (error) {
                                 alert(`无法保存图片：${error}`);

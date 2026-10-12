@@ -7,30 +7,22 @@
     "test": "node --test scripts/offline.test.mjs",
     "dev": "vite",
     "build": "vite build && node scripts/copy-offline-assets.mjs",
-    "build:desktop": "node scripts/build-desktop.mjs",
-    "desktop:dev": "node scripts/run-tauri.mjs dev",
-    "desktop:build": "node scripts/run-tauri.mjs build",
-    "desktop:build:macos": "node scripts/run-tauri.mjs build --target universal-apple-darwin",
-    "deploy": "gh-pages -d dist",
-    "desktop:build:windows": "node scripts/build-windows.mjs",
-    "desktop:pack:resources": "python3 scripts/pack-resources.py",
-    "desktop:release:collect": "node scripts/collect-offline-release.mjs"
+    "deploy": "gh-pages -d dist"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CoconutsXXS/Splatoon-Blender.git"
+    "url": "git+https://github.com/space4yyy/Splatoon-Blender.git"
   },
   "author": "Coconuts XXS",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/CoconutsXXS/Splatoon-Blender/issues"
+    "url": "https://github.com/space4yyy/Splatoon-Blender/issues"
   },
-  "homepage": "https://github.com/CoconutsXXS/Splatoon-Blender#readme",
+  "homepage": "https://github.com/space4yyy/Splatoon-Blender#readme",
   "dependencies": {
     "vite": "^5.2.8"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "2.11.5",
     "three": "0.174.0"
   }
 }

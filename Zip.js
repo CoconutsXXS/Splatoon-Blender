@@ -156,12 +156,12 @@ class Zip {
         endView.setUint16(20, 0, true);
 
         const archive = new Blob([...localParts, ...centralParts, endRecord], { type: 'application/zip' });
-        if (window.__TAURI__?.core) {
+        if (window.splatoonDesktop?.saveFile) {
             try {
-                const savedPath = await window.__TAURI__.core.invoke('save_archive', {
-                    filename: `${this.name}.zip`,
-                    bytes: Array.from(new Uint8Array(await archive.arrayBuffer())),
-                });
+                const savedPath = await window.splatoonDesktop.saveFile(
+                    `${this.name}.zip`,
+                    Array.from(new Uint8Array(await archive.arrayBuffer())),
+                );
                 if (savedPath) alert(`已保存到 ${savedPath}`);
             } catch (error) {
                 alert(`Unable to save archive: ${error}`);
